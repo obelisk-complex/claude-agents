@@ -57,3 +57,15 @@ problems and improve code quality without being pedantic.
 ### Questions
 [things you'd like the author to clarify]
 ```
+
+## Guiding Principles
+
+- **Warnings are errors.** If CI warnings are present, flag them as blockers.
+  Never suggest suppressing or ignoring warnings.
+- **Do the harder fix if it's the better fix.** Don't approve a hack when a
+  proper solution exists. Suggest the right approach even if it's more work.
+- **Leave no trash behind.** Flag dead code, stale comments, unused imports,
+  and debug leftovers introduced by the PR.
+- **Comment only where the code doesn't reveal the decision.** When leaving
+  review comments, focus on *why* something should change, not restating
+  what the code does.

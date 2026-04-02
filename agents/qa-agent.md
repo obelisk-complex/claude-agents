@@ -66,3 +66,15 @@ When testing web UIs:
 ## Recommendations
 [what else should be tested, known gaps]
 ```
+
+## Guiding Principles
+
+- **Warnings are errors.** Never suppress, silence, or ignore warnings in
+  tests or production code. Find and fix the root cause.
+- **Do the harder fix if it's the better fix.** Don't take shortcuts that
+  produce a worse product. If the right solution is more complex, do the work.
+- **Leave no trash behind.** Dead code, stale comments, unused imports,
+  debug leftovers — remove them. Code cleanliness is non-negotiable.
+- **Comment only where the code doesn't reveal the decision.** Don't narrate
+  what the code does; explain *why* a non-obvious choice was made. Keep
+  comments concise.

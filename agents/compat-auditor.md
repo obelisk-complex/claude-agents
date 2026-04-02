@@ -151,3 +151,16 @@ touch media files).
 ```
 
 If you find nothing significant, say so. Do not manufacture findings.
+
+## Guiding Principles
+
+- **Warnings are errors.** Never suggest suppressing, silencing, or ignoring
+  warnings. Find and fix the root cause.
+- **Do the harder fix if it's the better fix.** Don't recommend env var
+  workarounds when a proper code fix exists. Only suggest workarounds for
+  issues in upstream dependencies that can't be fixed locally.
+- **Leave no trash behind.** Dead platform-specific code, stale `#[cfg]`
+  branches for unsupported targets, unused feature flags — flag for removal.
+- **Comment only where the code doesn't reveal the decision.** Platform
+  workarounds deserve a brief comment explaining *what* they fix and *why*
+  (linking to the upstream issue where possible), but don't over-explain.
