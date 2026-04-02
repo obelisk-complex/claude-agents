@@ -1,0 +1,77 @@
+# Claude Code Agents
+
+A collection of specialised [Claude Code](https://docs.anthropic.com/en/docs/claude-code) sub-agents for code auditing, QA, security review, performance analysis, and platform compatibility testing.
+
+## Agents
+
+| Agent | Purpose | Model | Mode |
+|-------|---------|-------|------|
+| [code-auditor](agents/code-auditor.md) | Security vulnerabilities, anti-patterns, code quality | Sonnet | Read-only |
+| [qa-agent](agents/qa-agent.md) | Test writing, test execution, browser testing via Playwright | Sonnet | Worktree (isolated writes) |
+| [perf-analyst](agents/perf-analyst.md) | Bottleneck identification, profiling, targeted optimisation | Sonnet | Read-only |
+| [dependency-auditor](agents/dependency-auditor.md) | CVE scanning, licence review, supply chain risk | Sonnet | Read-only |
+| [pr-reviewer](agents/pr-reviewer.md) | Pull request review with CI checks and contextual code reading | Sonnet | Read-only |
+| [migration-planner](agents/migration-planner.md) | Framework upgrades, large refactors, breaking change planning | Opus | Read-only |
+| [platform-compat](agents/platform-compat.md) | Media pipeline quirks, OS/GPU/driver compat, filesystem edge cases | Sonnet | Read-only |
+| [compat-auditor](agents/compat-auditor.md) | General-purpose platform compatibility for any project | Sonnet | Read-only |
+
+## Installation
+
+Copy the agent files you want into your project's `.claude/agents/` directory:
+
+```bash
+# Copy all agents
+mkdir -p .claude/agents
+cp agents/*.md .claude/agents/
+
+# Or copy specific ones
+cp agents/code-auditor.md .claude/agents/
+cp agents/qa-agent.md .claude/agents/
+```
+
+Claude Code automatically discovers agents in `.claude/agents/`.
+
+## Usage
+
+Agents can be invoked in several ways:
+
+```bash
+# Natural language in a Claude Code session
+"Use the code-auditor agent to review src/"
+
+# @-mention
+@code-auditor review the auth module
+
+# Session-wide (the agent handles everything)
+claude --agent code-auditor
+```
+
+When using agents from the main conversation, Claude Code spawns them as sub-agents with their own context window. Results are returned to the parent conversation.
+
+## Security Model
+
+- **Read-only by default.** All agents except `qa-agent` run in `permissionMode: plan`, meaning they can read code and run analysis commands but cannot modify files.
+- **qa-agent uses worktree isolation.** It gets write access but operates in a temporary git worktree, so changes don't affect your working tree until you review and merge them.
+- Agents with `WebSearch` can query the internet for CVE databases, documentation, and known issues.
+- `platform-compat` and `compat-auditor` use the [Context7](https://context7.com) MCP server for live library documentation lookups (free, no signup required).
+
+## Agent Design Principles
+
+- **Find real problems, not style nits.** Every finding should be something that matters.
+- **Concrete fixes, not vague suggestions.** Include file paths, line numbers, and code snippets.
+- **Severity classification.** Critical/High/Medium/Low/Info so you can prioritise.
+- **No manufactured findings.** If the code is clean, say so.
+- **Aggressive web search.** Agents check known issue trackers, CVE databases, and current documentation rather than relying solely on static analysis.
+
+## Customisation
+
+Each agent is a Markdown file with YAML frontmatter. You can:
+
+- Adjust `maxTurns` to give agents more or less time
+- Change `model` (e.g. `opus` for deeper analysis, `haiku` for quick checks)
+- Add project-specific context to the prompt body
+- Add `mcpServers` for additional tool access (databases, APIs, etc.)
+
+## Licence
+
+[GPL-3.0-or-later](LICENSE)
