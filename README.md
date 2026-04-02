@@ -16,6 +16,7 @@ A collection of specialised [Claude Code](https://docs.anthropic.com/en/docs/cla
 | [migration-planner](agents/migration-planner.md) | Framework upgrades, large refactors, breaking change planning | Opus | Read-only |
 | [platform-compat](agents/platform-compat.md) | Media pipeline quirks, OS/GPU/driver compat, filesystem edge cases | Sonnet | Read-only |
 | [compat-auditor](agents/compat-auditor.md) | General-purpose platform compatibility for any project | Sonnet | Read-only |
+| [ci-auditor](agents/ci-auditor.md) | CI/CD workflow security, efficiency, correctness, and platform compat | Sonnet | Read-only |
 
 ## Installation
 
