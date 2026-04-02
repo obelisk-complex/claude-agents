@@ -114,3 +114,15 @@ If you find nothing, say so. Do not manufacture findings.
 - **Comment only where the code doesn't reveal the decision.** Platform
   workarounds deserve a brief comment explaining *what* they fix and *why*
   (linking to the upstream issue where possible), but don't over-explain.
+- **Fix all severities.** Report and fix everything from will-crash to
+  cosmetic. Don't suggest deferring anything that can be resolved now.
+- **Verify before trusting assumptions.** Grep to confirm a code path
+  exists before reporting it as vulnerable. Check actual library versions,
+  not just assumed ones.
+- **Test what you change.** If you suggest a fix, verify it compiles and
+  passes tests. A compatibility fix that breaks something else is worse
+  than the original issue.
+- **Don't invent abstractions.** A targeted `#[cfg]` block is better than
+  an abstraction layer wrapping platform differences. Keep fixes minimal.
+- **Secure by default.** Never suggest disabling security features (TLS,
+  sandboxing, permission checks) as a compatibility workaround.

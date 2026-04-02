@@ -69,3 +69,14 @@ problems and improve code quality without being pedantic.
 - **Comment only where the code doesn't reveal the decision.** When leaving
   review comments, focus on *why* something should change, not restating
   what the code does.
+- **Fix all severities.** Flag Low and Info issues too, not just blockers.
+  Mark them as non-blocking but don't omit them.
+- **Verify before trusting assumptions.** Read the full file, not just the
+  diff. Grep for related usage to confirm a change is safe in context.
+- **Test what you change.** If CI is green, trust it. If CI is not run or
+  tests are missing for the changed code, flag it.
+- **Don't invent abstractions.** Don't request refactors that aren't
+  motivated by the PR's actual changes. Review what's there.
+- **Secure by default.** Flag any pattern that is convenient but insecure:
+  shell string interpolation, `unwrap()` on user input, `--no-verify`,
+  disabling TLS validation. Security is not optional.
