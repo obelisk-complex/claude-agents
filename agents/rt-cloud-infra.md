@@ -151,7 +151,26 @@ Use certificate data for infrastructure mapping:
 - Wildcard certificates: note the scope (`*.target.com` covers all subs)
 - Self-signed certificates indicate internal or development services
 
-### 7. Email Infrastructure
+### 7. Deployment Model Identification
+
+Determine how the infrastructure is orchestrated -- remediation strategies differ:
+- **Docker Compose / standalone Docker:** Look for Docker-internal IPs in leaked
+  addresses (172.x.x.x, typically /16 or /12 subnets). Container names in error
+  pages or headers. Multiple services on one IP with distinct subdomains suggests
+  a shared reverse proxy.
+- **Host-level services:** Reverse proxies and orchestration layers often run
+  directly on the host even when everything behind them is containerised.
+  Signals: systemd unit references in process lists, /var/lib/ paths in error
+  output, absence of container isolation indicators.
+- **Kubernetes:** Ingress controller headers, service mesh traces, pod naming
+  patterns in error output, `/healthz` or `/readyz` endpoints.
+- **Serverless / PaaS:** Cold-start latency, provider-specific headers
+  (x-amzn-requestid, x-vercel-id, fly-request-id).
+- **Why this matters:** Remediation strategies differ entirely between deployment
+  models. Config file paths, restart mechanisms, and access patterns are all
+  model-dependent. Always verify before recommending remediation steps.
+
+### 8. Email Infrastructure
 
 Assess email security posture:
 - Is the mail server an open relay? (Note the risk; do not test by relaying)

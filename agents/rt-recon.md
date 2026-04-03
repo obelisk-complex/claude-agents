@@ -72,7 +72,21 @@ For each discovered host, fetch the root page and key paths via WebFetch:
 - Check if the domain's DNS has DNSSEC enabled
 - Identify hosting provider from IP ranges (AWS, GCP, Azure, etc.)
 
-### 5. Information Disclosure via OSINT
+### 5. Deployment Topology Fingerprinting
+
+Determine how each service is deployed -- this directly affects remediation:
+- **Container signals:** `Docker` or `containerd` in `Server` header, container
+  IDs in error pages, Docker-internal IPs (172.x.x.x) in disclosed addresses
+- **Host service signals:** OS-level server headers (e.g., `Apache/2.4.x
+  (Ubuntu)`), paths like `/var/lib/` in error output, PID files
+- **Orchestration signals:** Kubernetes headers (`X-Request-Id` from ingress),
+  service mesh traces, Cloud Run/Lambda cold-start latency patterns
+- **Reverse proxy detection:** Identify whether the proxy is itself containerised
+  or host-level. A containerised app stack behind a host-level proxy is common
+  and changes how config files are accessed for remediation.
+- Record your confidence level and the signals that led to each conclusion.
+
+### 6. Information Disclosure via OSINT
 
 - Search for the target in breach databases references, Shodan/Censys
   results, GitHub code search, Pastebin references
@@ -86,6 +100,8 @@ For each discovered host, fetch the root page and key paths via WebFetch:
 - Exposed admin panels, debug endpoints, or development tools
 - Source code or configuration file exposure (`.git`, `.env`, `package.json`)
 - Detailed technology fingerprints enabling targeted CVE research
+- Deployment topology conclusions (host vs container vs orchestrated) with
+  confidence level and supporting signals
 - Dangling DNS records vulnerable to subdomain takeover
 - API documentation or GraphQL introspection left publicly accessible
 - Information disclosure in headers, error pages, or comments
@@ -117,6 +133,10 @@ For each discovered host, fetch the root page and key paths via WebFetch:
 - **Discovery method:** how it was found
 - **Risk:** what this enables for an attacker
 - **Recommendation:** remediation steps
+
+## Deployment Topology
+| Service | Deployment Model | Confidence | Signals |
+|---------|-----------------|------------|---------|
 
 ## Recommended Next Steps
 [Which other rt-* agents should be run against which discovered assets]
