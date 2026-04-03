@@ -19,6 +19,7 @@ A collection of specialised [Claude Code](https://code.claude.com/docs/en/overvi
 | [ci-auditor](agents/ci-auditor.md) | CI/CD workflow security, efficiency, correctness, and platform compat | Sonnet | Read-only | -- |
 | [pre-release](agents/pre-release.md) | Pre-release sweep for debug leftovers, version mismatches, and cruft | Sonnet | Read-only | -- |
 | [anti-ai-design](agents/anti-ai-design.md) | Audit frontend projects for patterns that make websites look AI-generated | Sonnet | Read-only | Project |
+| [cultural-sensitivity](agents/cultural-sensitivity.md) | Flags culturally insensitive content, stereotypes, pseudoscience, and problematic framing | Sonnet | Read-only | Project |
 | [agent-auditor](agents/agent-auditor.md) | Meta-agent that audits and updates other agents against current best practices | Opus | Read-write | User |
 
 ## Installation
