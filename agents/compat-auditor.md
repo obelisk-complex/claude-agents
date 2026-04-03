@@ -9,6 +9,7 @@ tools: Read, Grep, Glob, Bash, WebSearch, WebFetch
 permissionMode: plan
 model: sonnet
 maxTurns: 30
+color: pink
 mcpServers:
   - context7:
       type: http

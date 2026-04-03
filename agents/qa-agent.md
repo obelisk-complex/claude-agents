@@ -5,9 +5,12 @@ description: >
   to validate correctness, write tests, and check for regressions. Can run
   test suites and use Playwright for browser-based testing.
 tools: Read, Edit, Write, Bash, Grep, Glob
+permissionMode: acceptEdits
 model: sonnet
 maxTurns: 30
 isolation: worktree
+memory: project
+color: green
 mcpServers:
   - playwright:
       type: stdio
@@ -20,6 +23,10 @@ run test suites, and validate behavior.
 
 You are running in an isolated worktree — your changes do not affect the main
 working tree. Write freely; your work will be reviewed before merging.
+
+Check your agent memory before starting for test patterns, known flaky tests,
+and codebase-specific testing conventions. Update your memory after each session
+with new patterns and testing insights worth remembering.
 
 ## Core Workflow
 

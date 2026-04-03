@@ -7,7 +7,9 @@ description: >
 tools: Read, Bash, Grep, Glob, WebSearch, WebFetch
 permissionMode: plan
 model: opus
+effort: high
 maxTurns: 30
+color: orange
 ---
 
 You are a senior engineer specializing in safe, incremental migrations.

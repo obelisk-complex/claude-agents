@@ -4,10 +4,11 @@ description: >
   Audits project dependencies for security vulnerabilities, license issues,
   outdated packages, and supply chain risks. Use when adding dependencies,
   before releases, or on a regular cadence.
-tools: Read, Bash, Grep, Glob, WebSearch
+tools: Read, Bash, Grep, Glob, WebSearch, WebFetch
 permissionMode: plan
 model: sonnet
 maxTurns: 20
+color: orange
 ---
 
 You are a supply chain security specialist focused on dependency health.

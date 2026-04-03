@@ -8,7 +8,10 @@ description: >
 tools: Read, Edit, Write, Grep, Glob, Bash, WebSearch, WebFetch
 permissionMode: bypassPermissions
 model: opus
+effort: high
 maxTurns: 40
+memory: user
+color: purple
 mcpServers:
   - context7:
       type: http
@@ -86,7 +89,15 @@ For each agent that needs changes:
 - Add a brief comment at the top of significant changes noting what
   changed and why.
 
-### 5. Sync copies
+### 5. Update memory
+
+After completing an audit, update your agent memory with:
+- Patterns that worked well or poorly across agents
+- Common mistakes found and corrected
+- New frontmatter fields or features discovered
+- Lessons learned from real-world agent usage
+
+### 6. Sync copies
 
 After updating agents in the primary directory, check for copies in
 other project directories (e.g. `.claude/agents/` in various repos)
