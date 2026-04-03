@@ -86,13 +86,75 @@ Determine how each service is deployed -- this directly affects remediation:
   and changes how config files are accessed for remediation.
 - Record your confidence level and the signals that led to each conclusion.
 
-### 6. Information Disclosure via OSINT
+### 6. Advanced Lateral Recon
+
+Techniques that extract architectural intelligence standard recon misses:
+
+**Clock skew and backend pool mapping:**
+- Make multiple requests and compare `Date` response headers. Clock skew
+  between responses indicates multiple backend servers with unsynchronised
+  clocks. Consistent timestamps = single server or NTP-synced pool.
+
+**Error page differential analysis:**
+- Request non-existent paths at different depths: `/x`, `/x/y`, `/x/y/z`.
+  Different error pages (style, wording, headers) from different depths
+  reveal routing boundaries. A 404 from nginx vs a 404 from the app tells
+  you where routing decisions happen.
+- Send malformed requests (oversized headers, invalid methods, bad encoding)
+  to provoke errors from different layers in the proxy chain.
+
+**Response header ordering:**
+- Different server software produces headers in different orders. If
+  `/api/` returns headers in a different order to `/static/`, they are
+  served by different backends even if the `Server` header is stripped.
+
+**Source map and JavaScript bundle analysis:**
+- Check for `.map` files alongside JavaScript bundles (e.g., if
+  `/_astro/main.abc123.js` exists, try `/_astro/main.abc123.js.map`).
+- Parse JavaScript bundles for hardcoded API endpoints, internal hostnames,
+  environment flags (`isDev`, `isStaging`), API keys, and debug toggles.
+
+**Wayback Machine differential analysis:**
+- Fetch `http://web.archive.org/cdx/search/cdx?url=target.com/*&output=json`
+  to enumerate all historically archived URLs.
+- Compare historical URLs against the live site: paths that existed before
+  but are now 404 may still have live backends (removed from UI but not
+  from routing).
+- Download historical `robots.txt` and `sitemap.xml` for paths the target
+  once exposed.
+
+**Favicon hash fingerprinting:**
+- Fetch `/favicon.ico` and compute its hash. Cross-reference with Shodan
+  (`http.favicon.hash`) to find related infrastructure sharing the same
+  favicon (staging servers, other deployments by the same operator).
+
+**IPv6 bypass probing:**
+- Query AAAA records. If the target uses a CDN/WAF on IPv4 but has an
+  AAAA record pointing directly to the origin, IPv6 bypasses the CDN.
+- Compare responses from the IPv4 CDN address vs the IPv6 origin address.
+
+**DNS TXT record service mapping:**
+- Beyond SPF/DKIM/DMARC, DNS TXT records contain verification tokens for
+  third-party services. Each token reveals a SaaS integration:
+  `google-site-verification` (Search Console), `MS=` (Microsoft 365),
+  `atlassian-domain-verification` (Jira/Confluence),
+  `docusign=`, `facebook-domain-verification=`, etc.
+- Each integration expands the attack surface map.
+
+### 7. Information Disclosure via OSINT
 
 - Search for the target in breach databases references, Shodan/Censys
   results, GitHub code search, Pastebin references
 - Check for exposed `.git` repositories, Docker registries, S3 buckets
   matching the domain naming convention
 - Look for staff email addresses and naming patterns
+- **Wayback Machine:** historical URL enumeration (see section 6)
+- **GitHub Actions workflows:** search for the target domain in workflow
+  files. `secrets.*` references reveal secret names, `runs-on: self-hosted`
+  reveals runner infrastructure, deployment steps reveal target servers.
+- **Container registries:** check Docker Hub, GHCR for public images
+  matching the target name. Image layers may contain source code, config,
+  or environment variables.
 
 ## What Counts as a Finding
 

@@ -121,7 +121,44 @@ Check for files that should not be publicly accessible:
 - Default welcome pages (Apache "It works!", Nginx welcome, IIS splash)
 - Stack traces in error responses (toggle by sending malformed requests)
 
-### 5. Cloud Metadata and Service Exposure
+### 5. Hardware Management Interface Exposure
+
+On dedicated/bare-metal servers, hardware management interfaces are a
+critical and frequently overlooked attack surface:
+
+**BMC/IPMI (Baseboard Management Controller):**
+- Test for IPMI on UDP port 623 (note: not HTTP-testable via WebFetch)
+- Web management interfaces often run on ports 80, 443, 8080, or 8443
+  on a separate IP or the same IP
+- Default credentials are extremely common (admin/admin, ADMIN/ADMIN,
+  root/calvin on Dell iDRAC, Administrator/password on HP iLO)
+- IPMI 2.0 cipher zero vulnerability allows authentication bypass
+- A compromised BMC grants full hardware control: power, console, virtual
+  media (remote boot from attacker image), firmware flashing
+
+**Vendor-specific interfaces:**
+- Dell iDRAC: `/login.html`, `/restgui/`, port 443/5900/623
+- HP iLO: `/html/login.html`, `/xmldata?item=all`, port 443/17988/623
+- Supermicro IPMI: `/cgi/login.cgi`, port 443/623
+- Intel AMT: ports 16992-16995 (HTTP/HTTPS management)
+- Lenovo XClarity: `/ui/login.html`, port 443
+
+**Detection via WebFetch (limited but possible):**
+- If the target IP also serves an HTTPS management interface on an
+  alternate port, WebFetch can detect it
+- Search Shodan/Censys for the target IP with filters for BMC/IPMI:
+  `ip:<target> port:623` or `ip:<target> product:iDRAC`
+- Certificate transparency logs may show certificates issued to
+  management interface hostnames (e.g., `idrac-<hostname>`)
+- iLO/iDRAC web interfaces have distinctive HTML titles and paths
+
+**Why this matters for hosted servers:** Dedicated server providers
+assign management interfaces to the customer. If the customer does not
+change default credentials or restrict access, anyone on the internet
+can gain full hardware-level control -- firmware persistence that
+survives OS reinstallation.
+
+### 6. Cloud Metadata and Service Exposure
 
 **Externally facing cloud services:**
 - Elasticsearch: `https://<target>:9200/`, `https://<target>:9200/_cat/indices`
