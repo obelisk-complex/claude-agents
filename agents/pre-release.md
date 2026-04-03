@@ -22,19 +22,20 @@ stale config, version mismatches, and working-directory cruft.
   `println!`, `eprintln!`, `print!` in production code (not tests).
   Flag any that look like temporary diagnostics (e.g. `[diag]`, `[debug]`,
   `TODO`, `FIXME`, `HACK`, `XXX`, `TEMP`).
-- Search for `appendLog('[diag]` or similar diagnostic messages injected
-  into UI-visible log consoles.
+- Search for diagnostic messages injected into UI-visible log panels
+  or status bars (e.g. `[diag]`, `[debug]`, `[test]` prefixed messages).
 - Check for `devtools: true` or equivalent debug flags in release config.
 - Check for `#[allow(dead_code)]`, `#[allow(unused)]`, or similar
   suppression annotations that may hide problems.
 
 ### 2. Version consistency
 - Read the version from all canonical sources (Cargo.toml, package.json,
-  tauri.conf.json, metainfo.xml, HTML title, README, CHANGELOG, etc.)
-  and verify they all match.
-- Check that the metainfo/changelog has a release entry for the current
-  version with today's date (or the intended release date).
-- Check that the Flatpak manifest tag reference matches the version.
+  pyproject.toml, app config files, metainfo/appdata XML, HTML title,
+  README, CHANGELOG, etc.) and verify they all match.
+- Check that the changelog has a release entry for the current version
+  with today's date (or the intended release date).
+- Check that packaging manifest version references (Flatpak, Snap,
+  Homebrew, etc.) match the project version.
 
 ### 3. Uncommitted and untracked files
 - Run `git status` and flag any uncommitted changes or untracked files
@@ -43,11 +44,11 @@ stale config, version mismatches, and working-directory cruft.
   (build artefacts, working docs, editor backups, OS junk).
 
 ### 4. Stale artefacts and temp files
-- Search for orphaned temp files: `*.histv-bak`, `*.tmp`, `_extract_tmp/`,
-  `*.histv-dv.*`, leftover test output.
+- Search for orphaned temp files: `*.bak`, `*.tmp`, `*.old`, `*.orig`,
+  leftover test output, temp directories (`_extract_tmp/`, `tmp/`).
 - Check for stale build directories that shouldn't be committed:
-  `target/`, `node_modules/`, `dist/`, `flatpak-build/`, `.flatpak-builder/`,
-  `flatpak-repo/`, `squashfs-root/`.
+  `target/`, `node_modules/`, `dist/`, `build/`, `out/`, `.flatpak-builder/`,
+  `squashfs-root/`.
 - Check for large binary files that shouldn't be in the repo (ffmpeg
   binaries, test videos, `.exe` files, `.dmg` files).
 
@@ -61,11 +62,12 @@ stale config, version mismatches, and working-directory cruft.
 - Verify `LICENSE` file exists and matches what the metainfo declares.
 - Check that `THIRD-PARTY-LICENCES` or equivalent is present and
   references all bundled third-party code.
-- Verify the AI disclosure badge (QuillX) is present in the README.
+- Verify any required disclosure badges or attribution notices are
+  present in the README (if the project uses them).
 
 ### 7. CI/CD readiness
 - Check that the CI workflow version pins match the project version
-  (e.g. Flatpak manifest runtime version, Rust toolchain version).
+  (e.g. runtime version in packaging manifests, toolchain version).
 - Verify the release workflow trigger is correct for the intended
   release method (tag push, GitHub release, etc.).
 
@@ -83,8 +85,8 @@ stale config, version mismatches, and working-directory cruft.
   then focus your sweep on those files.
 - Use `git status` to check for uncommitted work.
 - Use `grep -r` patterns to find debug leftovers across the codebase.
-- Read config files (tauri.conf.json, Cargo.toml, manifest files)
-  to verify version consistency.
+- Read config files (Cargo.toml, package.json, app config, manifest
+  files) to verify version consistency.
 
 ## Output Format
 
