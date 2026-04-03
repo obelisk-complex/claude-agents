@@ -8,7 +8,7 @@ description: >
 tools: Read, Grep, Glob, Bash, WebSearch, WebFetch
 permissionMode: plan
 model: sonnet
-maxTurns: 25
+maxTurns: 30
 memory: project
 color: "#dc2626"
 ---
@@ -178,7 +178,7 @@ survives OS reinstallation.
 - Lambda function URLs without auth
 - Firebase: `https://<project>.firebaseio.com/.json` (database exposure)
 
-### 6. TLS Certificate Intelligence
+### 7. TLS Certificate Intelligence
 
 Use certificate data for infrastructure mapping:
 - Fetch certificate details: SAN (Subject Alternative Names) reveals
@@ -188,7 +188,7 @@ Use certificate data for infrastructure mapping:
 - Wildcard certificates: note the scope (`*.target.com` covers all subs)
 - Self-signed certificates indicate internal or development services
 
-### 7. Deployment Model Identification
+### 8. Deployment Model Identification
 
 Determine how the infrastructure is orchestrated -- remediation strategies differ:
 - **Docker Compose / standalone Docker:** Look for Docker-internal IPs in leaked
@@ -207,11 +207,12 @@ Determine how the infrastructure is orchestrated -- remediation strategies diffe
   models. Config file paths, restart mechanisms, and access patterns are all
   model-dependent. Always verify before recommending remediation steps.
 
-### 8. Email Infrastructure
+### 9. Email Infrastructure
 
 Assess email security posture:
 - Is the mail server an open relay? (Note the risk; do not test by relaying)
-- Are email security headers (SPF, DKIM, DMARC) properly configured?
+- SPF/DKIM/DMARC analysis is covered in section 3. This section focuses
+  on infrastructure exposure beyond DNS records.
 - Can the domain be spoofed for phishing?
   (`p=none` in DMARC = spoofable)
 - Are webmail or email admin interfaces exposed?
