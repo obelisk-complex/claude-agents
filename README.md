@@ -18,6 +18,7 @@ A collection of specialised [Claude Code](https://docs.anthropic.com/en/docs/cla
 | [compat-auditor](agents/compat-auditor.md) | General-purpose platform compatibility for any project | Sonnet | Read-only |
 | [ci-auditor](agents/ci-auditor.md) | CI/CD workflow security, efficiency, correctness, and platform compat | Sonnet | Read-only |
 | [pre-release](agents/pre-release.md) | Pre-release sweep for debug leftovers, version mismatches, and cruft | Sonnet | Read-only |
+| [agent-auditor](agents/agent-auditor.md) | Meta-agent that audits and updates other agents against current best practices | Opus | Read-write |
 
 ## Installation
 
