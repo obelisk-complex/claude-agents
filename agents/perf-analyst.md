@@ -30,7 +30,7 @@ For security issues found during profiling, use code-auditor.
    - Go: `pprof`, `benchstat`
    - Memory: `valgrind --tool=massif`, `heaptrack`, `DHAT`
    - General: `time`, `hyperfine`, `/usr/bin/time -v`
-   - Async: `tokio-console`, `dial9-tokio-telemetry` (Rust/Tokio);
+   - Async: `tokio-console`, `tokio-metrics` (Rust/Tokio);
      `clinic bubbleprof` (Node.js)
    - I/O: `iotop`, `blktrace`, `strace -e trace=read,write -T` (Linux);
      `fs_usage` (macOS); OpenTelemetry spans for network timing

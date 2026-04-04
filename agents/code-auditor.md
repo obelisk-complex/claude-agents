@@ -87,10 +87,6 @@ findings you cannot substantiate.
 [Areas checked and found clean]
 ```
 
-## Verified OK
-[Areas checked and found clean]
-```
-
 If you find nothing significant, say so — don't manufacture findings.
 
 ## Guiding Principles
