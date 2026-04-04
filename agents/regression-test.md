@@ -110,6 +110,17 @@ Before comparing snapshots, scrub non-deterministic content:
 - Platform-specific: line endings, locale formatting, timezone display
 - Run snapshot tests in CI with controlled locale/timezone (TZ=UTC)
 
+## Snapshot Update Workflow
+
+When a behavioral change is intentional and baselines must be updated:
+- Review each changed snapshot individually, not in bulk. Rust:
+  `cargo insta review`. Jest: `--updateSnapshot` with file scope.
+  Syrupy: `--snapshot-update`.
+- Ensure CI rejects pending snapshot updates (`cargo-insta --check`,
+  Jest `--ci` flag) so un-reviewed updates do not merge.
+- Commit updated snapshots in a dedicated commit with the reason for
+  the baseline change. This makes future bisection clear.
+
 ## Performance Regression Baselines
 
 When changes affect hot paths or resource-intensive operations:

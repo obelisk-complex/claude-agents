@@ -53,7 +53,9 @@ coverage metrics, use coverage-analyst.
 - Cover the boundaries: empty input, max values, invalid types, concurrent access.
 - Don't mock what you don't own. Prefer integration tests for external interfaces.
 - If the project has no tests, scaffold a minimal test setup that matches the
-  project's language and build system before writing tests.
+  project's language and build system before writing tests. Use
+  `test_<unit>_<scenario>_<expected>` naming and Arrange-Act-Assert structure
+  as the default convention when no existing style exists.
 - Use property-based testing for functions with wide input domains. Declare
   invariants (e.g., "encode then decode returns the original") and let the
   framework generate inputs. Tools: `proptest` (Rust), `hypothesis` (Python),

@@ -97,6 +97,11 @@ coverage metrics, use coverage-analyst.
      inputs: `cargo fuzz cmin <target>` or libFuzzer `-merge=1` for dedup,
      AFL++ `afl-cmin`. Commit minimized corpus so CI starts from a strong
      baseline.
+   - **Check corpus coverage:** After a campaign, generate coverage for
+     the corpus to verify the fuzzer reaches deep code: `cargo fuzz
+     coverage <target>`, libFuzzer `-print_coverage`, AFL++ `afl-cov`.
+     If coverage plateaus at input validation, improve dictionaries or
+     seed corpus to help past parsing gates.
    - **Configure resource limits:** Memory: `-rss_limit_mb=2048` (libFuzzer)
      or `ASAN_OPTIONS=hard_rss_limit_mb=2048`. Per-input timeout:
      `-timeout=30`. Inputs exceeding these are findings (resource bugs).

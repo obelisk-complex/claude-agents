@@ -99,6 +99,20 @@ baselines, identified gaps, and patterns worth remembering.
 7. **Report findings** - Produce a coverage report with actionable gap
    analysis.
 
+## Coverage Enforcement
+
+When recommending CI integration:
+- Use ratcheting: set the gate at current coverage, not an aspirational
+  target. `--fail-under-lines` (cargo-llvm-cov), `coverageThreshold`
+  (Jest), `--fail-under` (coverage.py), JaCoCo `<minimum>`.
+- Gate on branch coverage if available, not just line coverage.
+- Allow per-file overrides for legitimately hard-to-test code (generated
+  bindings, platform-specific paths) rather than lowering the global
+  threshold.
+- For workspaces and monorepos, use `cargo-llvm-cov --workspace`,
+  Jest `projects` with merged coverage, or JaCoCo report aggregation
+  to avoid misleading per-package numbers.
+
 ## Analysis Principles
 
 - Coverage is a necessary but not sufficient measure of test quality.

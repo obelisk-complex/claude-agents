@@ -58,6 +58,10 @@ remembering.
      `testcontainers-go`, `os.MkdirTemp`
    - Java/Kotlin: `@SpringBootTest`, TestContainers, `@DataJpaTest`,
      `MockMvc`
+   - When using real databases or services (testcontainers, docker-compose),
+     wait for readiness before running tests. Use testcontainers' built-in
+     wait strategies or health-check polling. Tests that start before
+     dependencies are ready produce flaky failures.
 5. **Write integration tests** - For each identified seam, write tests
    that exercise the real interface:
    - Test with real file I/O (using temp directories, not mocks)

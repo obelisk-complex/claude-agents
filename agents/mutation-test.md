@@ -87,7 +87,10 @@ integration-test. For coverage metrics, use coverage-analyst.
    - **Weak assertion:** a test runs this code but doesn't assert on the
      affected output
    - **Equivalent mutation:** the mutation produces identical behavior
-     (rare but possible, e.g. reordering independent operations)
+     (rare but possible). Common patterns: mutations in logging-only code,
+     reordering commutative operations, changing strings used only in
+     debug output. When unsure, check if any test assertion could
+     possibly distinguish the original from the mutant.
    - **Dead code:** the mutated code is unreachable and should be removed
 6. **Report findings** - Produce a mutation score and actionable
    recommendations.
