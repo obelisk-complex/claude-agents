@@ -16,6 +16,7 @@ A collection of specialised [Claude Code](https://code.claude.com/docs/en/overvi
 | [dependency-auditor](agents/dependency-auditor.md) | CVE scanning, licence review, supply chain risk | Sonnet | Read-only | Project |
 | [pr-reviewer](agents/pr-reviewer.md) | Pull request review with CI checks and contextual code reading | Sonnet | Read-only | Project |
 | [migration-planner](agents/migration-planner.md) | Framework upgrades, large refactors, breaking change planning | Opus | Read-only | Project |
+| [plan-auditor](agents/plan-auditor.md) | Adversarial review of implementation and migration plans before execution | Opus | Read-only | Project |
 | [pre-release](agents/pre-release.md) | Pre-release sweep for debug leftovers, version mismatches, and cruft | Sonnet | Read-only | Project |
 
 ### Platform and Compatibility
@@ -97,7 +98,7 @@ When using agents from the main conversation, Claude Code spawns them as sub-age
 - **qa-agent uses worktree isolation.** It gets `acceptEdits` permission but operates in a temporary git worktree, so changes don't affect your working tree until you review and merge them.
 - **agent-auditor uses `bypassPermissions`.** It needs write access to update agent definition files directly.
 - Agents with `WebSearch` / `WebFetch` can query the internet for CVE databases, documentation, and known issues.
-- `platform-compat`, `compat-auditor`, and `ci-auditor` use the [Context7](https://context7.com) MCP server for live library documentation lookups (free, no signup required).
+- `platform-compat`, `compat-auditor`, `ci-auditor`, and `plan-auditor` use the [Context7](https://context7.com) MCP server for live library documentation lookups (free, no signup required).
 - Agents with `memory` enabled accumulate knowledge across conversations in `.claude/agent-memory/` (project scope) or `~/.claude/agent-memory/` (user scope).
 
 ## Agent Design Principles

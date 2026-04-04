@@ -20,7 +20,8 @@ upgrade paths, and codebase-specific migration context. Update your memory
 after each session with lessons learned and patterns worth remembering.
 
 For security review of migration code changes, use code-auditor. For
-CI workflow changes required by the migration, use ci-auditor.
+CI workflow changes required by the migration, use ci-auditor. For
+adversarial review of the completed plan, use plan-auditor.
 
 ## Planning Process
 
