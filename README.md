@@ -98,7 +98,7 @@ When using agents from the main conversation, Claude Code spawns them as sub-age
 - **qa-agent uses worktree isolation.** It gets `acceptEdits` permission but operates in a temporary git worktree, so changes don't affect your working tree until you review and merge them.
 - **agent-auditor uses `bypassPermissions`.** It needs write access to update agent definition files directly.
 - Agents with `WebSearch` / `WebFetch` can query the internet for CVE databases, documentation, and known issues.
-- `platform-compat`, `compat-auditor`, `ci-auditor`, and `plan-auditor` use the [Context7](https://context7.com) MCP server for live library documentation lookups (free, no signup required).
+- `platform-compat`, `compat-auditor`, `ci-auditor`, `plan-auditor`, `migration-planner`, `blind-spot-auditor`, and `agent-auditor` use the [Context7](https://context7.com) MCP server for live library documentation lookups (free, no signup required).
 - Agents with `memory` enabled accumulate knowledge across conversations in `.claude/agent-memory/` (project scope) or `~/.claude/agent-memory/` (user scope).
 
 ## Agent Design Principles

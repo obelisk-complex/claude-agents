@@ -11,6 +11,10 @@ effort: high
 maxTurns: 30
 memory: project
 color: "#d97706"
+mcpServers:
+  - context7:
+      type: http
+      url: https://mcp.context7.com/mcp
 ---
 
 You are a senior engineer specializing in safe, incremental migrations.
