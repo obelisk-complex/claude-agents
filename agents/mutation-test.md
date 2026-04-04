@@ -58,6 +58,11 @@ integration-test. For coverage metrics, use coverage-analyst.
    - Code with existing test coverage (to test assertion quality)
    - Complex conditionals, arithmetic, and boundary checks
    - Error handling paths
+   - **Incremental mutation:** For PR-scoped validation, use diff-based
+     mutation: `cargo-mutants --in-diff` (pipe `git diff main...HEAD`),
+     Stryker `--mutate` with file globs, PIT `targetClasses`. Dramatically
+     faster than full-codebase mutation. Reserve full runs for periodic
+     scheduled analysis.
 4. **Apply mutations** - For each target, inject one mutation at a time,
    run the relevant tests, and record whether the mutation was killed
    (test failed) or survived (tests still pass). Always revert each
@@ -71,6 +76,12 @@ integration-test. For coverage metrics, use coverage-analyst.
      an early return
    - **Negation:** negate a condition (`if x` to `if !x`)
    - **Constant:** change literal values (0 to 1, empty string to "x")
+   - **Timeout handling:** Configure per-mutation timeouts before running.
+     Mutations causing infinite loops are common (removing loop increment,
+     negating loop condition). Automated tools: `--timeout-multiplier`
+     (cargo-mutants), `timeoutMS`/`timeoutFactor` (Stryker), `timeoutConst`
+     (PIT). For manual mutation, set 2x normal suite duration as limit.
+     Timeouts count as "detected" (would block CI), not as survivors.
 5. **Analyze survivors** - For each surviving mutation, determine why:
    - **Missing test:** no test covers this code path at all
    - **Weak assertion:** a test runs this code but doesn't assert on the

@@ -99,6 +99,27 @@ use mutation-test.
   checkout` for before/after comparison, `jq` for JSON structural
   comparison
 
+## Snapshot Normalization
+
+Before comparing snapshots, scrub non-deterministic content:
+- Timestamps/dates: replace with fixed values or use redaction
+  (cargo-insta `redactions`, Jest `expect.any(Date)`)
+- File paths: normalize separators, replace absolute with placeholders
+- UUIDs and random IDs: deterministic placeholders
+- Floating-point: round to tolerance or use approximate matchers
+- Platform-specific: line endings, locale formatting, timezone display
+- Run snapshot tests in CI with controlled locale/timezone (TZ=UTC)
+
+## Performance Regression Baselines
+
+When changes affect hot paths or resource-intensive operations:
+- Execution time for critical operations (`criterion` for Rust,
+  `benchstat` for Go, `hyperfine` for CLI)
+- Memory consumption for representative workloads
+- Binary or output file size where relevant
+- Compare with statistical significance (not single-run). Flag regressions
+  exceeding defined tolerance (e.g., >5% wall-clock increase).
+
 ## Testing Principles
 
 - Pin behavior, not implementation. Snapshot tests should survive

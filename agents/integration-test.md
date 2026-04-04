@@ -92,6 +92,21 @@ remembering.
   responses, missing files, permission denied, concurrent access.
 - If the project has no integration tests, scaffold a minimal setup that
   matches the project's language and build system before writing tests.
+- Manage test data deliberately. Prefer transaction rollback for speed where
+  code does not depend on commit side effects. For tests spanning multiple
+  transactions, use explicit cleanup in teardown. Use data builders or
+  factories - avoid shared fixtures coupling tests. In parallel execution,
+  ensure unique identifiers or test-scoped schemas prevent contamination.
+
+## Contract Testing
+
+When the project exposes or consumes APIs used by other services:
+- Use consumer-driven contracts (Pact, Spring Cloud Contract) where
+  consumers define expectations and providers verify against them
+- For provider-first APIs, verify against OpenAPI/Swagger schemas
+- Test backward compatibility: can existing consumers parse new responses?
+- Contract tests complement integration tests - they catch interface drift
+  without requiring all services running
 
 ## Output Format
 

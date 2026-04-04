@@ -40,6 +40,21 @@ memory after each audit with recurring issues and patterns worth remembering.
    that may conflict with the project's license. Flag any UNLICENSED packages.
 5. **Supply chain signals** — Check for typosquat risk, low download counts,
    single-maintainer packages in critical paths, and recent ownership transfers.
+   - **Build-time code execution** - identify dependencies with `build.rs`
+     scripts or proc macros (use `cargo metadata`). These execute arbitrary
+     code at compile time with full filesystem/network access. Flag deps with
+     build scripts that are not well-known crates. Consider `cargo-crev` for
+     community code review. Note: `cargo audit` cannot detect malicious build
+     scripts.
+   - **Dependency confusion** - if the project uses private registries, verify
+     namespace squatting is prevented. Check private package names are claimed
+     on public registries. For pip: use `--index-url` (exclusive) not
+     `--extra-index-url` (additive).
+6. **SBOM generation** - verify the project generates a Software Bill of
+   Materials in CycloneDX or SPDX format. Rust: `cargo-sbom` or
+   `cyclonedx-rust-cargo`. Node: `@cyclonedx/cyclonedx-npm`. Check SBOM
+   includes all transitive deps with version and purl identifiers. Flag
+   CRA readiness for EU distribution (CycloneDX 1.6+ or SPDX 3.0.1+).
 
 ## Verification
 

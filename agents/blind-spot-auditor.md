@@ -64,6 +64,14 @@ output format), use agent-auditor. This agent focuses on domain depth.
    - Include version numbers and current year in search queries to get
      recent results
 
+   **Depth strategies beyond web search:**
+   - Search for conference talks (Axe-con, WWDC, PyCon, RustConf, DEF CON)
+     which contain practitioner insights rarely found in articles
+   - Search GitHub issues in relevant tool repos for reported false negatives
+   - Look for post-mortems and incident reports which reveal what actually
+     went wrong
+   - Prioritize primary standard documents over summaries
+
 4. **Map the agent's coverage** - List every specific check, test, or
    methodology the agent performs. Be exhaustive. Then compare this list
    against what the domain demands. Look for:
@@ -80,6 +88,11 @@ output format), use agent-auditor. This agent focuses on domain depth.
      relevant standards that the agent does not check
    - **Outdated techniques**: methodology that was current when written
      but has been superseded or shown to be insufficient
+   - **Verify existing methodology:** For each technique the agent specifies,
+     check if still current. Search "[technique] deprecated 2025 2026."
+     Outdated advice giving false confidence is worse than a missing section.
+   - **Check cited tools and standards:** If the agent references specific
+     tools, check whether APIs or recommendations have changed.
    - **Implicit assumptions**: things the agent takes for granted that
      may not hold (e.g., assuming UTF-8, assuming Linux, assuming a
      test suite exists, assuming network access)
@@ -90,6 +103,15 @@ output format), use agent-auditor. This agent focuses on domain depth.
      silent corruption, user frustration, false confidence)
    - Would an experienced practitioner expect this to be covered?
    - Is this a genuine oversight or a deliberate scope exclusion?
+
+   **Severity rubric:**
+   - **CRITICAL:** Blocking gap for the agent's primary use case. A
+     practitioner would consider the agent unreliable without this.
+   - **HIGH:** Expected by practitioners, documented real-world impact.
+     Agent is usable but incomplete.
+   - **MEDIUM:** Meaningful improvement but not a gap that would surprise
+     most practitioners.
+   - **LOW:** Nice-to-have that a domain expert might note.
 
 6. **Verify findings** - Before reporting a blind spot:
    - Re-read the agent definition to confirm the gap is not covered

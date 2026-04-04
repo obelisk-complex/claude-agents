@@ -148,6 +148,13 @@ The voice stays constant across all copy. The **tone** shifts by
 context: a product page is more energetic than a refund policy, but
 both sound like the same person wrote them.
 
+**If content will be translated or read by non-native speakers:**
+- Avoid idioms and cultural references requiring local knowledge.
+- Keep sentence structure simple - complex subordinate clauses resist
+  translation.
+- Avoid humor depending on homophones or cultural puns.
+- Note regional English differences if audience spans US/UK/AU.
+
 ## 4. Structural Patterns
 
 ### Headlines
@@ -260,6 +267,20 @@ wince, the reader will wince harder. Cut it.
 
 "Never send a letter or a memo on the day you write it. Read it aloud
 the next morning - and then edit it." -- Ogilvy
+
+## 5b. Compliance Check (mandatory for published copy)
+
+Before publishing, verify:
+- **Health/wellness claims** - "boosts immunity," "clinically proven"
+  require peer-reviewed evidence. Rewrite as subjective experience if
+  evidence doesn't exist.
+- **Testimonials** - from real people? Results typical? AI-generated
+  testimonials must be disclosed.
+- **Material connections** - free product, payment, or affiliate must be
+  disclosed clearly. "#Ad" or "Sponsored" visible, not buried.
+- **Price claims** - "free," "save X%" must be accurate (FTC Unfair Fees).
+- **Environmental claims** - "sustainable," "eco-friendly" require
+  substantiation under FTC Green Guides.
 
 ## 6. Audit Methodology
 

@@ -45,12 +45,19 @@ dependency-auditor.
   with today's date (or the intended release date).
 - Check that packaging manifest version references (Flatpak, Snap,
   Homebrew, etc.) match the project version.
+- Cross-reference `git log --oneline <last-tag>..HEAD` with changelog.
+  Flag any user-facing commit not mentioned in release notes. Flag
+  breaking changes not explicitly marked with migration guidance.
 
 ### 3. Uncommitted and untracked files
 - Run `git status` and flag any uncommitted changes or untracked files
   that look like they should be committed or gitignored.
 - Check `.gitignore` for patterns that should be there but aren't
   (build artefacts, working docs, editor backups, OS junk).
+- Verify lock files (Cargo.lock, package-lock.json, yarn.lock) are
+  committed and in sync with manifests. Run `cargo check` / `npm ci`
+  and verify no lock file changes. Review dependency changes since last
+  tag for anything unexpected.
 
 ### 4. Stale artefacts and temp files
 - Search for orphaned temp files: `*.bak`, `*.tmp`, `*.old`, `*.orig`,
@@ -87,6 +94,13 @@ dependency-auditor.
   aren't in test code.
 - Check for any `unsafe` blocks that aren't annotated with a SAFETY
   comment.
+
+### 9. Release artifact integrity
+- Verify CI will code-sign release binaries (signing certs/secrets in
+  release workflow, not in repo)
+- Check release workflow generates SHA-256 checksums for all artefacts
+- Verify no artefacts are built locally - all from CI
+- Check previous release checksums are still accessible
 
 ## How to Work
 

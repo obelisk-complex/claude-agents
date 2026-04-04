@@ -74,6 +74,17 @@ Read every agent file in the agents directory. For each agent, evaluate:
 - **Output format** — is the requested output format practical? Does it
   give the calling context what it needs?
 
+### 2b. Cross-agent interaction review
+
+For the agent set as a whole:
+- Verify every "delegate to X" reference points to an existing agent.
+  Flag dangling references.
+- Map scope boundaries: for related agent pairs, confirm boundary is
+  stated in both. Flag overlapping scope without delineation.
+- Identify coverage gaps: domains where no agent has responsibility.
+- Check for circular delegation (A delegates to B on the same concern
+  that B delegates back to A).
+
 ### 3. Review existing skills
 
 Read every skill file in the skills directory (`.claude/skills/` or a
@@ -108,6 +119,12 @@ If conversation history or memory files are available, look for:
 - **Tasks where the agent ran out of turns** — increase `maxTurns`.
 - **Agent results that required heavy post-processing** — improve the
   output format.
+
+If outcome data is available (saved outputs, user corrections):
+- Approximate false positive rate: findings dismissed or contradicted
+- Approximate false negative rate: issues found later that agent missed
+- Severity calibration: are Critical findings genuinely critical?
+- Model efficiency: would a cheaper model produce equivalent results?
 
 ### 5. Apply updates
 

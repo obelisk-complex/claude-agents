@@ -54,6 +54,16 @@ baselines, identified gaps, and patterns worth remembering.
      statically: for each source function, grep the test directory for
      calls to that function; classify functions with zero test references
      as uncovered.
+   - **Configure coverage exclusions** before interpreting results:
+     - Exclude generated code (protobuf, codegen, ORM migrations, macros)
+     - Exclude vendored/third-party code copied into the repo
+     - Exclude test utilities, helpers, and fixtures
+     - Use tool-specific exclusion: `--ignore-filename-regex` (cargo-llvm-cov),
+       `--exclude-files` (tarpaulin), `coveragePathIgnorePatterns` (Jest),
+       `omit` (coverage.py), `<exclude>` (JaCoCo)
+     - Code-level: `#[coverage(off)]` (Rust nightly), `/* istanbul ignore */`,
+       `# pragma: no cover` (Python)
+     - Report both raw and excluded numbers for transparency
 3. **Parse coverage results** - Extract:
    - Overall line/branch/function coverage percentages
    - Per-file coverage breakdown
@@ -78,6 +88,11 @@ baselines, identified gaps, and patterns worth remembering.
      never `Err`, `try` but never `catch`)
    - Find short-circuit evaluations where only the first condition is
      tested
+   - For complex boolean expressions (`if (a && b || c)`), check condition
+     coverage: has each individual condition been tested true and false?
+     Branch coverage alone does not guarantee this. For security-sensitive
+     code, consider MC/DC (Modified Condition/Decision Coverage) via LLVM
+     `-fcoverage-mcdc` (Clang 18+).
 6. **Cross-reference with recent changes** - Use `git log` and `git diff`
    to find recently changed code. Uncovered code that was recently
    modified is higher priority than old uncovered code.

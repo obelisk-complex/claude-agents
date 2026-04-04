@@ -39,6 +39,17 @@ Use WebFetch to connect to the target over HTTPS and analyse:
   ≥31536000), `includeSubDomains`, and `preload` directives.
 - **HTTP→HTTPS redirect:** Does port 80 redirect to 443? Is the redirect
   a 301 (permanent) or 302 (temporary)?
+- **Cipher suites:** Flag: RC4, 3DES, DES, export ciphers, NULL ciphers,
+  CBC without AEAD (POODLE variants). Prefer AES-GCM, CHACHA20-POLY1305.
+  Flag RSA key exchange (no forward secrecy) - require ECDHE or DHE.
+  Flag DHE groups < 2048 bits (Logjam). Prefer X25519, P-256.
+- **Certificate lifecycle readiness:** Check validity period against
+  CA/Browser Forum schedule: after March 2026 max 200 days, after March
+  2027 max 100 days, after March 2029 max 47 days. Long-lived certs
+  indicate lack of ACME automation.
+- **OCSP stapling:** Check for stapled OCSP response. Without stapling,
+  browsers may soft-fail revocation checks. Flag OCSP Must-Staple
+  extension presence.
 - **Mixed content risk:** Does the HTTPS page load any HTTP resources?
 
 Use WebSearch to check the target against public TLS assessment tools
@@ -61,6 +72,8 @@ response, check the presence, value, and correctness of:
 | `Cross-Origin-Opener-Policy` | `same-origin` | Missing |
 | `Cross-Origin-Embedder-Policy` | `require-corp` | Missing |
 | `Cross-Origin-Resource-Policy` | `same-origin` or `same-site` | Missing |
+| `Reporting-Endpoints` | Configured for CSP/COOP/COEP reports | Missing means no visibility into violations |
+| `NEL` (Network Error Logging) | Configured | Detects TLS errors, DNS failures, MitM |
 
 ### 3. Content Security Policy Deep Dive
 
@@ -76,6 +89,12 @@ If a CSP header is present, parse it directive by directive:
 - **`object-src`:** Should be `'none'` to block Flash/Java plugins.
 - **Nonce/hash usage:** Are nonces static (defeating their purpose)?
 - **Report-uri/report-to:** Is CSP violation reporting configured?
+- **CSP architecture assessment:** Determine model:
+  - Domain whitelist (e.g., `script-src cdn.example.com`): Flag as weak.
+    94.68% of whitelist CSPs are bypassable via script gadgets and JSONP.
+  - Nonce-based with `strict-dynamic`: Current best practice. Verify
+    nonces are unique per response.
+  - Check for `require-trusted-types-for 'script'` (DOM XSS defense).
 - Check whether CSP differs between pages (main page vs API vs admin).
 - For CSP bypass exploitation and XSS-specific CSP evasion techniques,
   delegate to **rt-xss**. This section assesses policy correctness.

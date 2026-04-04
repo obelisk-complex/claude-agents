@@ -73,6 +73,11 @@ For JSON-based APIs, test:
 - `{"$where": "1==1"}` — JavaScript injection in MongoDB
 - Check if raw user input reaches MongoDB `find()`, `aggregate()`,
   or similar query builders
+- If the target uses MongoDB `aggregate()`, test pipeline stage injection:
+  `{"$lookup": {"from": "users", "localField": "_id", "foreignField":
+  "_id", "as": "leaked"}}` reads from any collection. `$merge`/`$out`
+  write to arbitrary collections. Test nested operator bypass:
+  `{"$or": [{"$where": "1==1"}]}` to circumvent filters on top-level keys
 
 ### 4. Server-Side Template Injection (SSTI)
 
@@ -134,6 +139,28 @@ If the application accepts XML input (SOAP, file uploads, config):
   ```
 - Test blind XXE via out-of-band data exfiltration
 - Test billion laughs DoS (note without triggering; report the vector)
+
+### 9. Second-Order (Stored) Injection
+
+Payloads stored via one function and triggered by another:
+- Inject SQL/NoSQL/SSTI payloads into stored fields (user registration,
+  profile updates, settings, filenames)
+- Exercise every application function that reads stored values: reports,
+  exports, admin dashboards, email templates, search indexes
+- Monitor for delayed error messages, behavioral changes, or time delays
+  in these secondary functions
+- Second-order injection is especially common in microservice architectures
+  where one service writes and another reads without parameterisation
+
+### 10. Expression Language / OGNL Injection
+
+For Java-based targets, test EL/OGNL separately from SSTI:
+- `${7*7}` (JSP EL), `${T(java.lang.Runtime).getRuntime().exec('id')}`
+  (Spring SpEL), `%{7*7}` (OGNL/Struts)
+- Test in query parameters, POST body, and HTTP headers (Content-Type,
+  X-Forwarded-For) which Struts interceptors may evaluate
+- EL injection targets the application server's expression engine, not a
+  template renderer - it is a distinct interpreter context from SSTI
 
 ## What Counts as a Finding
 

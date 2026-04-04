@@ -91,6 +91,10 @@ If basic payloads are blocked, test bypass vectors:
 - **Mutation XSS (mXSS):** payloads that exploit DOM parser differences,
   e.g., `<math><mtext><table><mglyph><style><!--</style><img src=x onerror=alert(1)>`
 - **Prototype pollution to XSS:** if client-side JS merges untrusted objects
+- **WAF body-size bypass:** Many WAFs inspect only the first 8KB of the
+  request body. Pad with 8KB+ of benign data before the XSS payload to
+  push it outside the inspection window. Test with both
+  `application/x-www-form-urlencoded` and `multipart/form-data`.
 
 ### 4. Stored XSS Testing
 
@@ -114,6 +118,15 @@ If source code or JavaScript bundles are accessible:
   `innerHTML`, `outerHTML`, `document.write()`, `eval()`, `setTimeout()`,
   `setInterval()`, `Function()`, `$.html()`, `v-html`, `dangerouslySetInnerHTML`
 - Trace data flow from source to sink. Is there sanitisation in between?
+
+**DOM clobbering:**
+- Check if JavaScript references global variables (e.g., `window.config`,
+  `window.defaultURL`) that could be overridden by injecting HTML elements
+  with matching `id` or `name` attributes
+- Test: `<a id=config><a id=config name=url href='javascript:alert(1)'>`
+- DOM clobbering bypasses most sanitizers because it uses only benign HTML
+  elements. Check if DOMPurify's SANITIZE_NAMED_PROPS is enabled (not by
+  default). Pay attention to code checking `typeof variable !== 'undefined'`
 
 ### 6. CSP Bypass Assessment
 
@@ -143,6 +156,10 @@ For each confirmed or likely XSS vector, assess the impact:
 - Can it exfiltrate displayed PII or sensitive data?
 - Can it modify page content (phishing, social engineering)?
 - Is the affected page an admin panel (privilege escalation)?
+- Can the XSS register a service worker? If the origin uses service workers
+  or the XSS path qualifies as a service worker scope, a malicious
+  registration persists code execution across sessions and poisons the cache
+  for long-term compromise. Check `Service-Worker-Allowed` header scope.
 
 ## What Counts as a Finding
 

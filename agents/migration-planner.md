@@ -30,10 +30,21 @@ CI workflow changes required by the migration, use ci-auditor.
    changelogs, and breaking change lists for the target version or framework.
 3. **Dependency mapping** — Identify what depends on what. Find the order of
    operations that minimizes broken intermediate states.
+3b. **Database/schema migration** - if the migration involves schema changes:
+   - Use expand-and-contract: add new schema first, update app code, then
+     remove old schema. Never drop columns in the same step as code change.
+   - Each schema migration must be backward-compatible with current app
+     version (supports rollback).
+   - Plan data backfill separately from schema changes.
+   - Flag migrations requiring table locks on large tables.
 4. **Risk analysis** — Identify the riskiest parts of the migration:
    - Behavioral changes that won't cause compile/type errors
    - Features with no test coverage
    - Third-party integrations that may break
+   - For high-risk steps, plan feature flag strategy: deploy both old and new
+     paths, route percentage of traffic to new, monitor before cutover.
+     Especially important for auth changes, DB driver swaps, external API
+     migrations. Identify which steps can canary vs require all-or-nothing.
 5. **Step-by-step plan** — Break the migration into reviewable, deployable
    increments. Each step should leave the system in a working state.
 
@@ -61,6 +72,13 @@ CI workflow changes required by the migration, use ci-auditor.
 
 ### Rollback Strategy
 [how to undo if things go wrong]
+
+### Post-Migration Validation
+- **Baseline metrics:** [captured before migration]
+- **Success criteria:** [latency, error rate, throughput, data integrity]
+- **Monitoring plan:** [what to watch, for how long]
+- **Hypercare period:** [duration of elevated alerting]
+- **Data validation:** [reconciliation queries for integrity]
 
 ### Estimated Effort
 [S/M/L for each step]

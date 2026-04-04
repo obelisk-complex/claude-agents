@@ -55,18 +55,29 @@ naming conventions:
 - `https://<target>.blob.core.windows.net/`
 - Test container names: `assets`, `uploads`, `backup`, `data`, `public`
 
+**Alternative S3-compatible storage:**
+- Cloudflare R2: `https://<account-id>.r2.cloudflarestorage.com/<bucket>`
+- DigitalOcean Spaces: `https://<space>.digitaloceanspaces.com/`
+- Backblaze B2: `https://f<cluster>.backblazeb2.com/file/<bucket>/`
+- Wasabi: `https://s3.wasabisys.com/<bucket>/`
+- Self-hosted MinIO: check common ports 9000/9001 on target IPs
+
 ### 2. Subdomain Takeover
 
 For each subdomain discovered by rt-recon:
 - Check if CNAME records point to services that have been deprovisioned
 - **Vulnerable services:** GitHub Pages, Heroku, AWS S3 website hosting,
   Azure, Shopify, Fastly, Pantheon, Tumblr, WordPress.com, Ghost,
-  Surge.sh, Fly.io, Netlify, Firebase Hosting
+  Surge.sh, Fly.io, Netlify, Firebase Hosting, Render, Railway, Vercel,
+  DigitalOcean App Platform, AWS Elastic Beanstalk, Azure Traffic Manager
 - **Detection:** If the CNAME target returns a "not found" or default page
   from the hosting provider, the subdomain is likely takeable
 - Use WebSearch to check: `site:github.com "subdomain takeover" <provider>`
   for provider-specific takeover signatures
 - Check for dangling NS delegations (entire zone delegable)
+- **NS delegation takeover:** If NS records point to a nameserver the
+  target no longer controls, an attacker can register the same account and
+  control the entire zone. Higher impact than CNAME takeover.
 - Verify: fetch the subdomain and look for provider error pages:
   - GitHub: "There isn't a GitHub Pages site here."
   - Heroku: "No such app"
@@ -109,6 +120,12 @@ Check for files that should not be publicly accessible:
 - `/package.json`, `/composer.json`, `/Gemfile` — dependency manifests
 - `/.npmrc`, `/.yarnrc` — package manager config (may contain tokens)
 - `/wp-config.php.bak`, `/config.php.old` — backup config files
+- `/terraform.tfstate`, `/terraform.tfstate.backup` - IaC state files
+  containing plaintext secrets (database passwords, API keys, cloud creds)
+- `/.terraform/`, `/terraform.tfvars` - Terraform configuration
+- `/pulumi.*.yaml`, `/.pulumi/` - Pulumi state
+- `/k8s/`, `/manifests/`, `/kustomization.yaml` - Kubernetes manifests
+  (may contain embedded secrets in base64)
 
 **Debug and development tools:**
 - `/debug`, `/trace`, `/_profiler` (Symfony), `/__debug__` (Django)
@@ -172,6 +189,16 @@ survives OS reinstallation.
 - Grafana: `https://<target>:3000/`
 - Jenkins: `https://<target>:8080/`
 - Prometheus: `https://<target>:9090/`
+
+**Cloud instance metadata exposure (IMDS):**
+- Test whether the metadata endpoint is reachable through application
+  requests: AWS `http://169.254.169.254/latest/meta-data/`, GCP
+  `http://metadata.google.internal/computeMetadata/v1/`, Azure
+  `http://169.254.169.254/metadata/instance?api-version=2021-02-01`
+- Check for SSRF vectors that could reach the metadata endpoint
+- Flag IMDSv1 as Critical - IMDSv2 (token-based) should be enforced
+- Note: SSRF testing methodology is in rt-ssrf; this covers external
+  indicators of metadata exposure
 
 **Serverless and edge configuration:**
 - Netlify `_headers`, `_redirects` files (may reveal routing logic)

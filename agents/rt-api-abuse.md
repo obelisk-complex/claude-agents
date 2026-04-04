@@ -72,6 +72,12 @@ Test whether APIs accept fields beyond those in the documented schema:
 - Type juggling: send `{"active": "true"}` vs `{"active": true}` vs
   `{"active": 1}`
 - Test `null` injection: `{"email": null}` — does it bypass validation?
+- **Content-type confusion:** If the API expects `application/json`, test
+  with `application/x-www-form-urlencoded`, `text/plain`, `application/xml`,
+  and `multipart/form-data`. Schema validation may only apply to the
+  documented content type. Also test JSON with a `text/plain` Content-Type
+  header - many frameworks parse it as JSON but skip JSON-specific
+  validation middleware.
 
 ### 4. Rate Limiting and Resource Exhaustion
 
@@ -107,6 +113,15 @@ If a GraphQL endpoint exists:
 - **Mutation abuse:** Can mutations bypass REST-level rate limits?
 - **Alias-based batching:** Use aliases to repeat the same query N times:
   `{ a1: user(id:1){...} a2: user(id:2){...} ... }`
+- **Subscription abuse (WebSocket):** If the GraphQL endpoint supports
+  subscriptions via WebSocket, test whether HTTP-level security controls
+  apply. Send deeply nested subscription queries and verify depth limits
+  are enforced. Test authentication on the `connection_init` message with
+  no credentials or expired tokens. Test concurrent subscription limits.
+- **Persisted query enforcement:** Test whether the server accepts only
+  pre-registered queries or also ad-hoc queries. If persisted queries are
+  advertised, send an arbitrary query without a hash/ID. If accepted, the
+  allowlist is not enforced. Test APQ registration for arbitrary queries.
 
 ### 6. API Authentication Edge Cases
 
@@ -119,6 +134,17 @@ Test API-specific auth weaknesses:
   shared secret) or trusted blindly?
 - **Bearer vs query string:** Can `?token=...` replace `Authorization:
   Bearer ...`? Query strings get logged.
+
+### 7. Unsafe Consumption of Third-Party APIs
+
+Identify every third-party API the target integrates with (payment,
+SSO, maps, shipping, analytics). For each:
+- Does the target validate responses, or trust them implicitly?
+- Does the target follow redirects from third-party responses?
+- Is data from third parties sanitized before storage or rendering?
+- Can webhook payloads be spoofed if signature verification is absent?
+- Does the target enforce timeouts and size limits on third-party
+  responses?
 
 ## What Counts as a Finding
 

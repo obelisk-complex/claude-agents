@@ -28,13 +28,25 @@ pr-reviewer.
 1. **Security vulnerabilities** — injection (SQL, command, XSS), auth bypass,
    insecure deserialization, hardcoded secrets/credentials, path traversal,
    SSRF, broken access control
+   - **Regex safety** - regular expressions on user input with catastrophic
+     backtracking (ReDoS): nested quantifiers (`(a+)+`), overlapping
+     alternation. Prefer linear-time engines (RE2, Rust `regex`) for untrusted input
+   - **Unsafe block soundness** (Rust) - for each `unsafe` block, verify the
+     SAFETY comment documents invariants. Check safe wrapper APIs cannot
+     violate those invariants. Check FFI boundaries for incorrect types,
+     missing null checks, lifetime mismatches
 2. **Data safety** — unvalidated input at system boundaries, missing
    sanitization, PII exposure in logs, unsafe defaults
-3. **Concurrency & resource issues** — race conditions, deadlocks, resource
+3. **Cryptographic misuse** - deprecated algorithms (MD5, SHA-1 for security,
+   DES, RC4), insufficient key lengths (<256-bit AES, <2048-bit RSA), ECB
+   mode, hardcoded/reused IVs/nonces, missing authenticated encryption (use
+   AES-GCM or ChaCha20-Poly1305), custom crypto implementations, insecure
+   RNG for security purposes
+4. **Concurrency & resource issues** — race conditions, deadlocks, resource
    leaks (file handles, connections), unbounded allocations
-4. **Logic errors** — off-by-one, null/undefined dereference, unreachable
+5. **Logic errors** — off-by-one, null/undefined dereference, unreachable
    code, incorrect error handling (swallowed errors, wrong catch scope)
-5. **Dependency risk** — known CVEs in direct imports (defer deep supply chain analysis to
+6. **Dependency risk** — known CVEs in direct imports (defer deep supply chain analysis to
    dependency-auditor), unmaintained packages, overly broad
    permissions
 

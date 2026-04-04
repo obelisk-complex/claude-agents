@@ -80,12 +80,26 @@ coverage metrics, use coverage-analyst.
    - Add known-problematic patterns: null bytes in strings, deeply nested
      structures, integer overflow values, extremely long lines, mixed
      encodings
+   - **Create fuzzing dictionaries** - token files guiding the fuzzer:
+     - Protocol keywords ("GET", "POST", "Content-Type" for HTTP)
+     - File format magic bytes ("\x89PNG", "RIFF", "GIF89a")
+     - Field names, delimiters, structural tokens from the format spec
+     - Common error values ("NaN", "Infinity", "\x00", "null")
+     - Pass via `-dict=dict.txt` (libFuzzer/cargo-fuzz). Google maintains
+       curated dictionaries at github.com/google/fuzzing/dictionaries.
 5. **Run fuzz campaigns** - Execute short fuzzing runs (30-120 seconds
    per target) to validate the harness works and catch low-hanging bugs:
    - Monitor for crashes, panics, timeouts, and OOM
    - Extended fuzzing (hours/days) should be done outside this agent in
      CI. The agent focuses on setup, short validation runs, and crash
      triage.
+   - **Manage the corpus** - after a campaign, minimize to remove redundant
+     inputs: `cargo fuzz cmin <target>` or libFuzzer `-merge=1` for dedup,
+     AFL++ `afl-cmin`. Commit minimized corpus so CI starts from a strong
+     baseline.
+   - **Configure resource limits:** Memory: `-rss_limit_mb=2048` (libFuzzer)
+     or `ASAN_OPTIONS=hard_rss_limit_mb=2048`. Per-input timeout:
+     `-timeout=30`. Inputs exceeding these are findings (resource bugs).
 6. **Triage crashes** - For each crash found:
    - Minimize the crashing input (use the fuzzer's minimize feature if
      available)

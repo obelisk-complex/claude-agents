@@ -30,6 +30,10 @@ For security issues found during profiling, use code-auditor.
    - Go: `pprof`, `benchstat`
    - Memory: `valgrind --tool=massif`, `heaptrack`, `DHAT`
    - General: `time`, `hyperfine`, `/usr/bin/time -v`
+   - Async: `tokio-console`, `dial9-tokio-telemetry` (Rust/Tokio);
+     `clinic bubbleprof` (Node.js)
+   - I/O: `iotop`, `blktrace`, `strace -e trace=read,write -T` (Linux);
+     `fs_usage` (macOS); OpenTelemetry spans for network timing
 
 2. **Identify the bottleneck** — Read the code along the hot path. Look for:
    - Unnecessary allocations (especially in loops)
@@ -37,6 +41,10 @@ For security issues found during profiling, use code-auditor.
    - Algorithmic complexity issues (O(n^2) where O(n) or O(n log n) is possible)
    - Lock contention and excessive synchronization
    - Missing parallelism where work is embarrassingly parallel
+   - Async runtime starvation from blocking calls on executor threads
+     (use `tokio-console` for task introspection; file I/O, DNS, or
+     synchronous DB calls on async threads cause P99 spikes invisible
+     to CPU profilers)
 
 3. **Research known issues** — Use WebSearch to check for known performance
    issues, optimisation guides, or benchmarks for the specific libraries and
@@ -47,6 +55,11 @@ For security issues found during profiling, use code-auditor.
 
 5. **Verify improvement** — Run benchmarks before and after. Report actual
    numbers, not "should be faster."
+
+6. **Prevent regression** - recommend CI integration for benchmarks. Use
+   `criterion` baseline comparisons, `bencher.dev`, or
+   `github-action-benchmark` to track benchmarks across commits. Set a
+   regression threshold (e.g., >3% slowdown fails the PR).
 
 ## Rules
 

@@ -76,6 +76,14 @@ For JWT-based authentication:
 - Is `jku`/`jwk` header injection possible?
 - Can the `sub` or `role` claim be tampered with?
 - Is the signing key weak or guessable? (Check against common secrets)
+- **`kid` header injection:** If the JWT contains a `kid` claim, test
+  path traversal (`"kid": "../../dev/null"`) and sign with an empty string.
+  Test SQL injection (`"kid": "' UNION SELECT 'attacker-key'--"`) if keys
+  are fetched from a database. Test `kid` pointing to a URL you control.
+- **JWE-wrapped unsigned token:** If the server accepts JWE (encrypted
+  JWT), test wrapping an unsigned PlainJWT (alg=none) inside a JWE
+  constructed with the server's public key. If accepted, signature
+  verification is skipped after decryption (CVE-2026-29000 pattern).
 
 For cookie-based sessions:
 - Is the session ID sufficiently random? (Length, entropy, predictability)
@@ -93,6 +101,11 @@ Test the password reset mechanism:
 - Can the token be brute-forced (short numeric codes)?
 - Does using the reset link invalidate previous sessions?
 - Is there rate limiting on reset requests?
+- **Password reset poisoning:** Submit a reset request with a modified
+  `Host` header (e.g., `Host: attacker.com`). If the app uses the Host
+  header to construct the reset URL, the victim receives a link to the
+  attacker's domain, leaking the token. Also test `X-Forwarded-Host`,
+  `X-Host`, and `X-Original-URL` headers.
 
 ### 6. OAuth/SSO Weaknesses
 
@@ -104,6 +117,11 @@ If OAuth or SSO is used:
 - Is the token exchange done server-side (not client-side with exposed
   client secret)?
 - Can account linking be abused to take over existing accounts?
+- **Device code flow abuse:** If the app supports OAuth 2.0 Device
+  Authorization Grant (`/devicecode` endpoint), test: can codes be
+  generated without authentication? Do codes have appropriate expiry? Is
+  there rate limiting? Assess phishing potential: an attacker generates a
+  code and tricks a victim into entering it on the legitimate IdP page.
 
 ### 7. Authentication Bypass Vectors
 
@@ -128,6 +146,12 @@ If the target uses SAML:
   algorithms (SHA-1, MD5) or `alg: none`
 - **XML signature exclusion:** Test if unsigned assertions are accepted
   when signature validation is optional
+- **Parser differential attacks (SAMLStorm):** Test whether the XML
+  parser validating the signature differs from the one extracting claims.
+  Insert a second unsigned assertion alongside the signed one. Test XML
+  comment injection within element names (e.g., `<NameID>admin<!--
+  -->@evil.com</NameID>`) to exploit canonicalization differences. Use
+  SAMLRaider (Burp extension) for automated wrapping variant testing.
 
 ## What Counts as a Finding
 

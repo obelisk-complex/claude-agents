@@ -31,10 +31,16 @@ rt-cloud-infra. For TLS and header auditing, delegate to rt-tls-headers.
 
 ### 1. Subdomain Enumeration
 
+- **Wildcard detection:** Before enumerating, resolve a random non-existent
+  subdomain (e.g., `xyzrandomtest123.target.com`). If it resolves, wildcard
+  DNS is active. Record the wildcard IP(s) and filter from all results.
 - Use WebSearch to find subdomains via search dorking:
   `site:*.target.com`, `inurl:target.com`, certificate transparency logs
 - Fetch `https://crt.sh/?q=%.target.com&output=json` via WebFetch for
   CT log subdomain discovery
+- Query passive DNS aggregation services for historical resolutions:
+  SecurityTrails, VirusTotal, AlienVault OTX, ThreatCrowd. Passive DNS
+  reveals subdomains that never appeared in CT logs.
 - Check for common subdomains: `api`, `staging`, `dev`, `admin`, `mail`,
   `vpn`, `git`, `ci`, `cdn`, `internal`, `test`, `beta`, `dashboard`,
   `grafana`, `kibana`, `jenkins`, `sentry`
@@ -74,6 +80,11 @@ For each discovered host, fetch the root page and key paths via WebFetch:
   - NS records (DNS provider identification)
 - Check if the domain's DNS has DNSSEC enabled
 - Identify hosting provider from IP ranges (AWS, GCP, Azure, etc.)
+- **ASN and IP range enumeration:** Identify the target's ASN(s) via WHOIS.
+  Query BGP looking glass services for all IP prefixes under those ASNs.
+  Reverse-lookup each CIDR block for hostnames via PTR records. Cross-
+  reference discovered IPs against known subdomains to find assets with no
+  DNS relationship to the primary domain.
 
 ### 5. Deployment Topology Fingerprinting
 

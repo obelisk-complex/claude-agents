@@ -87,6 +87,14 @@ across all CSS, SCSS, and component files.
 - Flag clusters of similar-but-not-identical values (e.g., 14px, 15px, 16px
   used interchangeably) as drift.
 
+**Responsive value audit:**
+- Extract spacing/typography values within `@media` and `@container`
+  queries separately. Do they follow the same scale as base values?
+- Grep for responsive Tailwind prefixes with arbitrary values
+  (`sm:p-[`, `md:p-[`). Breakpoint-specific arbitrary values signal drift.
+- Check `container-type:` definitions and audit values within `@container`
+  rules against the global token scale.
+
 ### 2. Typography Sprawl
 
 Inventory every unique font-size, font-weight, line-height, letter-spacing,
@@ -147,6 +155,13 @@ is used at opacity below 90%, flag as **Medium** (cross-browser colour
 shift risk). Recommend replacing with a true neutral (`#000` or `#fff`
 at equivalent opacity) for darkening/lightening overlays, or using
 `oklch()` / `oklab()` for perceptually uniform blending.
+
+**Dark mode colour audit:**
+- Grep for `dark:bg-`, `dark:text-`, `dark:border-` and
+  `prefers-color-scheme: dark` blocks. Inventory dark-mode colours separately.
+- Apply same thresholds and near-duplicate detection to dark palette.
+- Check dark mode uses same token system (CSS variables that switch) rather
+  than hardcoded overrides.
 
 ### 4. Dead UI and Visual Cruft
 

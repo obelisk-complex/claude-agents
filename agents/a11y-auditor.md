@@ -97,6 +97,19 @@ Grep the codebase for common violation patterns:
 - Multi-step forms re-requesting previously entered information (name,
   address, email) without auto-population or selection (3.3.7)
 
+**Mobile and pointer accessibility:**
+- `user-scalable=no` or `maximum-scale=1` in viewport meta - blocks zoom (1.4.4)
+- Content locked to orientation via CSS or `screen.orientation.lock()` (1.3.4)
+- Multipoint gestures without single-pointer alternative (2.5.1)
+- Shake/tilt/device-motion without button alternative (2.5.4)
+- Content requiring horizontal scrolling at 320px viewport (1.4.10 Reflow)
+
+**Seizure and physical reaction risk (2.3.1, Level A):**
+- CSS animations with rapid alternation at intervals suggesting >3Hz
+- `animation-duration` under 333ms (could produce 3+ cycles/sec)
+- Video without photosensitivity pre-screening
+- Saturated red flashing (R/(R+G+B) >= 0.8) is especially dangerous
+
 ### 2. Contrast Computation (MANDATORY)
 
 This is not optional. Estimating contrast ratios by eye or by
@@ -200,6 +213,14 @@ Fetch the page via WebFetch and analyse the rendered HTML:
 - Islands/hydration boundaries breaking keyboard focus
 - Missing `lang` on HTML element
 - Client-side JS adding interactive elements without ARIA
+
+**SPA route change verification (all frameworks):**
+- After client-side navigation, does focus move to main content or heading?
+  Grep for `focus()` calls in route-change handlers.
+- Is there an aria-live region announcing the new page title?
+- Check `document.title` updates on route change.
+- Verify skip-link target updates after navigation.
+- Verify back/forward restores scroll position and focus.
 
 **Other frameworks (Angular, Svelte, etc.):**
 Apply the same principles: check for focus management on client-side

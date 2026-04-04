@@ -67,11 +67,24 @@ For each SSRF vector, test whether internal targets are reachable:
 - DigitalOcean: `http://169.254.169.254/metadata/v1/`
 - AWS IMDSv2: Note that `PUT` token fetch may block simple SSRF but not
   all configurations enforce IMDSv2
+- **IMDSv2 bypass:** If the SSRF vector allows controlling HTTP method and
+  headers, attempt `PUT http://169.254.169.254/latest/api/token` with
+  `X-aws-ec2-metadata-token-ttl-seconds: 21600`. Use returned token in
+  subsequent requests. Test redirect-based bypass via 302 from attacker
+  server to the PUT endpoint.
+- **Azure managed identity:** Test `http://169.254.169.254/metadata/
+  identity/oauth2/token?api-version=2018-02-01&resource=https://
+  management.azure.com/` with `Metadata: true` header to steal OAuth tokens
 
 **Private network ranges:**
 - `http://10.0.0.1/`, `http://172.16.0.1/`, `http://192.168.1.1/`
 - Internal service discovery: `http://consul:8500/`, `http://vault:8200/`,
   `http://kubernetes.default.svc/`
+- **Container/Kubernetes endpoints:** `http://127.0.0.1:10250/` (kubelet),
+  `http://127.0.0.1:2379/` (etcd), `http://127.0.0.1:15000/` (Istio/Envoy
+  admin), `http://127.0.0.1:4191/` (Linkerd). Pod service account token at
+  `/var/run/secrets/kubernetes.io/serviceaccount/token` may be accessible
+  via `file://`. Test Kubernetes API at `https://kubernetes.default.svc:443/`
 
 ### 3. Filter Bypass Techniques
 
@@ -87,11 +100,13 @@ If basic URLs are blocked, test bypass vectors:
 - Hex: `http://0x7f.0.0.1/`, `http://0x7f000001/`
 - Mixed notation: `http://127.0.0x0.1/`
 
-**DNS rebinding:**
-- Use a domain that resolves to `127.0.0.1` (e.g., `localhost.nip.io`,
-  `spoofed.burpcollaborator.net`)
-- If the server validates the hostname but fetches after DNS resolution,
-  a rebinding attack can redirect to internal IPs
+**DNS rebinding (TOCTOU bypass):**
+- Many SSRF filters validate the
+  resolved IP before fetching. If validation and fetch are separate DNS
+  lookups, rebinding succeeds. Set up a domain that alternates between a
+  safe IP and 169.254.169.254 using rebinder.cmpxchg8b.com or 1u.ms.
+  Submit as the SSRF target. Repeat 5-20 times (probabilistic). If the
+  app caches DNS, test whether TTL expiry enables the attack.
 
 **Redirect-based bypass:**
 - Host an open redirect on an allowed domain to bounce to internal targets

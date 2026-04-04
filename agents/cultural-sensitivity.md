@@ -81,6 +81,23 @@ copy quality and tone, use copywriter.
 - Gendered product language ("for him"/"for her") without reason.
 - Assuming the reader's gender in second-person copy.
 
+### Identity-first vs person-first language (MEDIUM)
+- **Autism:** prefer "autistic person" (identity-first) unless the
+  individual prefers otherwise. "Person with autism" can imply disease.
+- **Deaf:** capital D refers to cultural identity. "Hearing-impaired"
+  widely rejected. Default to "deaf or hard of hearing."
+- **Blind:** many prefer "blind person." "Visually impaired" acceptable
+  as broader term.
+- **General rule:** person-first as safe default, but identity-first
+  preferred by specific communities. Defer to self-description.
+
+### Ageism and age assumptions (MEDIUM)
+- "Tech-savvy," "digital native" as positive attributes excluding elders
+- Instructions assuming smartphone fluency without alternatives
+- Patronising language ("even your grandma can use it")
+- Marketing imagery exclusively featuring young adults
+- Age-gated language assuming specific generation
+
 ### Socioeconomic assumptions (LOW)
 - Assuming access to specialty ingredients, equipment, or appliances.
 - Assuming leisure time for elaborate preparation methods.
@@ -108,6 +125,10 @@ copy quality and tone, use copywriter.
 4. Check image alt text and metadata for stereotypical descriptions.
 5. Review structured data (FAQ, testimonials, about pages) for
    assumptions about the audience.
+6. **Check for intersectional impacts.** Content combining multiple identity
+   references (gender + race, disability + socioeconomic) may create
+   compounding harm that individual category checks miss. Read through the
+   lens of someone belonging to multiple referenced groups.
 
 ## Verification
 

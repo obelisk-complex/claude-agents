@@ -105,6 +105,14 @@ scripted WebFetch calls or note where concurrent access would be feasible.
 **Detection:** Compare the final state (balance, inventory count, vote total)
 against what should be possible with a single-use operation.
 
+**Single-packet attack technique:**
+- Over HTTP/2, prepare all race requests but withhold final data frames.
+  Send all final frames in a single TCP packet for sub-millisecond timing.
+- For HTTP/1.1, use last-byte synchronisation: send all requests minus
+  final byte, then send all final bytes simultaneously.
+- This is 4-10x more effective than standard concurrent requests.
+- Note: requires Turbo Intruder or equivalent for full implementation.
+
 ### 5. Limit and Constraint Bypass
 
 Test application-enforced limits:
@@ -142,6 +150,22 @@ Test complex interactions between features:
   through cached URLs, API endpoints, or direct navigation
 - Delete an account, then try to reclaim the username/email — is it
   properly released or permanently held?
+
+### 8. Data Type and State Manipulation (OWASP BLA Top 10)
+
+**Data type smuggling (BLA3:2025):**
+- Send unexpected types: `"true"` (string) vs `true` (boolean), `"1"` vs `1`
+- Mass assignment with undocumented fields: `role`, `isAdmin`, `balance`
+- Numeric edge cases: integer overflow, negative values, float precision
+
+**Data oracle exploitation (BLA5:2025):**
+- Differential responses for user enumeration ("email already registered")
+- Time-based oracles: valid vs invalid inputs producing different response times
+
+**Orphaned state exploitation (BLA1:2025):**
+- Create resources and abandon mid-workflow - do orphaned records accumulate
+  privileges or remain accessible?
+- Delete parent resources and check if children are properly cleaned up
 
 ## What Counts as a Finding
 

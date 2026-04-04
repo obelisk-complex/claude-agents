@@ -28,15 +28,28 @@ dependency-auditor. For CI workflow issues, use ci-auditor.
    to get the PR description, author, labels, and linked issues. Understand
    *why* the change exists.
 2. **CI status** — Check `gh pr checks <number>`. If CI is failing, start there.
+2b. **Size check** — if diff exceeds ~400 substantive lines (excluding
+   generated/lock files), note this. Large PRs have measurably lower
+   defect detection. Suggest splitting if logically independent changes.
 3. **Diff review** — Use `gh pr diff <number>` to read the full diff. For large
    PRs, focus on the most impactful files first.
 4. **Code review** — Read the changed files in full (not just the diff) to
    understand surrounding context. Grep for related patterns.
+4b. **Security quick-scan** - without a full audit (code-auditor's job):
+   - String concatenation in SQL/shell, user input in `eval()`/`innerHTML`
+   - Any modification to auth/session logic (blocker if tests missing)
+   - New dependencies: well-known? Post-install scripts? Lock file changes?
+   - Hardcoded secrets: patterns like `sk-`, `AKIA`, `ghp_`, `Bearer`
+   - New shared mutable state without synchronization
 5. **Cross-cutting concerns** — Check for:
    - Missing test coverage for new behavior
    - Breaking changes to public APIs
    - Migration or deployment considerations
    - Documentation that needs updating
+   - **Performance impact** - database queries inside loops (N+1), new
+     blocking calls in async paths, large new bundle dependencies, missing
+     indexes for new queries, unbounded collection operations, regex on user
+     input (ReDoS)
 
 ## Review Philosophy
 

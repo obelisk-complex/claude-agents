@@ -89,6 +89,18 @@ touch media files).
 - Linux: Wayland vs X11 feature gaps, GTK version differences,
   WebKitGTK EGL/GPU issues, XDG paths, D-Bus availability,
   systemd vs non-systemd, AppImage/Flatpak/Snap constraints
+  - GPU renderer compatibility: test WebKitGTK hardware compositing with
+    NVIDIA proprietary drivers on Wayland (DMA-BUF crashes), Intel
+    integrated graphics, and software rendering fallback. Check for
+    WEBKIT_DISABLE_DMABUF_RENDERER and WEBKIT_DISABLE_COMPOSITING_MODE
+    environment variables.
+  - **Sandbox restrictions in packaged formats:**
+    - Flatpak: filesystem via portals only (file dialogs must use XDG
+      Desktop Portal); /tmp is per-app; D-Bus requires portal or explicit
+      permission; spawned subprocesses inherit sandbox
+    - Snap: AppArmor confinement restricts filesystem, network, device
+    - AppImage: no sandbox but bundles own glibc/libraries; test on
+      distros newer and older than build target
 - Windows: UAC elevation, SmartScreen, Defender interference,
   long path support, registry access, service mode, Windows 10 vs 11
 - macOS: Gatekeeper, notarisation, App Sandbox, Apple Silicon vs Intel,
@@ -118,6 +130,17 @@ touch media files).
 - Mutex/lock poisoning after panics
 - Async runtime starvation from blocking calls
 - Deadlocks from lock ordering differences
+
+### 8. Accessibility compatibility (when applicable)
+- Screen reader interoperability: correct accessibility tree on each
+  platform? (MSAA/UIA on Windows, AT-SPI on Linux, NSAccessibility on macOS)
+- Keyboard navigation: all interactive elements reachable without mouse?
+- High contrast and forced colors: UI usable in Windows High Contrast,
+  macOS Increase Contrast, GTK high-contrast themes?
+- Reduced motion: respects `prefers-reduced-motion`?
+- WebKitGTK-specific: AT-SPI correctly wired in WebView? (inconsistent
+  across distros and WebKitGTK versions)
+- Skip if CLI tool or library with no GUI
 
 ## How to Work
 

@@ -66,6 +66,21 @@ character, confirmed intentional patterns, and recurring AI tells.
   accent = highlights, with no surprising or mood-based colour choices.
 - **No visual accidents** - nothing off-grid, no unexpected sizing, no
   element breaking out of its container.
+- **Default typography stack** - Inter, system-ui, or framework default with
+  no customisation is a strong AI tell. Check if heading and body fonts are
+  deliberately different families. Check if letter-spacing and line-height
+  differ from framework defaults.
+- **No font loading** - absence of `@font-face`, Google Fonts import, or
+  custom fonts suggests typography was never a conscious decision.
+
+### Image and visual content tells (HIGH)
+- **AI-generated hero images** - unnaturally smooth gradients, too-perfect
+  lighting, "stock AI" aesthetic. Check image metadata for AI indicators.
+- **AI team/founder photos** - symmetric faces, inconsistent ears, smooth
+  skin, warped backgrounds.
+- **Generic AI illustrations** - flat vector in Humaaans/unDraw style.
+- **No photography at all** - only illustrations/abstract visuals to avoid
+  need for real imagery. Combined with other tells, suggests no real product.
 
 ### Component tells (MEDIUM)
 - **Identical card structures** - every card same aspect ratio, same padding,

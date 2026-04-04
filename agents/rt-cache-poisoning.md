@@ -92,6 +92,16 @@ Some caches strip certain query parameters from the cache key:
 - **Duplicate parameters:** `?x=safe&x=malicious` -- does the cache key
   on the first value but the backend use the last?
 
+**Fat GET request poisoning:** Send GET with a body containing parameters
+mirroring query params. If the backend processes the body but the cache
+keys only on URL, the cached response contains the attacker's value. Test
+with `application/x-www-form-urlencoded` and `application/json` bodies.
+
+**Parameter cloaking via delimiter differences:** Test whether cache and
+backend use different delimiters. `?safe=1;evil=payload` - if the cache
+treats the string as one param but the backend splits on `;`, the evil
+param is invisible to the cache key. Test `;`, `|`, and nested `?`.
+
 **Detection method:** Same as unkeyed headers -- use cache-busters and
 compare cached vs fresh responses.
 
@@ -161,7 +171,24 @@ Use WebSearch to look up CDN-specific cache poisoning research for the
 identified CDN (e.g., "Cloudflare cache poisoning", "CloudFront cache
 key normalisation").
 
-### 7. Impact Assessment
+### 7. Cache Poisoned Denial of Service (CPDoS)
+
+Cache an error page to deny service to all users:
+
+**HTTP Header Oversize (HHO):** Send a request with an oversized header
+(10KB+ Cookie) that exceeds the origin's limit but stays within the
+cache's limit. The origin returns 400/431, cached and served to all users.
+
+**HTTP Meta Character (HMC):** Include control characters in headers that
+the cache forwards but the origin rejects.
+
+**HTTP Method Override (HMO):** `GET /page` with
+`X-HTTP-Method-Override: POST`. Cache keys on GET, origin processes as POST.
+
+Detection: cache-buster first, send attack, request without attack. If
+error is served from cache, CPDoS confirmed.
+
+### 8. Impact Assessment
 
 For each confirmed or likely cache poisoning vector:
 - **What content can be injected?** JavaScript (XSS at cache scale),

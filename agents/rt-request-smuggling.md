@@ -52,6 +52,11 @@ Before testing smuggling, map the proxy chain:
   `Connection: keep-alive` and observe differences in response headers
   and timing. Persistent connections are a prerequisite for smuggling.
 
+**Microservice chain analysis:** Modern architectures may have 5+ layers:
+CDN - load balancer - ingress controller - service mesh sidecar - app.
+Each is a potential disagreement point. Test smuggling between each
+adjacent pair, not just front-end to backend.
+
 ### 2. CL/TE Desynchronisation (HTTP/1.1)
 
 The classic smuggling vector: the front-end uses `Content-Length` to
@@ -84,6 +89,11 @@ determine request boundaries, while the back-end uses
 - `Transfer-Encoding: chunked` with a non-standard line ending
 - `Transfer-encoding: chunked` (capitalisation variance)
 - `X:ignored\r\nTransfer-Encoding: chunked` (header injection via value)
+- `0;\r\n\r\n` (bare semicolon chunk extension with no name/value)
+- `0;ext\r\n\r\n` (valid chunk extension some parsers strip)
+- `0 \r\n` (trailing space after chunk size)
+- These techniques from Imperva (2025) and Kettle's DEF CON 33 research
+  bypass defenses that normalise standard obfuscation variants
 
 **What to report:** Flag the proxy chain configuration, which header
 processing style each layer uses, and which obfuscation (if any) causes
@@ -131,7 +141,19 @@ do not correctly validate the upgrade response, enabling smuggling.
 - Flag any configuration where WebSocket is supported but upgrade
   validation appears inconsistent.
 
-### 5. Response Queue Poisoning
+### 5. CL.0 and Client-Side Desync
+
+**CL.0 desync:** Some endpoints ignore Content-Length entirely. The body
+is left on the socket as the next request. Test by sending POST with body
+to endpoints that don't accept POST: static files, redirects, endpoints
+that return before reading the body. CL.0 affects single-server targets.
+
+**Client-side desync (CSD):** Exploits CL.0 via the victim's browser.
+Malicious JavaScript sends a fetch() with body to the vulnerable endpoint.
+The browser connection is desynchronized and subsequent requests are
+poisoned. Enables attacks against single-server sites and intranet services.
+
+### 6. Response Queue Poisoning
 
 If smuggling is possible, the response queue can be desynchronised:
 - Inject a smuggled request that produces a response (e.g., a redirect).
@@ -146,7 +168,7 @@ response queue poisoning is feasible:
 - Can a smuggled request target an endpoint that reflects input in the
   response (enabling XSS delivery to arbitrary users)?
 
-### 6. Connection State Attacks
+### 7. Connection State Attacks
 
 Beyond classical smuggling, test for connection state manipulation:
 - **Request tunnelling:** Can a smuggled request access internal-only
@@ -160,6 +182,16 @@ Beyond classical smuggling, test for connection state manipulation:
 - **Cache poisoning via smuggling:** Can a smuggled request poison the
   cache for other users? For cache-specific analysis, delegate to
   **rt-cache-poisoning**.
+
+### 8. HTTP/3 (QUIC) Considerations
+
+HTTP/3 uses QUIC, eliminating CL/TE desync by design. However:
+- **H3-to-H1.1 downgrade:** If edge accepts HTTP/3 but proxies to
+  HTTP/1.1 backend, H2-style smuggling applies. Detect via `Alt-Svc: h3`.
+- **QUIC implementation bugs:** CVE-2025-54939 (QUIC-LEAK) showed
+  pre-handshake issues. QUIC parsers are less mature.
+- **Connection migration confusion:** QUIC allows IP migration, confusing
+  load balancers and rate limiters.
 
 ## What Counts as a Finding
 

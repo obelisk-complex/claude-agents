@@ -55,6 +55,11 @@ For each endpoint that accepts a resource identifier:
 - Short alphanumeric IDs — brute-forceable
 - UUIDs — not enumerable but may leak in other responses, referrer headers,
   or URL parameters
+  UUID v4 is not enumerable, but verify the version. UUID v1 (timestamp-
+  based) is predictable: extract the timestamp, determine the generation
+  window from API responses (createdAt fields), and brute-force the
+  remaining clock sequence bits. If the API returns UUID v1, treat the
+  resource as potentially enumerable.
 - Check if the API returns different responses for "not found" vs
   "not authorised" (information leak enabling enumeration)
 
@@ -127,6 +132,23 @@ Test whether authorisation changes are enforced in real time:
 - After a resource is made private, can cached/old URLs still access it?
 - After account deactivation, do API keys continue to function?
 - Test concurrent role changes: what happens during the transition?
+- **Authorization race conditions:** Test whether role changes and
+  privileged actions can race. While one request demotes a user from admin,
+  simultaneously send a second request performing an admin action. If the
+  action succeeds, the authorization check and action are not atomic.
+
+### 8. Property-Level Authorization (BOPLA)
+
+For each object type accessible to multiple roles, compare fields returned:
+- Request the same resource as a regular user and an admin. Does the
+  regular user's response contain fields only the admin should see
+  (internal IDs, cost data, audit metadata, PII of other users)?
+- Test both read (GET response fields) and write (can PUT/PATCH include
+  fields the user should not modify, even if authorized to modify the
+  object itself?)
+- BOPLA is distinct from IDOR (correct object, wrong properties) and from
+  mass assignment (which focuses on creation). Build a property-level
+  access matrix per role.
 
 ## What Counts as a Finding
 

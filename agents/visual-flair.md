@@ -92,6 +92,16 @@ Inventory every interactive state and transition in the codebase.
   well-implemented motion with proper reduced-motion fallbacks is
   the gold standard, not absence of motion.
 
+**Performance reality check:**
+- Before recommending JS-driven animations, check for existing INP issues.
+  Grep for heavy main-thread work: `requestAnimationFrame` chains,
+  `IntersectionObserver` with DOM mutations, `scroll` listeners without
+  passive flag.
+- `backdrop-blur` and `backdrop-saturate` are expensive on mobile GPUs.
+  Flag if used on scrollable content.
+- Prefer CSS-only animations (transform, opacity) on the compositor thread.
+- Note when a recommendation requires performance testing first.
+
 ### 2. Deliberate Visual Breaks
 
 Look for moments where the design intentionally breaks its own rules
@@ -199,6 +209,14 @@ Assess whether spacing creates narrative flow or just prevents overlap.
   the edges? Or is everything constrained to the same max-width?
 - Does the page have a sense of ending? A clear final section
   that feels like a conclusion, not just the last item in a list.
+
+### 7. Color Scheme Personality Parity
+Check whether flair carries across light and dark modes.
+- Grep for `prefers-color-scheme` and `dark:` (Tailwind). If dark mode
+  exists, verify texture, shadow, gradient, and animation choices are
+  adapted, not just color-inverted.
+- Grain/texture overlays may need inverted blend modes in dark mode.
+- If no dark mode support, flag as Opportunity.
 
 ## Framework-Specific Patterns
 

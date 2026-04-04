@@ -54,6 +54,14 @@ coverage metrics, use coverage-analyst.
 - Don't mock what you don't own. Prefer integration tests for external interfaces.
 - If the project has no tests, scaffold a minimal test setup that matches the
   project's language and build system before writing tests.
+- Use property-based testing for functions with wide input domains. Declare
+  invariants (e.g., "encode then decode returns the original") and let the
+  framework generate inputs. Tools: `proptest` (Rust), `hypothesis` (Python),
+  `fast-check` (JS/TS), `rapid` (Go). Complements example-based tests.
+- Flaky tests are bugs in the test suite. When a test is flaky: (1) quarantine
+  into a separate suite so it does not block CI, (2) diagnose the source
+  (timing, shared state, external dependency, timezone), (3) fix and
+  un-quarantine. Never use retries as a permanent fix.
 
 ## Browser Testing with Playwright
 

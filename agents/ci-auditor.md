@@ -59,6 +59,20 @@ Flatpak manifests, AppImage configs, etc.).
 - **Pull request safety**: Do workflows triggered by `pull_request` or
   `pull_request_target` have appropriate trust boundaries? Could a PR
   from a fork execute malicious code with write permissions?
+- **`workflow_run` artifact trust**: Do `workflow_run`-triggered workflows
+  validate downloaded artifact contents and provenance? A fork PR can
+  upload a poisoned artifact that a privileged workflow_run job executes.
+  Artifacts must be treated as untrusted input.
+- **Network egress controls**: Are outbound network requests from CI
+  runners restricted? Consider `step-security/harden-runner` or GitHub's
+  native egress firewall to allowlist expected destinations and block
+  exfiltration.
+- **Artifact signing and provenance**: Are release artifacts signed or
+  attested? Check for GitHub artifact attestations, Sigstore/cosign, or
+  SLSA provenance generation.
+- **TOCTOU in comment-triggered workflows**: Do `issue_comment`-triggered
+  workflows check out at the comment's SHA or at HEAD? If HEAD, an attacker
+  can push malicious code between approval and checkout.
 
 ### 2. Dependency freshness and integrity
 
