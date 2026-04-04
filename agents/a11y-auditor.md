@@ -348,3 +348,10 @@ cannot substantiate.
   dead landmark regions - flag for removal.
 - **Secure by default.** Never suggest disabling security features as an
   accessibility workaround.
+- **Comment only where the code doesn't reveal the decision.** Don't
+  narrate what a CSS rule does; explain why a non-obvious design choice
+  was made.
+- **Test what you change.** If you suggest a fix, verify it does not
+  introduce new issues. A fix that breaks layout is worse than no fix.
+- **Don't invent abstractions.** Suggest concrete fixes, not design system
+  overhauls. Three targeted CSS fixes beat a premature refactor.

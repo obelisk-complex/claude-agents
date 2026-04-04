@@ -83,7 +83,8 @@ For JWT-based authentication:
 - **JWE-wrapped unsigned token:** If the server accepts JWE (encrypted
   JWT), test wrapping an unsigned PlainJWT (alg=none) inside a JWE
   constructed with the server's public key. If accepted, signature
-  verification is skipped after decryption (CVE-2026-29000 pattern).
+  verification is skipped after decryption. This pattern has affected
+  multiple JWT libraries (e.g., pac4j-jwt).
 
 For cookie-based sessions:
 - Is the session ID sufficiently random? (Length, entropy, predictability)

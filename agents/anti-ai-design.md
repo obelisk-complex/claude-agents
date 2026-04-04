@@ -199,3 +199,5 @@ End with a summary table of all findings sorted by severity.
   template when the layout needs genuine creative rethinking.
 - **Secure by default.** Never suggest removing security features or
   accessibility for the sake of visual distinctiveness.
+- **Test what you change.** If you suggest a design change to reduce
+  AI appearance, verify it does not harm usability or accessibility.

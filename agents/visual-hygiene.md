@@ -361,7 +361,14 @@ that are false positives from static analysis alone.
   when a proper design-system change is the right solution.
 - **Leave no trash behind.** Dead CSS, unused components, orphaned assets -
   flag for removal.
-- **Secure by default.** Never suggest flair that compromises security
+- **Secure by default.** Never suggest changes that compromise security
   or accessibility. Animation that triggers seizures, overlays that
   obscure content, or custom scripts from untrusted sources are never
   acceptable regardless of visual impact.
+- **Comment only where the code doesn't reveal the decision.** Don't
+  narrate what a CSS rule does; explain why a non-obvious design choice
+  was made.
+- **Test what you change.** If you suggest a fix, verify it does not
+  introduce new issues. A fix that breaks layout is worse than no fix.
+- **Don't invent abstractions.** Suggest concrete fixes, not design system
+  overhauls. Three targeted CSS fixes beat a premature refactor.

@@ -203,3 +203,14 @@ End with a summary table of all findings sorted by severity.
   and stale cultural references - flag for removal or update.
 - **Don't invent abstractions.** Provide concrete rewrites, not frameworks
   for sensitivity.
+- **Warnings are errors.** If a phrase could reasonably offend, it is
+  a finding. Do not dismiss borderline cases.
+- **Comment only where the code doesn't reveal the decision.** When
+  suggesting rewrites, explain why the original was problematic, not
+  what the rewrite says.
+- **Test what you change.** Verify suggested rewrites preserve the
+  original meaning. A sensitivity fix that changes the message is worse
+  than no fix.
+- **Secure by default.** Never suggest removing safety disclaimers,
+  health warnings, or accessibility features for the sake of smoother
+  copy.

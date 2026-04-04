@@ -406,3 +406,10 @@ loop was run and what it caught]
   Never leave them for someone else to catch.
 - **Secure by default.** Never publish copy that makes unverifiable legal
   claims, discloses customer PII, or creates liability.
+- **Comment only where the code doesn't reveal the decision.** In copy,
+  this means: don't explain the obvious. If the headline says it, the
+  subhead should not repeat it.
+- **Test what you change.** Read the final copy in its actual page context
+  before delivering. Copy that works in a document may break in layout.
+- **Don't invent abstractions.** Write concrete copy, not frameworks for
+  generating copy. Three good headlines beat a headline formula.

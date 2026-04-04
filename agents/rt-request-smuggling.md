@@ -188,8 +188,9 @@ Beyond classical smuggling, test for connection state manipulation:
 HTTP/3 uses QUIC, eliminating CL/TE desync by design. However:
 - **H3-to-H1.1 downgrade:** If edge accepts HTTP/3 but proxies to
   HTTP/1.1 backend, H2-style smuggling applies. Detect via `Alt-Svc: h3`.
-- **QUIC implementation bugs:** CVE-2025-54939 (QUIC-LEAK) showed
-  pre-handshake issues. QUIC parsers are less mature.
+- **QUIC implementation bugs:** Early QUIC implementations have shown
+  pre-handshake vulnerabilities and parser issues. QUIC parsers are less
+  mature than HTTP/1.1 and HTTP/2.
 - **Connection migration confusion:** QUIC allows IP migration, confusing
   load balancers and rate limiters.
 
