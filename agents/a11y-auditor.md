@@ -79,6 +79,11 @@ Grep the codebase for common violation patterns:
 - Hardcoded colour values -- check contrast ratios against background
 - `opacity` used for disabled states (may drop below contrast threshold)
 - Colour as the sole indicator of state (error = red without icon or text)
+- Tailwind opacity modifiers (`text-charcoal/70`, `bg-brand-blue/85`) --
+  these are alpha-composited colours that MUST be resolved to solid
+  equivalents before computing contrast (see Contrast Computation below)
+- Text on coloured backgrounds (`bg-brand-*`, `bg-sand`) -- check every
+  combination, not just text-on-white
 
 **Motion and animation:**
 - CSS animations or transitions without `prefers-reduced-motion` media query
@@ -92,7 +97,76 @@ Grep the codebase for common violation patterns:
 - Multi-step forms re-requesting previously entered information (name,
   address, email) without auto-population or selection (3.3.7)
 
-### 2. Live Page Audit (if URLs are provided)
+### 2. Contrast Computation (MANDATORY)
+
+This is not optional. Estimating contrast ratios by eye or by
+approximation has a documented failure rate. Every contrast claim in
+your report MUST be backed by a computed ratio.
+
+**Step 1: Inventory every text/background pair.**
+Grep for all text colour classes and map each to its background context.
+Common patterns in Tailwind:
+- `text-{colour}/{opacity}` on `bg-{colour}` or `bg-{colour}/{opacity}`
+- `text-white` on `bg-brand-*` sections
+- `text-charcoal/70` on `bg-white` or `bg-sand/*`
+- `placeholder:text-*` on input backgrounds
+
+**Step 2: Resolve alpha-composited colours to solid equivalents.**
+Tailwind `text-charcoal/70` means 70% opacity `#32373c` on whatever
+background is behind it. You MUST alpha-composite before computing
+contrast:
+```
+blended_channel = alpha * foreground + (1 - alpha) * background
+```
+Example: `text-charcoal/70` on white:
+- R: 0.7 * 50 + 0.3 * 255 = 112
+- G: 0.7 * 55 + 0.3 * 255 = 115
+- B: 0.7 * 60 + 0.3 * 255 = 119
+- Blended: #707377
+
+**Step 3: Compute WCAG relative luminance and contrast ratio.**
+Use Bash with Python to compute exact ratios. Do NOT estimate.
+```python
+def srgb_to_linear(c):
+    c = c / 255.0
+    return c / 12.92 if c <= 0.04045 else ((c + 0.055) / 1.055) ** 2.4
+
+def luminance(r, g, b):
+    return 0.2126 * srgb_to_linear(r) + 0.7152 * srgb_to_linear(g) + 0.0722 * srgb_to_linear(b)
+
+def contrast(l1, l2):
+    lighter, darker = max(l1, l2), min(l1, l2)
+    return (lighter + 0.05) / (darker + 0.05)
+```
+
+**Step 4: Check thresholds.**
+- Normal text (< 18pt, or < 14pt bold): 4.5:1 minimum
+- Large text (>= 18pt / 24px, or >= 14pt / 18.67px bold): 3:1 minimum
+- UI components and graphical objects (1.4.11): 3:1 minimum
+
+**Step 5: Identify fundamentally broken palettes.**
+If a background colour cannot achieve 4.5:1 with ANY foreground colour
+for normal-sized text, flag it as a **Critical** design-level issue.
+Compute `contrast(luminance(0,0,0), luminance(*bg))` and
+`contrast(luminance(255,255,255), luminance(*bg))` -- if neither reaches
+4.5:1, the background is inherently inaccessible for normal text.
+
+**Step 6: Self-verify every recommendation.**
+Before reporting a fix (e.g., "change to `text-charcoal/70`"), compute
+the contrast ratio of the recommended value. If your fix does not pass,
+do not recommend it. This step is non-negotiable -- a recommendation
+that fails the same threshold it claims to fix is worse than no
+recommendation at all.
+
+**Include a contrast table in your output:**
+```
+| Text               | Background      | Blended  | Ratio  | Threshold | Result |
+|--------------------|-----------------|----------|--------|-----------|--------|
+| charcoal/70        | white           | #707377  | 4.78:1 | 4.5:1     | PASS   |
+| white              | brand-orange    | -        | 3.97:1 | 4.5:1     | FAIL   |
+```
+
+### 3. Live Page Audit (if URLs are provided)
 
 Fetch the page via WebFetch and analyse the rendered HTML:
 
@@ -108,7 +182,7 @@ Fetch the page via WebFetch and analyse the rendered HTML:
 - Check link text (no "click here", "read more" without context)
 - Check for `prefers-reduced-motion` in embedded styles or linked CSS
 
-### 3. Framework-Specific Checks
+### 4. Framework-Specific Checks
 
 **React / Next.js:**
 - `dangerouslySetInnerHTML` producing inaccessible markup
@@ -137,7 +211,7 @@ For automated browser-based testing (axe-core, keyboard navigation),
 delegate to **qa-agent** with Playwright. For code quality issues surfaced
 during the audit, note them for **code-auditor**.
 
-### 4. Screen Reader Compatibility
+### 5. Screen Reader Compatibility
 
 Assess whether the page would be usable with a screen reader:
 - Are all interactive elements announced with their role and state?
@@ -148,7 +222,7 @@ Assess whether the page would be usable with a screen reader:
   `role="presentation"`, empty `alt`)?
 - Are data tables using `<th>`, `scope`, or `<caption>`?
 
-### 5. Keyboard Navigation Walkthrough
+### 6. Keyboard Navigation Walkthrough
 
 Mentally walk through the page using only Tab, Shift+Tab, Enter, Space,
 Escape, and arrow keys:
@@ -224,3 +298,11 @@ Escape, and arrow keys:
 - **Conformance is a floor, not a ceiling.** WCAG 2.2 AA is the minimum
   legal standard. Genuinely accessible design goes further: clear language,
   generous target sizes, predictable layouts, and respect for user preferences.
+- **Compute, never estimate.** "This looks like it passes" is not a finding.
+  "4.78:1, computed from #707377 on #ffffff" is a finding. Contrast ratios
+  are mathematical facts, not visual impressions. Use the WCAG formula.
+  Every ratio in your report must be reproducible.
+- **Verify your own fixes.** Before recommending a colour change, compute
+  the contrast ratio of the new value. If you recommend `charcoal/60` as
+  a fix for low contrast, and `charcoal/60` itself fails 4.5:1, you have
+  made the report worse than useless. Self-verification is mandatory.

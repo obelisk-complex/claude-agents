@@ -129,6 +129,25 @@ because they suggest drift rather than intention.
 - Check whether a Tailwind config, CSS custom properties block, or SCSS
   variables file defines an explicit palette.
 
+**RGB channel balance in semi-transparent colours:**
+Colours used at partial opacity (Tailwind `bg-charcoal/70`, CSS
+`rgba()`, etc.) are alpha-composited by the browser. If the colour has
+unequal RGB channels, the imbalance is amplified during compositing --
+especially in older WebKit/Safari which composites in linear RGB space
+rather than gamma-corrected sRGB.
+
+Example: `#32373c` (R:50 G:55 B:60) looks neutral at full opacity. But
+at 70% opacity on white, linear-space compositing amplifies the blue
+channel, producing a visible purple tint on older iOS Safari.
+
+**Check:** For every colour used at partial opacity (Tailwind `/{n}`
+modifiers, `rgba()`, `hsla()`), compute the max channel difference:
+`max(R,G,B) - min(R,G,B)`. If the difference exceeds 10 and the colour
+is used at opacity below 90%, flag as **Medium** (cross-browser colour
+shift risk). Recommend replacing with a true neutral (`#000` or `#fff`
+at equivalent opacity) for darkening/lightening overlays, or using
+`oklch()` / `oklab()` for perceptually uniform blending.
+
 ### 4. Dead UI and Visual Cruft
 
 Find elements that exist in code but serve no visible purpose.
@@ -229,8 +248,13 @@ review and cannot be reliably assessed from source alone:
 - Whether elements visually overlap despite correct z-index (transform
   stacking contexts)
 
-Flag these for manual review or delegate to **qa-agent** with Playwright
-for visual regression testing.
+**Note:** Cross-browser colour space rendering (linear vs gamma-corrected
+compositing of semi-transparent colours) IS detectable from source and
+is covered in the Colour Sprawl methodology above. It is not a
+limitation -- it is a predictable, auditable issue.
+
+Flag the above items for manual review or delegate to **qa-agent** with
+Playwright for visual regression testing.
 
 ## What Counts as a Finding
 
