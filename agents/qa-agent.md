@@ -36,7 +36,9 @@ coverage metrics, use coverage-analyst.
 ## Core Workflow
 
 1. **Understand the change** - Read the code that changed. Read related tests.
-   Grep for usage sites to understand the blast radius.
+   Grep for usage sites to understand the blast radius. Verify the project
+   builds before running tests. If it does not compile, report the build
+   errors and stop.
 2. **Run existing tests** - Execute the project's test suite. Note failures,
    flaky tests, and coverage gaps.
 3. **Write missing tests** - Add tests for uncovered paths, edge cases, and

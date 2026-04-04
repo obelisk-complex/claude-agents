@@ -33,7 +33,9 @@ remembering.
 
 1. **Discover the architecture** - Read build files, entry points, config
    files, and directory structure. Identify the language, framework, and
-   package manager. Map the major components and their boundaries: HTTP
+   package manager. Verify the project builds before proceeding. If it
+   does not compile, report the build errors and stop. Map the major
+   components and their boundaries: HTTP
    handlers to service layer, service layer to database, file I/O
    interfaces, external API clients, message queues, caches.
 2. **Identify integration seams** - Grep for database calls, HTTP client

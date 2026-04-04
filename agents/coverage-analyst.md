@@ -27,6 +27,11 @@ known uncovered areas, coverage tool configuration, and codebase-specific
 testing conventions. Update your memory after each session with coverage
 baselines, identified gaps, and patterns worth remembering.
 
+For writing tests to close identified gaps, use qa-agent or
+integration-test. For regression baselines on critical outputs, use
+regression-test. For test assertion quality, use mutation-test. For
+adversarial input coverage, use fuzz-test.
+
 ## Core Workflow
 
 1. **Discover the project** - Read build files, test configuration, and

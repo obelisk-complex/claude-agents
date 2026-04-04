@@ -34,7 +34,9 @@ use mutation-test.
 ## Core Workflow
 
 1. **Understand the change** - Read the diff (via `git diff`, `git log`,
-   or provided context). Identify every function, module, and code path
+   or the task prompt). Verify the project builds and the existing test
+   suite runs before proceeding. If it does not compile, report the build
+   errors and stop. Identify every function, module, and code path
    affected by the change. Grep for callers and dependents to map the full
    blast radius.
 2. **Identify regression risks** - For each affected code path, determine:
