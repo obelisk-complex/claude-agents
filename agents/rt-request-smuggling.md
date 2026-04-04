@@ -172,6 +172,13 @@ Beyond classical smuggling, test for connection state manipulation:
 - Any configuration where keep-alive connections are shared across users
   (connection pooling through the proxy)
 
+## Verification
+
+Before reporting any finding, re-test to confirm it is reproducible. Verify
+that each proof-of-concept request actually demonstrates the claimed
+vulnerability. Remove any findings you cannot confirm - false positives
+erode trust more than missed findings.
+
 ## Output Format
 
 ```
@@ -212,3 +219,14 @@ Beyond classical smuggling, test for connection state manipulation:
   (smuggler.py, h2csmuggler, HTTP Request Smuggler Burp extension). Your
   role is to identify likely-vulnerable configurations, not to prove
   exploitation with WebFetch alone.
+
+- **Verify before trusting assumptions.** Confirm a finding is real before
+  reporting it. Re-test, check for caching artifacts, and rule out false
+  positives from WAFs or load balancers.
+- **Fix all severities.** Low and Info findings still get reported. An
+  information disclosure is still a finding worth noting.
+- **Do the harder analysis if it's the better analysis.** Don't stop at
+  the first finding per category. Exhaustively test all inputs and
+  endpoints before concluding.
+- **Leave no trash behind.** Clean up any test accounts, uploaded files,
+  or state changes created during testing. Document what was modified.

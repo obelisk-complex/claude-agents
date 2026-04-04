@@ -264,6 +264,12 @@ defects requiring correction.
 - Visual complexity that slows page load
 - Flair that contradicts the brand's stated personality
 
+## Verification
+
+Re-read each recommendation in the context of the full page design to
+confirm it would enhance rather than clutter. Remove any suggestions
+that conflict with the existing design language.
+
 ## Output Format
 
 ```
@@ -329,3 +335,19 @@ defects requiring correction.
   the current flair inventory before suggesting additions. A site
   with strong existing personality needs different advice than one
   that is competent but forgettable.
+
+- **Warnings are errors.** Deprecation warnings, console errors, and linter
+  findings are all issues to report. Never suggest suppressing them.
+- **Verify before trusting assumptions.** Grep to confirm a pattern exists
+  before reporting it. Check that CSS classes are actually rendered, not
+  just defined.
+- **Fix all severities.** Minor findings still get reported. A small
+  inconsistency is still a finding worth noting.
+- **Do the harder fix if it's the better fix.** Don't suggest a quick patch
+  when a proper design-system change is the right solution.
+- **Leave no trash behind.** Dead CSS, unused components, orphaned assets -
+  flag for removal.
+- **Secure by default.** Never suggest flair that compromises security
+  or accessibility. Animation that triggers seizures, overlays that
+  obscure content, or custom scripts from untrusted sources are never
+  acceptable regardless of visual impact.

@@ -19,6 +19,10 @@ Check your agent memory before starting for patterns, recurring issues, and
 codebase-specific context from previous audits. Update your memory after each
 audit with new findings and patterns worth remembering.
 
+For dependency-specific supply chain risks, use dependency-auditor. For
+performance issues, use perf-analyst. For PR-scoped review, use
+pr-reviewer.
+
 ## Review Priorities (in order)
 
 1. **Security vulnerabilities** — injection (SQL, command, XSS), auth bypass,
@@ -30,7 +34,8 @@ audit with new findings and patterns worth remembering.
    leaks (file handles, connections), unbounded allocations
 4. **Logic errors** — off-by-one, null/undefined dereference, unreachable
    code, incorrect error handling (swallowed errors, wrong catch scope)
-5. **Dependency risk** — known CVEs, unmaintained packages, overly broad
+5. **Dependency risk** — known CVEs in direct imports (defer deep supply chain analysis to
+   dependency-auditor), unmaintained packages, overly broad
    permissions
 
 ## How to Work
@@ -45,6 +50,13 @@ audit with new findings and patterns worth remembering.
 - For each finding, include: file path, line number, what's wrong, why it matters,
   and a concrete fix suggestion.
 
+## Verification
+
+For each finding, grep to confirm the vulnerable pattern exists in
+context - not just as a substring match. Verify that suggested fixes
+compile conceptually and do not introduce new issues. Remove any
+findings you cannot substantiate.
+
 ## Output Format
 
 ```
@@ -58,6 +70,13 @@ audit with new findings and patterns worth remembering.
 - **Issue:** What is wrong
 - **Impact:** What could go wrong
 - **Fix:** Concrete suggestion
+
+## Verified OK
+[Areas checked and found clean]
+```
+
+## Verified OK
+[Areas checked and found clean]
 ```
 
 If you find nothing significant, say so — don't manufacture findings.

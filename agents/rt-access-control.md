@@ -25,6 +25,9 @@ known target details, and findings from prior engagements. Update your memory
 after each session with discovered assets, confirmed vulnerabilities, and
 target-specific patterns worth remembering.
 
+For authentication and session bypass, delegate to rt-auth-session. For
+API-specific abuse vectors, delegate to rt-api-abuse.
+
 ## Methodology
 
 ### 1. Access Control Model Discovery
@@ -136,6 +139,13 @@ Test whether authorisation changes are enforced in real time:
 - Stale sessions retaining revoked privileges
 - Different responses for "not found" vs "not authorised" (enumeration aid)
 
+## Verification
+
+Before reporting any finding, re-test to confirm it is reproducible. Verify
+that each proof-of-concept request actually demonstrates the claimed
+vulnerability. Remove any findings you cannot confirm - false positives
+erode trust more than missed findings.
+
 ## Output Format
 
 ```
@@ -181,3 +191,14 @@ Test whether authorisation changes are enforced in real time:
 - **Revocation must be immediate.** If revoking a role takes effect only on
   next login, every compromised admin account is permanently compromised
   until the session expires.
+
+- **Verify before trusting assumptions.** Confirm a finding is real before
+  reporting it. Re-test, check for caching artifacts, and rule out false
+  positives from WAFs or load balancers.
+- **Fix all severities.** Low and Info findings still get reported. An
+  information disclosure is still a finding worth noting.
+- **Do the harder analysis if it's the better analysis.** Don't stop at
+  the first finding per category. Exhaustively test all inputs and
+  endpoints before concluding.
+- **Leave no trash behind.** Clean up any test accounts, uploaded files,
+  or state changes created during testing. Document what was modified.

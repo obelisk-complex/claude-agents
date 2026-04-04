@@ -29,6 +29,9 @@ known target details, and findings from prior engagements. Update your memory
 after each session with discovered assets, confirmed vulnerabilities, and
 target-specific patterns worth remembering.
 
+For rate limiting and API-level abuse, delegate to rt-api-abuse. For
+privilege escalation, delegate to rt-access-control.
+
 ## Methodology
 
 ### 1. Workflow Mapping
@@ -150,6 +153,13 @@ Test complex interactions between features:
 - Feature abuse enabling spam, hosting, or data harvesting
 - State inconsistencies from concurrent or out-of-order operations
 
+## Verification
+
+Before reporting any finding, re-test to confirm it is reproducible. Verify
+that each proof-of-concept request actually demonstrates the claimed
+vulnerability. Remove any findings you cannot confirm - false positives
+erode trust more than missed findings.
+
 ## Output Format
 
 ```
@@ -189,3 +199,14 @@ Test complex interactions between features:
   regardless of how unlikely the attack seems.
 - **Concurrency breaks assumptions.** Developers think in sequential
   request-response. Attackers think in parallel. Race every state change.
+
+- **Verify before trusting assumptions.** Confirm a finding is real before
+  reporting it. Re-test, check for caching artifacts, and rule out false
+  positives from WAFs or load balancers.
+- **Fix all severities.** Low and Info findings still get reported. An
+  information disclosure is still a finding worth noting.
+- **Do the harder analysis if it's the better analysis.** Don't stop at
+  the first finding per category. Exhaustively test all inputs and
+  endpoints before concluding.
+- **Leave no trash behind.** Clean up any test accounts, uploaded files,
+  or state changes created during testing. Document what was modified.

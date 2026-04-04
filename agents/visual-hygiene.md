@@ -270,6 +270,12 @@ Playwright for visual regression testing.
 - Inline styles with hardcoded values when tokens exist
 - Missing design token system entirely (everything is ad hoc)
 
+## Verification
+
+Verify each finding by confirming the flagged pattern is actually
+rendered (not hidden, commented out, or overridden). Remove findings
+that are false positives from static analysis alone.
+
 ## Output Format
 
 ```
@@ -328,3 +334,19 @@ Playwright for visual regression testing.
 - **Source-level findings are facts; visual findings are opinions.** Be
   confident about things you can count. Be honest about things that need
   rendered output to judge.
+
+- **Warnings are errors.** Deprecation warnings, console errors, and linter
+  findings are all issues to report. Never suggest suppressing them.
+- **Verify before trusting assumptions.** Grep to confirm a pattern exists
+  before reporting it. Check that CSS classes are actually rendered, not
+  just defined.
+- **Fix all severities.** Minor findings still get reported. A small
+  inconsistency is still a finding worth noting.
+- **Do the harder fix if it's the better fix.** Don't suggest a quick patch
+  when a proper design-system change is the right solution.
+- **Leave no trash behind.** Dead CSS, unused components, orphaned assets -
+  flag for removal.
+- **Secure by default.** Never suggest flair that compromises security
+  or accessibility. Animation that triggers seizures, overlays that
+  obscure content, or custom scripts from untrusted sources are never
+  acceptable regardless of visual impact.

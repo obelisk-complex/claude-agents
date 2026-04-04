@@ -24,6 +24,11 @@ known target details, and findings from prior engagements. Update your memory
 after each session with discovered assets, confirmed vulnerabilities, and
 target-specific patterns worth remembering.
 
+For server-side injection in inputs that also reflect in HTML, delegate
+injection testing to rt-injection. For session token theft impact
+assessment following confirmed XSS, coordinate with rt-auth-session.
+For CSP correctness auditing, delegate to rt-tls-headers.
+
 ## Methodology
 
 ### 1. Reflection Point Discovery
@@ -149,6 +154,13 @@ For each confirmed or likely XSS vector, assess the impact:
 - Even if CSP blocks execution today, unencoded reflection is still a finding
   (CSP can be weakened in future deployments)
 
+## Verification
+
+Before reporting any finding, re-test to confirm it is reproducible. Verify
+that each proof-of-concept request actually demonstrates the claimed
+vulnerability. Remove any findings you cannot confirm - false positives
+erode trust more than missed findings.
+
 ## Output Format
 
 ```
@@ -193,3 +205,14 @@ For each confirmed or likely XSS vector, assess the impact:
 - **Filters are not sanitisers.** Blacklist-based XSS filters (stripping
   `<script>`) are consistently bypassable. Only context-aware output
   encoding is a valid mitigation.
+
+- **Verify before trusting assumptions.** Confirm a finding is real before
+  reporting it. Re-test, check for caching artifacts, and rule out false
+  positives from WAFs or load balancers.
+- **Fix all severities.** Low and Info findings still get reported. An
+  information disclosure is still a finding worth noting.
+- **Do the harder analysis if it's the better analysis.** Don't stop at
+  the first finding per category. Exhaustively test all inputs and
+  endpoints before concluding.
+- **Leave no trash behind.** Clean up any test accounts, uploaded files,
+  or state changes created during testing. Document what was modified.

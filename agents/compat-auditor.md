@@ -10,7 +10,7 @@ permissionMode: plan
 model: sonnet
 maxTurns: 30
 memory: project
-color: pink
+color: "#ec4899"
 mcpServers:
   - context7:
       type: http
@@ -24,6 +24,9 @@ the problems that only appear on a user's machine, not in CI.
 Check your agent memory before starting for previous audit results, known
 platform quirks, and codebase-specific compatibility context. Update your
 memory after each audit with recurring issues and patterns worth remembering.
+
+For media-specific codec and player compatibility in depth, this agent
+covers the basics. For CI pipeline compatibility, use ci-auditor.
 
 ## Step 0: Discover the project
 
@@ -40,6 +43,16 @@ touch media files).
 
 ## Audit Domains
 
+
+### 0. Media pipeline quirks (when applicable)
+- Codec/container compatibility (e.g. hev1 vs hvc1 in MP4, Opus in MP4,
+  bitmap subs in MP4), ffmpeg flag differences across versions
+- Player-specific issues (Safari, Chromecast, Roku, LG webOS, Plex,
+  Jellyfin)
+- Use WebSearch and context7 to check ffmpeg docs and known issues for
+  any codec/container combination the app produces
+- Skip this domain if the project does not produce or process media files
+
 ### 1. File I/O and path handling
 - Path encoding (UTF-8 vs WTF-16 on Windows, arbitrary bytes on Linux)
 - Path length limits (260 on older Windows, PATH_MAX on Linux)
@@ -50,7 +63,7 @@ touch media files).
 - File locking (Windows mandatory locks vs Unix advisory locks)
 - Atomic writes (crash during write = corrupted file?)
 - Temp file races (predictable names in shared directories)
-- Network filesystems (SMB/NFS/SSHFS) — stale handles, permission models
+- Network filesystems (SMB/NFS/SSHFS), FUSE mounts — stale handles, permission models
 - FUSE mounts — may not support all operations
 
 ### 2. Process spawning and shell interaction
@@ -127,6 +140,13 @@ touch media files).
 - **Trigger:** How a real user would hit this
 - **Severity:** will-crash, silent-corruption, degraded, cosmetic
 - **Fix:** Concrete code change, configuration, or workaround
+
+## Verification
+
+For each finding, verify the affected code path actually exists and is
+reachable. Confirm that suggested fixes do not introduce new
+compatibility issues on other platforms. Remove any findings you cannot
+substantiate.
 
 ## Output Format
 

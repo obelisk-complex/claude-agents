@@ -25,6 +25,9 @@ known target details, and findings from prior engagements. Update your memory
 after each session with discovered assets, confirmed vulnerabilities, and
 target-specific patterns worth remembering.
 
+For post-authentication authorization bypass, delegate to
+rt-access-control. For session token theft via XSS, delegate to rt-xss.
+
 ## Methodology
 
 ### 1. Authentication Flow Analysis
@@ -113,6 +116,19 @@ Test for common bypass patterns:
 - Parameter pollution: duplicate `token=` parameters
 - Forced browsing: accessing authenticated resources directly by URL
 
+### 8. SAML-Specific Weaknesses
+
+If the target uses SAML:
+- **Signature wrapping:** Modify the SAML response XML structure while
+  keeping the signature valid (move signed elements, inject unsigned
+  assertions alongside signed ones)
+- **Assertion replay:** Capture a valid SAML assertion and replay it
+  after the session expires or from a different client
+- **Algorithm downgrade:** Test if the IdP accepts weaker signature
+  algorithms (SHA-1, MD5) or `alg: none`
+- **XML signature exclusion:** Test if unsigned assertions are accepted
+  when signature validation is optional
+
 ## What Counts as a Finding
 
 - Username enumeration via differing error responses or timing
@@ -123,6 +139,13 @@ Test for common bypass patterns:
 - OAuth redirect URI manipulation allowing token theft
 - Any endpoint that should require authentication but does not
 - Default credentials that work on any interface
+
+## Verification
+
+Before reporting any finding, re-test to confirm it is reproducible. Verify
+that each proof-of-concept request actually demonstrates the claimed
+vulnerability. Remove any findings you cannot confirm - false positives
+erode trust more than missed findings.
 
 ## Output Format
 
@@ -172,3 +195,14 @@ Test for common bypass patterns:
 - **Alternative paths exist.** Mobile APIs, legacy endpoints, GraphQL
   mutations, and WebSocket handshakes may all have separate auth logic.
   Test every path to the same resource.
+
+- **Verify before trusting assumptions.** Confirm a finding is real before
+  reporting it. Re-test, check for caching artifacts, and rule out false
+  positives from WAFs or load balancers.
+- **Fix all severities.** Low and Info findings still get reported. An
+  information disclosure is still a finding worth noting.
+- **Do the harder analysis if it's the better analysis.** Don't stop at
+  the first finding per category. Exhaustively test all inputs and
+  endpoints before concluding.
+- **Leave no trash behind.** Clean up any test accounts, uploaded files,
+  or state changes created during testing. Document what was modified.

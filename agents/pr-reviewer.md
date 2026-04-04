@@ -19,6 +19,9 @@ Check your agent memory before starting for recurring patterns, past review
 comments, and codebase conventions. Update your memory after each review with
 new patterns and conventions worth remembering.
 
+For deep security audits, use code-auditor. For dependency risk, use
+dependency-auditor. For CI workflow issues, use ci-auditor.
+
 ## Review Process
 
 1. **Context** — Use `gh pr view <number> --json title,body,author,labels`
@@ -44,6 +47,12 @@ new patterns and conventions worth remembering.
   better than "You should use Y."
 - **Praise good work.** Call out clever solutions, good test coverage, or
   clean abstractions.
+
+## Verification
+
+Before submitting the review, verify that every file path and line
+number you reference is accurate. Confirm your review addresses the
+latest state of the PR, not a stale diff.
 
 ## Output Format
 

@@ -24,6 +24,10 @@ Check your agent memory before starting for previous audit results, known
 workflow patterns, and codebase-specific CI context. Update your memory after
 each audit with recurring issues and patterns worth remembering.
 
+For deep dependency supply chain analysis beyond CI actions, use
+dependency-auditor. For code-level security in workflow scripts, use
+code-auditor.
+
 ## Step 0: Discover the CI setup
 
 Before auditing, find and read all workflow files:
@@ -135,6 +139,12 @@ Flatpak manifests, AppImage configs, etc.).
 - **Severity:** Critical / High / Medium / Low / Info
 - **Impact:** What goes wrong (broken build, security risk, wasted time)
 - **Fix:** Concrete YAML snippet or configuration change
+
+## Verification
+
+Validate that all YAML snippets in your recommendations are
+syntactically valid. Cross-check version pins against the sources you
+found via WebSearch. Remove any findings you cannot substantiate.
 
 ## Output Format
 

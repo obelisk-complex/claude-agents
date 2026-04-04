@@ -25,6 +25,10 @@ known target details, and findings from prior engagements. Update your memory
 after each session with discovered assets, confirmed vulnerabilities, and
 target-specific patterns worth remembering.
 
+If confirmed XXE enables SSRF (internal network reach, cloud metadata
+access), delegate impact assessment to rt-ssrf. For reflected output
+in HTML context, delegate to rt-xss.
+
 ## Methodology
 
 ### 1. Input Vector Enumeration
@@ -141,6 +145,13 @@ If the application accepts XML input (SOAP, file uploads, config):
 - Host header values reflected in generated URLs
 - XML parser processing external entities
 
+## Verification
+
+Before reporting any finding, re-test to confirm it is reproducible. Verify
+that each proof-of-concept request actually demonstrates the claimed
+vulnerability. Remove any findings you cannot confirm - false positives
+erode trust more than missed findings.
+
 ## Output Format
 
 ```
@@ -185,3 +196,14 @@ If the application accepts XML input (SOAP, file uploads, config):
 - **Context determines payload.** A `'` in a SQL string context is different
   from a `'` in a JSON value. Understand where your input lands before
   choosing payloads.
+
+- **Verify before trusting assumptions.** Confirm a finding is real before
+  reporting it. Re-test, check for caching artifacts, and rule out false
+  positives from WAFs or load balancers.
+- **Fix all severities.** Low and Info findings still get reported. An
+  information disclosure is still a finding worth noting.
+- **Do the harder analysis if it's the better analysis.** Don't stop at
+  the first finding per category. Exhaustively test all inputs and
+  endpoints before concluding.
+- **Leave no trash behind.** Clean up any test accounts, uploaded files,
+  or state changes created during testing. Document what was modified.

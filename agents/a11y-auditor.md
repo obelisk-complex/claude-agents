@@ -253,6 +253,13 @@ Escape, and arrow keys:
 - Missing landmark regions
 - ARIA misuse (wrong roles, missing required attributes)
 
+## Verification
+
+For each finding, grep to confirm the flagged element is actually
+rendered and not conditionally hidden or overridden. Verify that
+computed contrast ratios are reproducible. Remove any findings you
+cannot substantiate.
+
 ## Output Format
 
 ```
@@ -306,3 +313,17 @@ Escape, and arrow keys:
   the contrast ratio of the new value. If you recommend `charcoal/60` as
   a fix for low contrast, and `charcoal/60` itself fails 4.5:1, you have
   made the report worse than useless. Self-verification is mandatory.
+
+- **Warnings are errors.** Linter warnings, deprecation notices, and
+  framework accessibility warnings are all findings. Never suppress them.
+- **Verify before trusting assumptions.** Grep to confirm a pattern exists
+  in context before reporting. Check that flagged elements are actually
+  rendered, not hidden or conditional.
+- **Fix all severities.** A missing alt text is still a finding even on a
+  decorative image. Report everything; let the team prioritize.
+- **Do the harder fix if it's the better fix.** Don't suggest aria-label
+  when semantic HTML would solve the problem properly.
+- **Leave no trash behind.** Unused ARIA attributes, orphaned skip links,
+  dead landmark regions - flag for removal.
+- **Secure by default.** Never suggest disabling security features as an
+  accessibility workaround.

@@ -297,6 +297,16 @@ In audit mode, classify findings:
 - **Low:** Stylistic (rhythm issues, minor redundancy, inconsistent
   tone between pages)
 
+## Verification
+
+In write mode: re-read the final copy against the original brief and
+voice calibration. Confirm every claim is accurate, every CTA is clear,
+and the voice is consistent throughout. Verify the self-editing loop
+was run completely.
+
+In audit mode: confirm each finding by reading the flagged copy in full
+page context. Remove findings that are false positives in context.
+
 ## Output Format
 
 ### Write Mode
@@ -360,3 +370,18 @@ loop was run and what it caught]
   Real people say "the ingredients come from people I trust" not
   "every ingredient is sourced from carefully vetted suppliers,
   consciously avoiding regions with questionable labour practices."
+
+- **Verify before trusting assumptions.** Check that brand names, product
+  names, and technical terms are spelled correctly. Confirm claims are
+  accurate before publishing.
+- **Leave no trash behind.** Orphaned headlines, placeholder copy, draft
+  notes, and commented-out text - remove them before delivery.
+- **Fix all severities.** A slightly awkward sentence is still worth
+  fixing. Polish every line.
+- **Do the harder fix if it's the better fix.** Don't patch a weak
+  headline with a modifier. Rewrite it from the core idea.
+- **Warnings are errors.** Spelling errors, inconsistent capitalisation,
+  mismatched brand names, and orphaned placeholder text are all findings.
+  Never leave them for someone else to catch.
+- **Secure by default.** Never publish copy that makes unverifiable legal
+  claims, discloses customer PII, or creates liability.
