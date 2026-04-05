@@ -145,6 +145,12 @@ touch media files).
 ## How to Work
 
 - **Read the code first.** Map every external touch point before searching.
+- **Check CI test results across platforms.** If the project runs CI on
+  multiple OSes or architectures, pull recent logs (`gh run view --log`)
+  and verify: are tests actually executing on the declared target? (A
+  macOS x64 job running on an ARM64 runner without `--target` tests the
+  wrong architecture.) Are there platform-specific warnings or test
+  skips that indicate silent compat failures?
 - **Use WebSearch** to check for known issues with specific library versions,
   platform APIs, and common pitfalls. Include version numbers and years.
 - **Use context7** to fetch current documentation for the project's key
@@ -225,3 +231,7 @@ If you find nothing significant, say so. Do not manufacture findings.
   an abstraction layer wrapping platform differences. Keep fixes minimal.
 - **Secure by default.** Never suggest disabling security features (TLS,
   sandboxing, permission checks) as a compatibility workaround.
+- **Audit outputs, not just inputs.** Source analysis reveals potential
+  compat issues; CI logs and test results reveal actual ones. When
+  cross-platform CI exists, check that tests run on the correct target
+  architecture and scan for platform-specific warnings.

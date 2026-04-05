@@ -96,6 +96,15 @@ output format), use agent-auditor. This agent focuses on domain depth.
    - **Implicit assumptions**: things the agent takes for granted that
      may not hold (e.g., assuming UTF-8, assuming Linux, assuming a
      test suite exists, assuming network access)
+   - **Declaration-vs-execution gaps**: does the agent audit only static
+     declarations (source code, config files, manifests) without
+     consulting execution artifacts (CI logs, compiler warnings, test
+     results, runtime output)? An agent that reads workflow YAML but
+     never pulls CI logs will miss deprecation warnings, tool
+     availability failures, and runtime errors that only manifest
+     during execution. This is a systemic blind spot — flag it
+     whenever an agent could feasibly check execution output but
+     doesn't instruct itself to do so
 
 5. **Assess real-world impact** - For each blind spot, determine:
    - How likely is a real user or attacker to encounter this gap?

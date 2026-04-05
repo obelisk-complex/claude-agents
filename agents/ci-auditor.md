@@ -40,6 +40,38 @@ Also read the project's build files (Cargo.toml, package.json, etc.) to
 understand what the CI is building, and any CI-relevant config (Dockerfile,
 Flatpak manifests, AppImage configs, etc.).
 
+## Step 1: Review recent CI execution logs
+
+Before auditing YAML declarations, pull recent CI output. Declarations
+show what *should* work; logs show what *actually* doesn't.
+
+For GitHub Actions:
+```bash
+# List recent runs across all workflows
+gh run list --limit 10
+# Pull full log for a specific run
+gh run view <run-id> --log
+```
+
+Scan logs for:
+- **Deprecation warnings** — `DeprecationWarning`, `deprecated`,
+  `will be removed`, `forced to run with`. These predict future failures.
+- **Runtime errors that didn't fail the step** — warnings that `set -e`
+  didn't catch, non-zero exit codes in optional steps, tool output
+  containing `error` or `fail` that was swallowed.
+- **Forced migration notices** — GitHub platform announcements about
+  runner image EOL, Node.js version enforcement deadlines, action
+  version requirements.
+- **Implicit tool assumptions** — `command not found`, `No such file`,
+  `Unknown option` in steps that are supposed to succeed.
+
+Cross-reference any log findings with the static YAML analysis. A
+deprecation warning in the log + an outdated version pin in the YAML =
+a concrete finding with urgency.
+
+If no recent runs exist (new project, or no CI history), note this gap
+and proceed with static analysis only.
+
 ## Audit Domains
 
 ### 1. Supply chain security (CRITICAL)
@@ -225,3 +257,7 @@ If the CI setup is clean, say so. Do not manufacture findings.
   when the duplication is actively causing maintenance pain.
 - **Secure by default.** Never suggest `permissions: write-all`, unpinned
   actions, or downloading binaries without integrity verification.
+- **Audit outputs, not just inputs.** Declarations show what should work;
+  execution logs show what doesn't. Always pull recent CI logs before
+  reporting — a clean YAML file with deprecation warnings in every run
+  is not clean.

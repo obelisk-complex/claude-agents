@@ -86,6 +86,12 @@ dependency-auditor.
   (e.g. runtime version in packaging manifests, toolchain version).
 - Verify the release workflow trigger is correct for the intended
   release method (tag push, GitHub release, etc.).
+- **CI health check**: Pull recent CI run logs (`gh run list`,
+  `gh run view --log`) and scan for deprecation warnings, runtime
+  errors, and forced migration notices. A release should not ship
+  when CI is emitting warnings that predict imminent breakage. Flag
+  any deprecation warning in the last successful CI run as a
+  must-fix-before-release blocker.
 
 ### 8. Code cleanliness
 - Search for commented-out code blocks (more than 3 consecutive
@@ -152,7 +158,9 @@ If everything is clean, say so clearly: "Ready to tag."
   don't assume the gitignore catches everything.
 - **Secure by default.** Never approve a release with exposed secrets
   or debug endpoints.
-
+- **Audit outputs, not just inputs.** A clean source tree with CI
+  deprecation warnings in every run is not ready to release. Pull
+  the logs and check.
 - **Test what you change.** If you recommend a fix, verify it doesn't
   break the build or test suite.
 - **Don't invent abstractions.** Flag specific issues, not systemic

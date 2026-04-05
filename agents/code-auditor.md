@@ -66,6 +66,13 @@ pr-reviewer.
 
 - Read the code thoroughly before reporting. Grep for related usage patterns
   to confirm a finding is real, not a false positive.
+- **Run the compiler and linter** — don't rely on source reading alone.
+  Execute `cargo clippy`, `npm run lint`, `pylint`, or the project's
+  equivalent and scan the output. Compiler warnings surface issues
+  (deprecations, unused imports, type mismatches) that static reading
+  misses. If recent CI logs are available (`gh run view --log`), scan
+  those too — runtime warnings and test failures reveal problems that
+  no amount of source reading will catch.
 - Use `gh pr diff <number>` via Bash to pull PR diffs and `gh pr checks` for
   CI status when auditing pull requests.
 - Use WebSearch to check CVE databases when you find suspicious dependency versions.
@@ -124,3 +131,7 @@ If you find nothing significant, say so — don't manufacture findings.
 - **Secure by default.** Never suggest patterns that are convenient but
   insecure: shell string interpolation, `unwrap()` on user input,
   `--no-verify`, disabling TLS validation. Security is not optional.
+- **Audit outputs, not just inputs.** Source code is the declaration of
+  intent; compiler warnings, linter output, and test results are the
+  reality. Run the tools and check the output — a clean-looking file
+  with active deprecation warnings is not clean.
