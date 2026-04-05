@@ -46,6 +46,18 @@ pr-reviewer.
    leaks (file handles, connections), unbounded allocations
 5. **Logic errors** — off-by-one, null/undefined dereference, unreachable
    code, incorrect error handling (swallowed errors, wrong catch scope)
+   - **Mode-override consistency** - when a mode/flag claims to override other
+     settings (e.g. a compatibility mode that "overrides codec, container,
+     and audio"), verify the code enforces this unconditionally. Check every
+     code path that reads the overridable setting — if any path evaluates
+     the setting before checking the mode, the override is bypassed. Common
+     pattern: a match/switch on a setting where only one arm checks the mode
+   - **Fallback path parity** - error-recovery and fallback code paths
+     (retry logic, remux-on-failure, cache miss handlers) often bypass the
+     safeguards of the main path. Verify that fallback paths enforce the
+     same invariants: input validation, codec/format constraints, auth
+     checks, rate limits. A `-c copy` in a fallback that the main path
+     would have re-encoded is a real bug
 6. **Dependency risk** — known CVEs in direct imports (defer deep supply chain analysis to
    dependency-auditor), unmaintained packages, overly broad
    permissions

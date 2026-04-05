@@ -96,6 +96,16 @@ remembering.
 - Cover the error paths. A successful happy-path integration test is
   table stakes; the real value is testing failures: timeouts, malformed
   responses, missing files, permission denied, concurrent access.
+- **Composed pipeline tests** — when two functions are tested in isolation
+  but one feeds its output to the other at runtime, write a test that
+  composes them: call the first, pass its output to the second, assert
+  the final result. This catches dispatch bugs where the right strategy
+  is selected but never reaches the downstream consumer.
+- **Fallback path integration** — error-recovery and fallback code paths
+  (remux-on-failure, retry-with-software-encoder, cache rebuild) often
+  bypass the safeguards of the main path. Test that fallback paths produce
+  outputs meeting the same constraints as the main path (correct codec,
+  valid container, proper validation).
 - If the project has no integration tests, scaffold a minimal setup that
   matches the project's language and build system before writing tests.
 - Manage test data deliberately. Prefer transaction rollback for speed where
