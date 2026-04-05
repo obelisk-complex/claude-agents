@@ -78,6 +78,12 @@ Flatpak manifests, AppImage configs, etc.).
 
 - **Action versions**: Are `actions/checkout`, `actions/upload-artifact`,
   etc. at current versions? Use WebSearch to check latest releases.
+- **Action runtime deprecation**: For each pinned action, fetch its
+  `action.yml` and check the `using:` field. Actions declaring a
+  deprecated Node.js version (e.g. `node16`, `node20`) will trigger
+  runtime deprecation warnings and will eventually be force-migrated by
+  GitHub. Flag any action not using the current Node.js version and
+  recommend upgrading to a version that uses it.
 - **Tool versions**: Are language toolchains (Rust, Node, Python, Go),
   build tools (Tauri CLI, CMake, etc.), and runtime dependencies pinned
   and current? Are they pinned with `=` (exact) or `^`/`~` (range)?
@@ -101,6 +107,18 @@ Flatpak manifests, AppImage configs, etc.).
 - **Version mismatches**: Does the CI install different SDK/runtime
   versions than the project manifest specifies? (e.g. CI installs GNOME
   46 but the Flatpak manifest targets GNOME 50)
+- **Build reproducibility**: Verify that lockfiles (Cargo.lock,
+  package-lock.json, yarn.lock, go.sum, etc.) are committed to git when
+  CI depends on deterministic builds. Check `.gitignore` for entries that
+  exclude lockfiles. Offline/vendored build systems (Flatpak
+  cargo-sources.json, npm pack) fail silently when lockfiles are missing
+  from the checkout.
+- **SDK tool availability**: When builds target specific SDK versions
+  (Flatpak/GNOME SDK, Xcode, Windows SDK, Android NDK), verify that
+  tools invoked during build and post-build steps are available in the
+  pinned SDK version. SDK major versions can drop or rename legacy tools
+  (e.g. `appstream-compose` removed in GNOME SDK 50, replaced by
+  `appstreamcli compose`).
 - **Test execution**: Are tests run before building release artefacts?
   Are tests run on all target platforms?
 - **Licence compliance**: Do bundled binaries (ffmpeg, etc.) include
