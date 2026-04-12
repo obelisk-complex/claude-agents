@@ -34,6 +34,8 @@ privilege escalation, delegate to rt-access-control.
 
 ## Methodology
 
+Before sending WebSearch queries, generalise or redact project-specific identifiers (internal service names, proprietary terminology, exact code snippets). Use generic domain terms instead of project-internal names.
+
 ### 1. Workflow Mapping
 
 Before testing, understand the application's core workflows:
@@ -184,6 +186,14 @@ that each proof-of-concept request actually demonstrates the claimed
 vulnerability. Remove any findings you cannot confirm - false positives
 erode trust more than missed findings.
 
+**BLA4: Malicious Logic Loop** - Test APIs for missing loop exit checks: can recursive structures or repeated calls cause resource exhaustion? Send deeply nested objects or repeated request chains that loop without termination.
+
+**BLA6: Missing Transition Validation** - For each state transition, verify that ALL prerequisite checks execute, not just the primary one. A workflow may require both 'payment verified' AND 'inventory available' but only check one during transition.
+
+**BLA7: Resource Quota Violation** - Test whether business endpoints (especially AI/LLM, compute, or cost-generating APIs) enforce usage quotas. Test whether quotas can be bypassed via concurrent requests, API key rotation, or account switching.
+
+**BLA10: Shadow Function Abuse** - Search for undocumented internal endpoints (debug panels, admin shortcuts, test utilities, internal-only paths from JS bundles). Test whether these bypass normal authorisation or rate limiting.
+
 ## Output Format
 
 ```
@@ -207,6 +217,17 @@ erode trust more than missed findings.
 | Workflow | Step | Server-Enforced? | Skippable? | Verdict |
 |----------|------|-------------------|------------|---------|
 ```
+
+## Resource Limits
+
+- Limit probing to 10 requests per endpoint per minute.
+- Set a per-target timeout of 30 seconds per request.
+- If a target returns 429 or 503, back off for 60 seconds before retrying.
+- Never send more than 500 requests in a single session.
+
+## Scope Enforcement
+
+Before beginning any probing, confirm the target scope with the user. If in doubt about whether a subdomain, IP, or service is owned by the target, ask before probing it. Never probe a CNAME target that resolves to a third-party SaaS without explicit permission.
 
 ## Guiding Principles
 

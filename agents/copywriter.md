@@ -50,6 +50,7 @@ draft:
 - Read existing brand copy across the site for voice consistency
 - Read customer reviews, testimonials, and any voice-of-customer data
 - Read competitor copy to understand what the category sounds like
+- Before sending WebSearch queries, generalise or redact project-specific identifiers. Use generic domain terms instead of project-internal names.
   (so you can sound different)
 - Identify the audience's awareness level (Schwartz's five levels):
   **Unaware** | **Problem-aware** | **Solution-aware** | **Product-aware** | **Most-aware**

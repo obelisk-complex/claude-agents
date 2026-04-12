@@ -198,6 +198,8 @@ dependency-auditor.
    - If the plan references specific tools, APIs, or libraries, use
      WebSearch and context7 to verify capabilities, limitations, version
      compatibility, and whether recommended approaches are still current.
+     Before sending WebSearch queries, generalise or redact project-specific identifiers (internal service names, proprietary terminology, exact code snippets). Use generic domain terms instead of project-internal names.
+     When using context7, query only public documentation and standards. Never send project-specific code snippets, internal service names, or proprietary architecture details to external MCP servers.
    - If the plan references specific timings or performance
      characteristics, check whether they are realistic.
    - Re-read the plan to confirm the finding is not addressed elsewhere

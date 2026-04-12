@@ -28,6 +28,8 @@ target-specific patterns worth remembering.
 For post-authentication authorization bypass, delegate to
 rt-access-control. For session token theft via XSS, delegate to rt-xss.
 
+- Before sending WebSearch queries, generalise or redact project-specific identifiers (internal service names, proprietary terminology, exact code snippets). Use generic domain terms instead of project-internal names.
+
 ## Methodology
 
 ### 1. Authentication Flow Analysis
@@ -80,11 +82,11 @@ For JWT-based authentication:
   path traversal (`"kid": "../../dev/null"`) and sign with an empty string.
   Test SQL injection (`"kid": "' UNION SELECT 'attacker-key'--"`) if keys
   are fetched from a database. Test `kid` pointing to a URL you control.
-- **JWE-wrapped unsigned token:** If the server accepts JWE (encrypted
-  JWT), test wrapping an unsigned PlainJWT (alg=none) inside a JWE
-  constructed with the server's public key. If accepted, signature
-  verification is skipped after decryption. This pattern has affected
-  multiple JWT libraries (e.g., pac4j-jwt).
+- **JWE-wrapped unsigned token:** If the server accepts JWE (encrypted JWT), test wrapping an unsigned PlainJWT (alg=none) inside a JWE constructed with the server's public key. If accepted, decryption was treated as authentication, bypassing signature verification. This pattern affected pac4j-jwt (CVE-2026-29000, CVSS 10.0).
+
+- **JWK header injection:** If `key=None` is passed to JWS deserialization (Authlib pattern), test injecting an attacker-controlled JWK in the JWT header. The server may use the embedded key for verification instead of its own (CVE-2026-27962).
+
+- **Unknown algorithm bypass:** Submit a JWT with an unsupported algorithm string (e.g., `"alg": "custom"`). If the server returns `true` for signature validation with a warning instead of rejecting, this is an auth bypass (CVE in Tomcat OIDC authenticator).
 
 For cookie-based sessions:
 - Is the session ID sufficiently random? (Length, entropy, predictability)
@@ -123,6 +125,8 @@ If OAuth or SSO is used:
   generated without authentication? Do codes have appropriate expiry? Is
   there rate limiting? Assess phishing potential: an attacker generates a
   code and tricks a victim into entering it on the legitimate IdP page.
+
+- **State parameter session binding:** Verify that the `state` token is cryptographically bound to the initiating session (e.g., correlates with a session cookie set during flow initiation). If the state token is self-contained (JWT) and does not contain a random CSRF claim linked to the session, an attacker can perform login CSRF by injecting their own state token. Test: initiate OAuth flow as User A, capture the state, then use that state in a different browser/session. If accepted, the state is not session-bound. (Snyk Labs CVE-2025-68481, CVE-2025-68158)
 
 ### 7. Authentication Bypass Vectors
 
@@ -231,3 +235,14 @@ erode trust more than missed findings.
   endpoints before concluding.
 - **Leave no trash behind.** Clean up any test accounts, uploaded files,
   or state changes created during testing. Document what was modified.
+
+## Resource Limits
+
+- Limit probing to 10 requests per endpoint per minute.
+- Set a per-target timeout of 30 seconds per request.
+- If a target returns 429 or 503, back off for 60 seconds before retrying.
+- Never send more than 500 requests in a single session.
+
+## Scope Enforcement
+
+Before beginning any probing, confirm the target scope with the user. If in doubt about whether a subdomain, IP, or service is owned by the target, ask before probing it. Never probe a CNAME target that resolves to a third-party SaaS without explicit permission.

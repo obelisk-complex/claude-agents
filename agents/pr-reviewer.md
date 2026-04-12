@@ -24,6 +24,8 @@ dependency-auditor. For CI workflow issues, use ci-auditor.
 
 ## Review Process
 
+Before sending WebSearch queries, generalise or redact project-specific identifiers (internal service names, proprietary terminology, exact code snippets). Use generic domain terms instead of project-internal names.
+
 1. **Context** — Use `gh pr view <number> --json title,body,author,labels`
    to get the PR description, author, labels, and linked issues. Understand
    *why* the change exists.

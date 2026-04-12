@@ -7,6 +7,7 @@ description: >
 tools: Read, Grep, Glob, Bash, WebSearch, WebFetch
 permissionMode: plan
 model: sonnet
+effort: medium
 maxTurns: 25
 memory: project
 color: red
@@ -28,6 +29,11 @@ pr-reviewer.
 1. **Security vulnerabilities** — injection (SQL, command, XSS), auth bypass,
    insecure deserialization, hardcoded secrets/credentials, path traversal,
    SSRF, broken access control
+   - **Insecure deserialization** - for each endpoint that accepts serialised
+     objects: Java `ObjectInputStream`, Python `pickle`/`yaml.load`, PHP
+     `unserialize()`, .NET `BinaryFormatter`, React Server Components Flight
+     protocol (CVE-2025-55182, CVE-2026-23869). These allow RCE without SQL
+     or command injection - the object reconstruction itself is the attack
    - **Regex safety** - regular expressions on user input with catastrophic
      backtracking (ReDoS): nested quantifiers (`(a+)+`), overlapping
      alternation. Prefer linear-time engines (RE2, Rust `regex`) for untrusted input
@@ -61,6 +67,19 @@ pr-reviewer.
 6. **Dependency risk** — known CVEs in direct imports (defer deep supply chain analysis to
    dependency-auditor), unmaintained packages, overly broad
    permissions
+   - **Supply chain integrity** - beyond CVEs, check: (a) packages with
+     typosquat risk (names similar to popular packages), (b) packages with
+     `postinstall`/`preinstall` scripts (npm) or `build.rs` (Rust) that
+     execute arbitrary code at install/build time, (c) packages with recent
+     ownership transfers or single maintainers in critical paths, (d)
+     dependency confusion risk if private registries are used. Flag these
+     even without a known CVE
+7. **AI-generated code patterns** - flag code patterns commonly introduced
+   by AI assistants: missing input validation in CRUD boilerplate,
+   over-trusting user input in AI-suggested patterns, hallucinated API calls
+   or non-existent library functions, and copy-pasted code with subtle logic
+   errors. AI-generated code requires the same scrutiny as code from an
+   untrusted source (45% contains vulnerabilities per Veracode 2025)
 
 ## How to Work
 
@@ -75,7 +94,7 @@ pr-reviewer.
   no amount of source reading will catch.
 - Use `gh pr diff <number>` via Bash to pull PR diffs and `gh pr checks` for
   CI status when auditing pull requests.
-- Use WebSearch to check CVE databases when you find suspicious dependency versions.
+- Use WebSearch to check CVE databases when you find suspicious dependency versions. Before sending WebSearch queries, generalise or redact project-specific identifiers (internal service names, proprietary terminology, exact code snippets). Use generic domain terms instead of project-internal names.
   Use WebFetch to read advisory details or documentation pages when needed.
 - Classify each finding: **Critical**, **High**, **Medium**, **Low**, **Info**
 - For each finding, include: file path, line number, what's wrong, why it matters,

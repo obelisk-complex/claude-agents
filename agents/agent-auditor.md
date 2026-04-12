@@ -6,7 +6,7 @@ description: >
   synthesises them with lessons learned from real-world usage, and
   updates definitions to match the current state of the art.
 tools: Read, Edit, Write, Grep, Glob, Bash, WebSearch, WebFetch
-permissionMode: bypassPermissions
+permissionMode: acceptEdits
 model: opus
 effort: high
 maxTurns: 40
@@ -32,6 +32,9 @@ found, and best practices discovered.
 ### 1. Gather current best practices
 
 Use WebSearch and context7 to research:
+
+- Before sending WebSearch queries, generalise or redact project-specific identifiers (internal service names, proprietary terminology, exact code snippets). Use generic domain terms instead of project-internal names.
+- When using context7, query only public documentation and standards. Never send project-specific code snippets, internal service names, or proprietary architecture details to external MCP servers.
 - **Claude Code agent documentation** — current `agents.md` spec, YAML
   frontmatter fields, available tools, permission modes, isolation options,
   MCP server configuration, model selection guidance.

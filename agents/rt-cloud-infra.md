@@ -29,6 +29,8 @@ For upstream subdomain and service discovery, delegate to rt-recon.
 
 ## Methodology
 
+Before sending WebSearch queries, generalise or redact project-specific identifiers (internal service names, proprietary terminology, exact code snippets). Use generic domain terms instead of project-internal names.
+
 ### 1. Cloud Storage Exposure
 
 Test for publicly accessible storage buckets/blobs matching the target's
@@ -310,6 +312,23 @@ erode trust more than missed findings.
 ## Verified Safe
 [Assets confirmed correctly configured]
 ```
+
+### 10. Kubernetes-Specific Infrastructure Assessment
+
+If Kubernetes is detected: test for exposed kubelet API (`https://<target>:10250/pods`); test for default service accounts with excessive RBAC permissions; check for container registries with public access (`docker pull` without auth); test for etcd exposure on port 2379; check for pod security standards enforcement; test whether service account tokens are mounted in pods that don't need them. Stolen K8s service account tokens were observed in 22% of cloud environments in 2025 (Palo Alto Unit 42). K8s threats increased 282% in 2025.
+
+**AI/LLM infrastructure:** Check for exposed LLM proxy servers and API gateways (common ports: 8000, 8080, 11434 for Ollama, 5000 for text-generation-webui, 7860 for Gradio). Test whether they respond to unauthenticated queries. If AI infrastructure is exposed, assess: unauthorised API relay for billing abuse, data exfiltration via connected knowledge bases, SSRF potential through proxy forwarding, model extraction in self-hosted deployments. Over 10,000 public LLM instances were found via Censys in 2025; 91,000+ attack sessions recorded Oct 2025 - Jan 2026.
+
+## Resource Limits
+
+- Limit probing to 10 requests per endpoint per minute.
+- Set a per-target timeout of 30 seconds per request.
+- If a target returns 429 or 503, back off for 60 seconds before retrying.
+- Never send more than 500 requests in a single session.
+
+## Scope Enforcement
+
+Before beginning any probing, confirm the target scope with the user. If in doubt about whether a subdomain, IP, or service is owned by the target, ask before probing it. Never probe a CNAME target that resolves to a third-party SaaS without explicit permission.
 
 ## Guiding Principles
 

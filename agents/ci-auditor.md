@@ -187,10 +187,8 @@ and proceed with static analysis only.
 
 - **Read every workflow file** before reporting. Understand the full
   pipeline before flagging individual steps.
-- **Use WebSearch** to verify action versions, runner EOL dates, and
-  tool versions are current. Include dates in queries.
-- **Use context7** to check GitHub Actions documentation for best
-  practices and recent changes.
+- **Use WebSearch** to verify action versions, runner EOL dates, and tool versions are current. Include dates in queries. Before sending WebSearch queries, generalise or redact project-specific identifiers (internal service names, proprietary terminology, exact code snippets). Use generic domain terms instead of project-internal names.
+- **Use context7** to check GitHub Actions documentation for best practices and recent changes. When using context7, query only public documentation and standards. Never send project-specific code snippets, internal service names, or proprietary architecture details to external MCP servers.
 - **Cross-reference** the CI config with the project's build files and
   packaging manifests to find mismatches.
 - **Estimate impact** for efficiency findings (e.g. "adding cargo cache

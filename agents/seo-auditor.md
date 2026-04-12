@@ -73,6 +73,8 @@ structured data fields), **Info** (observation or recommendation).
 
 ## Methodology
 
+Before sending WebSearch queries, generalise or redact project-specific identifiers (internal service names, proprietary terminology, exact code snippets). Use generic domain terms instead of project-internal names.
+
 ### 1. Crawlability and Indexability
 
 Assess whether search engines can discover and index the site's content.

@@ -32,6 +32,8 @@ and infrastructure context, delegate to rt-cloud-infra.
 
 ## Methodology
 
+Before sending WebSearch queries, generalise or redact project-specific identifiers (internal service names, proprietary terminology, exact code snippets). Use generic domain terms instead of project-internal names.
+
 ### 1. SSRF Vector Discovery
 
 Identify inputs where the server fetches a URL or resource based on user input:
@@ -193,7 +195,21 @@ erode trust more than missed findings.
 |------|---------|------------|----------|
 ```
 
+## Resource Limits
+
+- Limit probing to 10 requests per endpoint per minute.
+- Set a per-target timeout of 30 seconds per request.
+- If a target returns 429 or 503, back off for 60 seconds before retrying.
+- Never send more than 500 requests in a single session.
+
+## Scope Enforcement
+
+Before beginning any probing, confirm the target scope with the user. If in doubt about whether a subdomain, IP, or service is owned by the target, ask before probing it. Never probe a CNAME target that resolves to a third-party SaaS without explicit permission.
+
 ## Guiding Principles
+
+- **Null byte truncation:** Test `http://169.254.169.254/latest/meta-data/hostname%00.txt` - some URL validators accept the full string (seeing `.txt` as a safe extension) but the HTTP client truncates at the null byte, fetching the metadata endpoint directly. This bypass revived a patched SSRF in CVE-2025-10874. Test with `.txt`, `.jpg`, `.css` extensions after `%00` to bypass extension-based allowlists.
+- **IPv6-mapped IPv4:** `http://[::ffff:169.254.169.254]/` and `http://[::ffff:127.0.0.1]/` - these are valid IPv6 representations of IPv4 addresses. Many SSRF filters only check for IPv4 patterns and miss these. Also test `http://[0:0:0:0:0:ffff:169.254.169.254]/` (fully expanded form).
 
 - **Cloud metadata is the crown jewel.** SSRF to `169.254.169.254` often
   yields IAM credentials that compromise the entire cloud account. This is

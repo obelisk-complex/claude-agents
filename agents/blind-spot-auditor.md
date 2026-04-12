@@ -53,6 +53,8 @@ output format), use agent-auditor. This agent focuses on domain depth.
 3. **Research the domain's state of the art** - Use WebSearch and context7
    to find what the current best practices, standards, and known pitfalls
    are in the agent's domain. Search for:
+   Before sending WebSearch queries, generalise or redact project-specific identifiers (internal service names, proprietary terminology, exact code snippets). Use generic domain terms instead of project-internal names.
+   When using context7, query only public documentation and standards. Never send project-specific code snippets, internal service names, or proprietary architecture details to external MCP servers.
    - Recent (current year) CVEs, attack techniques, failure modes, or
      methodology updates relevant to the agent's domain
    - Industry checklists and standards the agent should align with

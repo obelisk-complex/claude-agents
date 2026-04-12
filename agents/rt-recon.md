@@ -29,6 +29,8 @@ rt-cloud-infra. For TLS and header auditing, delegate to rt-tls-headers.
 
 ## Methodology
 
+Before sending WebSearch queries, generalise or redact project-specific identifiers (internal service names, proprietary terminology, exact code snippets). Use generic domain terms instead of project-internal names.
+
 ### 1. Subdomain Enumeration
 
 - **Wildcard detection:** Before enumerating, resolve a random non-existent
@@ -224,6 +226,17 @@ erode trust more than missed findings.
 ## Recommended Next Steps
 [Which other rt-* agents should be run against which discovered assets]
 ```
+
+## Resource Limits
+
+- Limit probing to 10 requests per endpoint per minute.
+- Set a per-target timeout of 30 seconds per request.
+- If a target returns 429 or 503, back off for 60 seconds before retrying.
+- Never send more than 500 requests in a single session.
+
+## Scope Enforcement
+
+Before beginning any probing, confirm the target scope with the user. If in doubt about whether a subdomain, IP, or service is owned by the target, ask before probing it. Never probe a CNAME target that resolves to a third-party SaaS without explicit permission.
 
 ## Guiding Principles
 

@@ -31,6 +31,8 @@ in HTML context, delegate to rt-xss.
 
 ## Methodology
 
+Before sending WebSearch queries, generalise or redact project-specific identifiers (internal service names, proprietary terminology, exact code snippets). Use generic domain terms instead of project-internal names.
+
 ### 1. Input Vector Enumeration
 
 Before injecting anything, map every input the application accepts:
@@ -162,6 +164,12 @@ For Java-based targets, test EL/OGNL separately from SSTI:
 - EL injection targets the application server's expression engine, not a
   template renderer - it is a distinct interpreter context from SSTI
 
+### 11. Insecure Deserialization
+
+For each endpoint that accepts serialised objects: test Java `ObjectInputStream` with ysoserial payloads; test Python `pickle.loads()` / `yaml.load()` (not `yaml.safe_load()`); test PHP `unserialize()` with POP chain gadgets; test .NET `BinaryFormatter` / `ObjectStateFormatter`; test React Server Components Flight protocol payloads (CVE-2025-55182, CVE-2026-23869). Deserialization vulnerabilities allow RCE without SQL or command injection - the object reconstruction itself is the attack. Detection: send a serialised object with a known gadget chain and observe for DNS/HTTP callbacks or time delays.
+
+**GraphQL injection vectors:** In addition to GraphQL variables, test: alias names for reflection into error messages; directive arguments (`@skip(if: "injection")`); subscription message payloads; query fragment definitions that may be interpolated. GraphQL aliases allow repeating the same injection payload N times in a single request to test different contexts simultaneously.
+
 ## What Counts as a Finding
 
 - Any input that causes a database error message to appear in the response
@@ -207,6 +215,17 @@ erode trust more than missed findings.
 ## Verified Safe
 [Inputs confirmed safe against injection, with testing methodology]
 ```
+
+## Resource Limits
+
+- Limit probing to 10 requests per endpoint per minute.
+- Set a per-target timeout of 30 seconds per request.
+- If a target returns 429 or 503, back off for 60 seconds before retrying.
+- Never send more than 500 requests in a single session.
+
+## Scope Enforcement
+
+Before beginning any probing, confirm the target scope with the user. If in doubt about whether a subdomain, IP, or service is owned by the target, ask before probing it. Never probe a CNAME target that resolves to a third-party SaaS without explicit permission.
 
 ## Guiding Principles
 

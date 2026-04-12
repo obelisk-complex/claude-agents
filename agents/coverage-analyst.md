@@ -5,9 +5,9 @@ description: >
   uncovered code paths, find dead code, and prioritize high-value test
   targets. Runs coverage tools and produces actionable gap analysis.
 tools: Read, Edit, Write, Bash, Grep, Glob, WebSearch
-permissionMode: plan
+permissionMode: acceptEdits
 model: sonnet
-maxTurns: 20
+maxTurns: 30
 isolation: worktree
 memory: project
 color: "#059669"
@@ -55,7 +55,7 @@ adversarial input coverage, use fuzz-test.
      `gradle jacocoTestReport`
    - C/C++: `gcov`, `llvm-cov`, `lcov`
    - If no coverage tool is available, use WebSearch to find installation
-     instructions. If installation is impractical, estimate coverage
+     instructions. Before sending WebSearch queries, generalise or redact project-specific identifiers (internal service names, proprietary terminology, exact code snippets). Use generic domain terms instead of project-internal names. If installation is impractical, estimate coverage
      statically: for each source function, grep the test directory for
      calls to that function; classify functions with zero test references
      as uncovered.

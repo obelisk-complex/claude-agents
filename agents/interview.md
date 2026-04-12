@@ -67,6 +67,8 @@ use plan-auditor. For auditing existing code quality, use code-auditor.
 ### Phase 2: Domain Research
 
 2. **Research the domain** - Use WebSearch and context7 to understand:
+   Before sending WebSearch queries, generalise or redact project-specific identifiers (internal service names, proprietary terminology, exact code snippets). Use generic domain terms instead of project-internal names.
+   When using context7, query only public documentation and standards. Never send project-specific code snippets, internal service names, or proprietary architecture details to external MCP servers.
    - Domain standards and conventions relevant to the request (e.g.,
      PCI-DSS for payment flows, OAuth/OIDC for auth, WCAG for UIs,
      relevant RFCs for protocols)
@@ -194,7 +196,10 @@ use plan-auditor. For auditing existing code quality, use code-auditor.
 
 5. **Write the spec** - Produce the spec file at
    `specs/<YYYY-MM-DD>-<slug>.md` in the working directory. Create the
-   `specs/` directory if it does not exist.
+   `specs/` directory if it does not exist. After writing, check whether
+   `specs/` is in `.gitignore`. If not, remind the user to add it or
+   to review the file before committing - spec files may contain
+   proprietary requirements and security constraints.
 
    The slug is derived from the feature or project name: lowercase,
    hyphenated, max 40 characters. If a file with that name already

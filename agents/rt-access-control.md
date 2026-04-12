@@ -28,6 +28,8 @@ target-specific patterns worth remembering.
 For authentication and session bypass, delegate to rt-auth-session. For
 API-specific abuse vectors, delegate to rt-api-abuse.
 
+- Before sending WebSearch queries, generalise or redact project-specific identifiers (internal service names, proprietary terminology, exact code snippets). Use generic domain terms instead of project-internal names.
+
 ## Methodology
 
 ### 1. Access Control Model Discovery
@@ -70,6 +72,10 @@ For each endpoint that accepts a resource identifier:
 - API keys, tokens, invitations
 - Organisation/team membership and settings
 - Audit logs, activity history
+
+**Test batch/bulk endpoints:** If the API accepts arrays of resource IDs (e.g., `POST /api/users/batch` with `{"ids": [1,2,3,...100]}`), test whether the authorisation check applies to ALL IDs in the array, or only to the first. Bulk endpoints that skip per-item ownership checks enable mass data exfiltration in a single request, bypassing rate limits designed for single-resource access.
+
+**Test second-order IDOR:** Inject another user's resource ID into stored fields (profile `managerId`, shared resource `ownerId`, notification `userId`) via authorised endpoints. Then exercise secondary functions (reports, exports, admin dashboards, webhook deliveries) that read the stored reference without re-checking ownership. Second-order IDOR persists across requests and is invisible to single-request testing.
 
 ### 3. Vertical Privilege Escalation
 
@@ -118,7 +124,7 @@ Test URL manipulation techniques that bypass path-based access control:
 - Case variation: `/Admin` vs `/admin` vs `/ADMIN`
 - Trailing characters: `/admin/` vs `/admin` vs `/admin/.`
 - Path traversal: `/user/../admin/`
-- Double encoding: `/admin` → `/%61dmin` → `/%2561dmin`
+- Double encode: `/admin` → `/%61dmin` → `/%2561dmin`
 - URL fragments and parameters: `/admin#`, `/admin?`
 - Alternate extensions: `/admin.json`, `/admin.xml`
 - API versioning: `/v1/admin` vs `/v2/admin` (different auth?)
@@ -149,6 +155,10 @@ For each object type accessible to multiple roles, compare fields returned:
 - BOPLA is distinct from IDOR (correct object, wrong properties) and from
   mass assignment (which focuses on creation). Build a property-level
   access matrix per role.
+
+### 9. GraphQL Authorization Testing
+
+For each GraphQL query and mutation, test nested object access: can a query for an authorised object traverse to unauthorised objects via relationships? Test alias-based repeated access: `{ a1: user(id:1){email} a2: user(id:2){email} }` to test bulk authorisation. Test whether field-level authorisation exists or only query-level. Test introspection-derived queries against authorisation boundaries.
 
 ## What Counts as a Finding
 
@@ -224,3 +234,14 @@ erode trust more than missed findings.
   endpoints before concluding.
 - **Leave no trash behind.** Clean up any test accounts, uploaded files,
   or state changes created during testing. Document what was modified.
+
+## Resource Limits
+
+- Limit probing to 10 requests per endpoint per minute.
+- Set a per-target timeout of 30 seconds per request.
+- If a target returns 429 or 503, back off for 60 seconds before retrying.
+- Never send more than 500 requests in a single session.
+
+## Scope Enforcement
+
+Before beginning any probing, confirm the target scope with the user. If in doubt about whether a subdomain, IP, or service is owned by the target, ask before probing it. Never probe a CNAME target that resolves to a third-party SaaS without explicit permission.

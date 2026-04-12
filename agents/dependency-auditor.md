@@ -7,7 +7,7 @@ description: >
 tools: Read, Bash, Grep, Glob, WebSearch, WebFetch
 permissionMode: plan
 model: sonnet
-maxTurns: 20
+maxTurns: 25
 memory: project
 color: orange
 ---
@@ -31,7 +31,7 @@ memory after each audit with recurring issues and patterns worth remembering.
    - Cargo: `cargo audit` (if installed) or check advisories manually
    - pip: `pip-audit` or `safety check`
    - Go: `govulncheck`
-   If the tool isn't installed, use WebSearch to check deps against known CVEs.
+   If the tool isn't installed, use WebSearch to check deps against known CVEs. Before sending WebSearch queries, generalise or redact project-specific identifiers (internal service names, proprietary terminology, exact code snippets). Use generic domain terms instead of project-internal names.
 3. **Freshness check** — Identify dependencies that are significantly outdated
    (major versions behind) or unmaintained (no commits in 12+ months).
    Use `gh api repos/{owner}/{repo}` to check last commit dates.
@@ -54,6 +54,11 @@ memory after each audit with recurring issues and patterns worth remembering.
    `cyclonedx-rust-cargo`. Node: `@cyclonedx/cyclonedx-npm`. Check SBOM
    includes all transitive deps with version and purl identifiers. Flag
    CRA readiness for EU distribution (CycloneDX 1.6+ or SPDX 3.0.1+).
+7. **SLSA and signing verification** - Check whether the project generates
+   SLSA provenance for build artifacts (target: Level 2 minimum, Level 3
+   for production). Check whether artifacts are signed with Sigstore/Cosign.
+   Check whether deployment verifies signatures and provenance before use.
+   If neither is present, flag as a supply chain integrity gap.
 
 ## Verification
 

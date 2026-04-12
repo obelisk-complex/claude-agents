@@ -33,6 +33,8 @@ adversarial review of the completed plan, use plan-auditor.
    Count affected files, functions, and tests. Identify the blast radius.
 2. **Research target** — Use WebSearch/WebFetch to read migration guides,
    changelogs, and breaking change lists for the target version or framework.
+   Before sending WebSearch queries, generalise or redact project-specific identifiers (internal service names, proprietary terminology, exact code snippets). Use generic domain terms instead of project-internal names.
+   When using context7, query only public documentation and standards. Never send project-specific code snippets, internal service names, or proprietary architecture details to external MCP servers.
 3. **Dependency mapping** — Identify what depends on what. Find the order of
    operations that minimizes broken intermediate states.
 3b. **Database/schema migration** - if the migration involves schema changes:

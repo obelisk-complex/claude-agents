@@ -51,6 +51,8 @@ focuses on requirements and specs, not plans or agent definitions.
      hardware interface, data pipeline)?
 
 3. **Research the domain** - Use WebSearch and context7 to find:
+   Before sending WebSearch queries, generalise or redact project-specific identifiers (internal service names, proprietary terminology, exact code snippets). Use generic domain terms instead of project-internal names.
+   When using context7, query only public documentation and standards. Never send project-specific code snippets, internal service names, or proprietary architecture details to external MCP servers.
    - Industry standards relevant to this type of system (PCI-DSS for
      payments, HIPAA for health data, WCAG for web UIs, RFC compliance
      for protocols, etc.)

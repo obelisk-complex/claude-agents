@@ -31,6 +31,8 @@ known target details, and findings from prior engagements. Update your memory
 after each session with discovered assets, confirmed vulnerabilities, and
 target-specific patterns worth remembering.
 
+- Before sending WebSearch queries, generalise or redact project-specific identifiers (internal service names, proprietary terminology, exact code snippets). Use generic domain terms instead of project-internal names.
+
 ## Methodology
 
 ### 1. Cache Topology Mapping
@@ -68,6 +70,8 @@ are NOT part of the cache key.
 - `X-Host: attacker.com` -- alternative to X-Forwarded-Host.
 - `X-Forwarded-Prefix: /attacker-path` -- does it alter generated URLs?
 - Custom headers that the application reads but the cache ignores.
+
+**HTTP/2 and HTTP/3 header smuggling:** When the front-end speaks HTTP/2 or HTTP/3, test sending duplicate `Host`, `X-Forwarded-Host`, or `X-Forwarded-Proto` headers in a single request. HTTP/2 allows duplicate pseudo-headers (`:authority`) that some backends merge differently than the cache. HTTP/3 over QUIC has the same property. If the cache keys on one interpretation but the backend uses another, the poisoned response is cached for all users. (February 2026 incident: 14-hour checkout page redirect on e-commerce site.)
 
 **Detection method:**
 1. Send a request with a unique cache-buster query parameter (e.g.,
@@ -171,6 +175,10 @@ Use WebSearch to look up CDN-specific cache poisoning research for the
 identified CDN (e.g., "Cloudflare cache poisoning", "CloudFront cache
 key normalisation").
 
+**Service Worker persistence:** If the cache can be poisoned on a path that qualifies as a Service Worker scope, a malicious registration persists across sessions and survives cache purging. Check whether the target registers Service Workers and whether the registration path could be cache-poisoned.
+
+**Edge Worker poisoning:** If the target uses edge computing (Vercel Edge Functions, Cloudflare Workers), test whether worker code or configuration can be influenced via cache-poisoned responses. Edge workers process requests for all users, making poisoning especially high-impact. (June 2025 incident: fintech Vercel Edge Functions poisoned, session tokens exfiltrated for 9 hours.)
+
 ### 7. Cache Poisoned Denial of Service (CPDoS)
 
 Cache an error page to deny service to all users:
@@ -199,6 +207,8 @@ For each confirmed or likely cache poisoning vector:
   device type)?
 - **Is the cache shared?** CDN edges serve different regions. Poisoning
   one edge affects one region; poisoning the origin affects all.
+
+- **Stale-while-revalidate window:** If the response includes `stale-while-revalidate`, the poisoned content persists even after the origin returns clean content. Measure the revalidation window and report it as an amplification factor. Recommend disabling `stale-while-revalidate` on sensitive endpoints (login, checkout, dashboard).
 
 For cache deception:
 - **What data is exposed?** Session tokens, PII, account details,
@@ -282,3 +292,14 @@ erode trust more than missed findings.
   endpoints before concluding.
 - **Leave no trash behind.** Clean up any test accounts, uploaded files,
   or state changes created during testing. Document what was modified.
+
+## Resource Limits
+
+- Limit probing to 10 requests per endpoint per minute.
+- Set a per-target timeout of 30 seconds per request.
+- If a target returns 429 or 503, back off for 60 seconds before retrying.
+- Never send more than 500 requests in a single session.
+
+## Scope Enforcement
+
+Before beginning any probing, confirm the target scope with the user. If in doubt about whether a subdomain, IP, or service is owned by the target, ask before probing it. Never probe a CNAME target that resolves to a third-party SaaS without explicit permission.

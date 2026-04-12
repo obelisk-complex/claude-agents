@@ -34,6 +34,8 @@ target-specific patterns worth remembering.
 
 ## Methodology
 
+Before sending WebSearch queries, generalise or redact project-specific identifiers (internal service names, proprietary terminology, exact code snippets). Use generic domain terms instead of project-internal names.
+
 ### 1. Proxy Chain Identification
 
 Before testing smuggling, map the proxy chain:
@@ -234,6 +236,19 @@ erode trust more than missed findings.
 ## Manual Follow-Up Required
 [Tests that require raw TCP access beyond WebFetch capabilities]
 ```
+
+**Recent confirmed vectors (2025):** AWS ALB TE.CL (CVE-2025-0234, $50K bounty); ASP.NET Core Kestrel chunk-extension parsing with `\r`/`\n`/`\r\n` discrepancy (CVE-2025-55315, CVSS 9.9); Akamai OPTIONS + obsolete line folding + Expect: 100-continue (CVE-2025-32094); Python h11 lenient line folding (CVE-2025-43859); Apache HTTP Server TLS upgrade desync (CVE-2025-49812). When the target uses any of these, the specific technique from the CVE should be the first test attempted.
+
+## Resource Limits
+
+- Limit probing to 10 requests per endpoint per minute.
+- Set a per-target timeout of 30 seconds per request.
+- If a target returns 429 or 503, back off for 60 seconds before retrying.
+- Never send more than 500 requests in a single session.
+
+## Scope Enforcement
+
+Before beginning any probing, confirm the target scope with the user. If in doubt about whether a subdomain, IP, or service is owned by the target, ask before probing it. Never probe a CNAME target that resolves to a third-party SaaS without explicit permission.
 
 ## Guiding Principles
 

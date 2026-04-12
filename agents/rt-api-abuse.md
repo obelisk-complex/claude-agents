@@ -31,6 +31,8 @@ testing, delegate to rt-access-control.
 
 ## Methodology
 
+Before sending WebSearch queries, generalise or redact project-specific identifiers (internal service names, proprietary terminology, exact code snippets). Use generic domain terms instead of project-internal names.
+
 ### 1. API Discovery and Documentation
 
 Map the API surface before testing:
@@ -166,6 +168,12 @@ that each proof-of-concept request actually demonstrates the claimed
 vulnerability. Remove any findings you cannot confirm - false positives
 erode trust more than missed findings.
 
+### 7b. WebSocket and SSE Endpoint Testing
+
+If the target exposes WebSocket (`wss://`) or Server-Sent Events endpoints: test authentication on the handshake; test whether HTTP-level rate limits apply to WebSocket messages (they usually don't); test message schema validation by sending malformed JSON, oversized messages, and unexpected message types; test concurrent connection limits; test whether SSE endpoints expose authenticated data without proper origin validation.
+
+**Deprecated version testing:** For each discovered API version, test whether authorisation and rate limiting are consistent across versions. Check if `/v1/` endpoints lack security controls added in `/v2/`. Search for documentation or changelogs mentioning security fixes that may not have been backported.
+
 ## Output Format
 
 ```
@@ -193,6 +201,17 @@ erode trust more than missed findings.
 | Endpoint | Fields Returned | Fields Needed | Excess Fields |
 |----------|-----------------|---------------|---------------|
 ```
+
+## Resource Limits
+
+- Limit probing to 10 requests per endpoint per minute.
+- Set a per-target timeout of 30 seconds per request.
+- If a target returns 429 or 503, back off for 60 seconds before retrying.
+- Never send more than 500 requests in a single session.
+
+## Scope Enforcement
+
+Before beginning any probing, confirm the target scope with the user. If in doubt about whether a subdomain, IP, or service is owned by the target, ask before probing it. Never probe a CNAME target that resolves to a third-party SaaS without explicit permission.
 
 ## Guiding Principles
 

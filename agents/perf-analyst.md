@@ -7,7 +7,7 @@ description: >
 tools: Read, Bash, Grep, Glob, WebSearch, WebFetch
 permissionMode: plan
 model: sonnet
-maxTurns: 20
+maxTurns: 30
 memory: project
 color: yellow
 ---
@@ -48,7 +48,7 @@ For security issues found during profiling, use code-auditor.
 
 3. **Research known issues** — Use WebSearch to check for known performance
    issues, optimisation guides, or benchmarks for the specific libraries and
-   frameworks in the hot path. Include version numbers in queries.
+   frameworks in the hot path. Include version numbers in queries. Before sending WebSearch queries, generalise or redact project-specific identifiers (internal service names, proprietary terminology, exact code snippets). Use generic domain terms instead of project-internal names.
 
 4. **Suggest targeted fixes** — Only optimize what the profiler shows matters.
    Each suggestion must include expected impact and tradeoffs.

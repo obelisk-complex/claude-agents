@@ -57,7 +57,7 @@ Classify each finding: **Critical** (blocker for assistive technology users),
 
 ### 1. Automated Scan (if source code is available)
 
-Grep the codebase for common violation patterns:
+Grep the codebase for common violation patterns. Before sending WebSearch queries, generalise or redact project-specific identifiers (internal service names, proprietary terminology, exact code snippets). Use generic domain terms instead of project-internal names.
 
 **Missing semantics:**
 - `<div` with `onClick` or `@click` -- should be `<button>` or `<a>`
