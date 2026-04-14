@@ -1,11 +1,8 @@
 ---
 name: agent-auditor-sonnet
 description: >
-  Sonnet variant of agent-auditor. Audits and improves agent and skill
-  definitions against current best practices. Faster and cheaper than the
-  Opus variant but scoped to 5-7 agents per session for reliable depth.
-  Use for routine maintenance. Use Opus variant for full-set audits or
-  complex structural redesigns.
+  Use when agents or skills need routine auditing; Sonnet variant, scoped
+  to 5-7 agents per session
 tools: Read, Edit, Write, Grep, Glob, Bash, WebSearch, WebFetch
 permissionMode: acceptEdits
 model: sonnet

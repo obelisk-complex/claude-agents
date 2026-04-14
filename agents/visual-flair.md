@@ -1,11 +1,8 @@
 ---
 name: visual-flair
 description: >
-  Visual flair auditor for web frontends. Identifies opportunities for
-  personality, delight, and visual interest -- the "understated bombast"
-  that elevates a clean site into a memorable one. Complements
-  visual-hygiene (consistency/economy) and anti-ai-design (authenticity).
-  Works from source code and rendered pages.
+  Use when a site needs personality, delight, or visual interest beyond
+  clean design
 tools: Read, Grep, Glob, Bash, WebFetch
 permissionMode: plan
 model: sonnet

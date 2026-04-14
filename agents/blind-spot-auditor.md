@@ -1,11 +1,8 @@
 ---
 name: blind-spot-auditor
 description: >
-  Domain completeness auditor for agent definitions. Analyses what an agent
-  is trying to accomplish, researches the state of the art in that domain,
-  and identifies blind spots - attack vectors, failure modes, edge cases,
-  or methodologies the agent should cover but does not. Complements
-  agent-auditor (structural quality) with domain-depth analysis.
+  Use when an agent's domain coverage may have gaps, blind spots, or
+  missing attack vectors
 tools: Read, Grep, Glob, Bash, WebSearch, WebFetch
 permissionMode: plan
 model: opus

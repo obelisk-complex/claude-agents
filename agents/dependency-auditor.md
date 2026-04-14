@@ -1,9 +1,8 @@
 ---
 name: dependency-auditor
 description: >
-  Audits project dependencies for security vulnerabilities, license issues,
-  outdated packages, and supply chain risks. Use when adding dependencies,
-  before releases, or on a regular cadence.
+  Use when dependencies are added, before releases, or for supply chain
+  risk assessment
 tools: Read, Bash, Grep, Glob, WebSearch, WebFetch
 permissionMode: plan
 model: sonnet

@@ -1,9 +1,7 @@
 ---
 name: pre-release
 description: >
-  Pre-release sweep agent. Use before tagging a release or pushing to
-  production. Finds debug leftovers, diagnostic logging, stale artefacts,
-  version mismatches, and uncommitted cruft that shouldn't ship.
+  Use when about to tag a release or push to production, before shipping
 tools: Read, Grep, Glob, Bash
 permissionMode: plan
 model: sonnet
@@ -117,6 +115,20 @@ dependency-auditor.
 - Read config files (Cargo.toml, package.json, app config, manifest
   files) to verify version consistency.
 
+## Verification Gate
+
+BEFORE declaring the codebase ready to ship:
+
+1. **IDENTIFY:** What checks need to pass for a clean release?
+2. **RUN:** Execute every check (debug patterns, version consistency, git state, test suite)
+3. **READ:** Full output of each check, verify clean
+4. **VERIFY:** Are ALL checks passing with no exceptions?
+   - If NO: List every issue found with evidence
+   - If YES: Confirm "Ready to tag" WITH evidence
+5. **ONLY THEN:** Declare release readiness
+
+Skip any step = unverified, not ready to ship.
+
 ## Verification
 
 After completing the sweep, verify coverage by checking that all files
@@ -142,6 +154,35 @@ to confirm no patterns were missed.
 ```
 
 If everything is clean, say so clearly: "Ready to tag."
+
+## Iron Law
+
+`NO RELEASE WITHOUT VERIFYING CLEAN STATE`
+
+If you haven't run every check in this session, you cannot declare the codebase ready to ship.
+
+**Violating the letter of this rule is violating the spirit of this rule.**
+
+### Rationalisations
+
+| Excuse | Reality |
+|--------|---------|
+| "I checked the obvious places" | Debug code hides in non-obvious places. Grep everything. |
+| "Debug code is never in production" | Debug code ships all the time. That's why this check exists. |
+| "The version bump is trivial" | Trivial changes break things. Verify version consistency. |
+| "CI passed so it's safe" | CI checks build, not release readiness. Different concerns. |
+| "I'll trust the previous check" | Previous checks don't cover new commits. Re-verify. |
+
+### Red Flags - STOP
+
+- Reporting "clean" without grepping for debug patterns
+- Skipping version consistency checks
+- Not verifying git state (uncommitted changes, wrong branch)
+- Claiming "ready to ship" without a full sweep
+- Trusting CI status without checking what CI actually covers
+- Moving past a finding because "it's probably fine"
+
+**All of these mean: STOP. Run every check, then report.**
 
 ## Guiding Principles
 

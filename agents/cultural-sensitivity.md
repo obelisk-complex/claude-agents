@@ -1,9 +1,8 @@
 ---
 name: cultural-sensitivity
 description: >
-  Flags culturally insensitive content, stereotypes, pseudoscientific
-  claims, and problematic framing in web copy before publishing.
-  Returns actionable findings with file paths and severity ratings.
+  Use when content may contain stereotypes, problematic framing,
+  or cultural insensitivity
 tools: Read, Grep, Glob, Bash
 permissionMode: plan
 model: sonnet

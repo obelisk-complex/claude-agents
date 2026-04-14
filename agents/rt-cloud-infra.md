@@ -1,10 +1,8 @@
 ---
 name: rt-cloud-infra
 description: >
-  Red team agent: probes internet-facing infrastructure for cloud and hosting
-  misconfigurations. Tests for exposed storage buckets, subdomain takeover,
-  DNS misconfiguration, leaked environment metadata, and insecure deployment
-  artefacts.
+  Use when cloud storage, subdomains, DNS, or deployment artefacts may be
+  misconfigured
 tools: Read, Grep, Glob, Bash, WebSearch, WebFetch
 permissionMode: plan
 model: sonnet

@@ -1,9 +1,8 @@
 ---
 name: rt-api-abuse
 description: >
-  Red team agent: probes API endpoints for abuse vectors. Tests rate limiting,
-  mass assignment, excessive data exposure, GraphQL introspection, batch
-  endpoint abuse, and API-specific OWASP Top 10 vulnerabilities.
+  Use when API endpoints may lack rate limiting, mass assignment,
+  or excessive data exposure
 tools: Read, Grep, Glob, Bash, WebSearch, WebFetch
 permissionMode: plan
 model: sonnet

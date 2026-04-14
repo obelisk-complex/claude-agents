@@ -1,9 +1,8 @@
 ---
 name: rt-injection
 description: >
-  Red team agent: probes internet-facing services for server-side injection
-  vulnerabilities. Tests for SQL injection, NoSQL injection, SSTI, OS command
-  injection, LDAP injection, and header injection via HTTP inputs.
+  Use when server-side inputs may enable SQL injection, SSTI, or command
+  injection
 tools: Read, Grep, Glob, Bash, WebSearch, WebFetch
 permissionMode: plan
 model: sonnet

@@ -1,9 +1,8 @@
 ---
 name: migration-planner
 description: >
-  Plans and validates code migrations, framework upgrades, and large
-  refactors. Use when upgrading dependencies, migrating between frameworks,
-  or planning breaking changes. Read-only — produces a plan, does not execute.
+  Use when planning framework upgrades, large refactors, or breaking
+  changes; read-only, produces a plan
 tools: Read, Bash, Grep, Glob, WebSearch, WebFetch
 permissionMode: plan
 model: opus

@@ -1,11 +1,8 @@
 ---
 name: blind-spot-auditor-sonnet
 description: >
-  Sonnet variant of blind-spot-auditor. Domain completeness auditor for
-  agent definitions. Researches the state of the art in an agent's domain
-  and identifies missing attack vectors, failure modes, or methodologies.
-  Scoped to 1-2 agents per session for reliable depth. Use Opus variant
-  for batch audits or domains requiring deep expert judgment.
+  Use when an agent may have domain gaps; Sonnet variant, scoped to 1-2
+  agents per session
 tools: Read, Grep, Glob, Bash, WebSearch, WebFetch
 permissionMode: plan
 model: sonnet

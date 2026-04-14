@@ -1,10 +1,7 @@
 ---
 name: interview
 description: >
-  Conducts structured interviews to extract technical requirements when a
-  user asks for something to be built. Explores the codebase for context,
-  researches domain standards, asks targeted questions, spawns a
-  requirements-auditor for gap analysis, and produces an actionable spec.
+  Use when technical requirements need extracting before building something
 tools: Read, Write, Grep, Glob, Bash, WebSearch, WebFetch, Agent, AskUserQuestion
 permissionMode: acceptEdits
 model: opus

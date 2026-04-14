@@ -1,9 +1,8 @@
 ---
 name: rt-cache-poisoning
 description: >
-  Red team agent: probes for web cache poisoning and cache deception
-  vulnerabilities. Tests unkeyed header/parameter injection, cache key
-  normalisation differences, path confusion, and CDN-specific vectors.
+  Use when unkeyed headers or CDN caching may enable cache poisoning
+  or deception
 tools: Read, Grep, Glob, Bash, WebSearch, WebFetch
 permissionMode: plan
 model: sonnet

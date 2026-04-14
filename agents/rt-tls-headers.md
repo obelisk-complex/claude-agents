@@ -1,9 +1,8 @@
 ---
 name: rt-tls-headers
 description: >
-  Red team agent: audits TLS configuration, security headers, CORS policy,
-  and cookie flags on internet-facing services. Identifies transport-layer
-  and header-level misconfigurations that weaken the security posture.
+  Use when TLS configuration, security headers, CORS, or cookie flags need
+  auditing
 tools: Read, Grep, Glob, Bash, WebSearch, WebFetch
 permissionMode: plan
 model: sonnet

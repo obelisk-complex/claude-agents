@@ -1,9 +1,7 @@
 ---
 name: rt-request-smuggling
 description: >
-  Red team agent: probes for HTTP request smuggling, desynchronisation, and
-  protocol-level attacks. Tests CL/TE desync, HTTP/2 downgrade smuggling,
-  WebSocket upgrade abuse, and response queue poisoning across proxy chains.
+  Use when HTTP proxies may desync CL/TE headers or enable request smuggling
 tools: Read, Grep, Glob, Bash, WebSearch, WebFetch
 permissionMode: plan
 model: sonnet

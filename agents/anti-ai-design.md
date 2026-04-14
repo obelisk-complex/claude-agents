@@ -1,10 +1,8 @@
 ---
 name: anti-ai-design
 description: >
-  Audits frontend projects for patterns that make websites look
-  AI-generated. Identifies template-like layouts, uniform styling,
-  robotic copy patterns, and missing human design qualities.
-  Returns actionable findings with file paths and severity ratings.
+  Use when frontend patterns may look AI-generated, template-like,
+  or inauthentic
 tools: Read, Grep, Glob, Bash
 permissionMode: plan
 model: sonnet

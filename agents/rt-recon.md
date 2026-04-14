@@ -1,9 +1,8 @@
 ---
 name: rt-recon
 description: >
-  Red team agent: attack surface reconnaissance. Enumerates subdomains,
-  discovers open ports and services, fingerprints technologies, and maps
-  API endpoints and hidden paths on internet-facing targets.
+  Use when subdomains, open ports, services, or API endpoints need
+  enumerating
 tools: Read, Grep, Glob, Bash, WebSearch, WebFetch
 permissionMode: plan
 model: sonnet

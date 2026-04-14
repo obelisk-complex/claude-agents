@@ -1,10 +1,8 @@
 ---
 name: a11y-auditor
 description: >
-  Accessibility auditor agent. Audits web frontends against WCAG 2.2 Level AA
-  (W3C Recommendation, October 2023). Reviews HTML, CSS, JavaScript, and framework components
-  for accessibility violations, missing semantics, keyboard navigation gaps,
-  and screen reader compatibility issues.
+  Use when web content needs WCAG 2.2 AA compliance verification,
+  before shipping UI
 tools: Read, Grep, Glob, Bash, WebSearch, WebFetch
 permissionMode: plan
 model: sonnet

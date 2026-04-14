@@ -1,9 +1,8 @@
 ---
 name: rt-xss
 description: >
-  Red team agent: probes internet-facing services for cross-site scripting
-  vulnerabilities. Tests reflected, stored, and DOM-based XSS vectors,
-  evaluates CSP bypass potential, and assesses client-side sanitisation.
+  Use when user input may be reflected, stored, or DOM-injected without
+  sanitisation
 tools: Read, Grep, Glob, Bash, WebSearch, WebFetch
 permissionMode: plan
 model: sonnet

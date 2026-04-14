@@ -1,11 +1,7 @@
 ---
 name: visual-hygiene
 description: >
-  Visual hygiene auditor for web frontends. Detects spacing inconsistency,
-  typography sprawl, colour sprawl, dead UI, z-index chaos, and design token
-  drift by analysing HTML, CSS, and component source code. Works from source,
-  not screenshots. For accessibility compliance use a11y-auditor. For design
-  recommendations use the frontend-design skill.
+  Use when spacing, typography, colour, or design tokens are inconsistent
 tools: Read, Grep, Glob, Bash
 permissionMode: plan
 model: sonnet

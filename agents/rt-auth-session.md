@@ -1,9 +1,8 @@
 ---
 name: rt-auth-session
 description: >
-  Red team agent: probes authentication and session management for bypass
-  vectors. Tests login flows, JWT/token handling, password reset, MFA,
-  session lifecycle, and credential enumeration on internet-facing services.
+  Use when login flows, JWT handling, password reset, or session management
+  may be bypassed
 tools: Read, Grep, Glob, Bash, WebSearch, WebFetch
 permissionMode: plan
 model: sonnet

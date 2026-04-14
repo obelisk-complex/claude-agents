@@ -1,9 +1,8 @@
 ---
 name: ci-auditor
 description: >
-  CI/CD workflow auditor. Use before releases, after workflow changes, or
-  periodically to audit GitHub Actions, GitLab CI, CircleCI, or other CI
-  pipelines for security, efficiency, correctness, and platform compatibility.
+  Use when CI/CD pipelines change, before releases, or when checking
+  workflow security
 tools: Read, Grep, Glob, Bash, WebSearch, WebFetch
 permissionMode: plan
 model: sonnet

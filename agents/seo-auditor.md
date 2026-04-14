@@ -1,11 +1,8 @@
 ---
 name: seo-auditor
 description: >
-  SEO auditor for websites. Audits HTML, meta tags, structured data, heading
-  hierarchy, link structure, image optimization, crawlability signals, Core Web
-  Vitals indicators, and framework-specific SSR/SSG concerns. Works from source
-  code and rendered pages. For accessibility use a11y-auditor. For performance
-  deep-dives use perf-analyst.
+  Use when HTML, meta tags, structured data, or crawlability need SEO
+  verification
 tools: Read, Grep, Glob, Bash, WebSearch, WebFetch
 permissionMode: plan
 model: sonnet

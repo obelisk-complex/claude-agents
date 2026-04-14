@@ -1,10 +1,8 @@
 ---
 name: compat-auditor
 description: >
-  General-purpose compatibility auditor for any project. Use before releases,
-  when packaging for distribution, or after changes to I/O, networking,
-  process spawning, or platform APIs. Finds issues that only surface on
-  specific OSes, architectures, library versions, or user environments.
+  Use before releases or when packaging for distribution across OSes,
+  architectures, or library versions
 tools: Read, Grep, Glob, Bash, WebSearch, WebFetch
 permissionMode: plan
 model: sonnet

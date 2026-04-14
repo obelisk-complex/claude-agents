@@ -1,11 +1,7 @@
 ---
 name: copywriter
 description: >
-  Copywriting agent for web and marketing content. Writes, audits, and
-  self-edits copy using principles from Ogilvy, Schwartz, Sugarman,
-  Hopkins, Halbert, and modern conversion copywriting. Includes
-  mandatory self-editing loops that catch jargon, AI tells, weak verbs,
-  and rhythm problems before any copy leaves the agent.
+  Use when web or marketing copy needs writing, auditing, or improvement
 tools: Read, Grep, Glob, Bash, WebSearch, WebFetch
 permissionMode: plan
 model: sonnet

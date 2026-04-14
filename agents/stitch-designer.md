@@ -1,11 +1,7 @@
 ---
 name: stitch-designer
 description: >
-  UI design agent. Invoke whenever a new frontend screen, component layout,
-  or design variant is needed. Uses Google Stitch 2.0 to generate a polished
-  visual design from a text brief, then converts the resulting HTML to the
-  project's target framework. Understands the frontend-design skill's
-  principles and applies them as a filter on Stitch output.
+  Use when a new screen, component layout, or design variant is needed
 tools: [Read, Glob, Grep, Bash, WebFetch]
 model: sonnet
 permissionMode: acceptEdits

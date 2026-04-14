@@ -1,10 +1,8 @@
 ---
 name: rt-ssrf
 description: >
-  Red team agent: probes internet-facing services for server-side request
-  forgery. Tests URL inputs, webhook configurations, file fetchers, and
-  redirect chains for access to internal networks, cloud metadata, and
-  local services.
+  Use when URL inputs, webhooks, or file fetchers may access internal
+  networks
 tools: Read, Grep, Glob, Bash, WebSearch, WebFetch
 permissionMode: plan
 model: sonnet

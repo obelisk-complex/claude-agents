@@ -1,10 +1,8 @@
 ---
 name: rt-business-logic
 description: >
-  Red team agent: probes internet-facing services for business logic flaws.
-  Tests payment flows, race conditions, workflow bypass, state machine abuse,
-  and application-specific logic that cannot be caught by signature-based
-  scanning.
+  Use when payment flows, race conditions, or workflow bypasses may enable
+  business logic flaws
 tools: Read, Grep, Glob, Bash, WebSearch, WebFetch
 permissionMode: plan
 model: sonnet

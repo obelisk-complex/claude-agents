@@ -1,10 +1,8 @@
 ---
 name: plan-auditor
 description: >
-  Audits implementation plans, migration plans, and project roadmaps for
-  gaps, inconsistencies, false assumptions, and inefficient processes.
-  Use after a plan has been formulated to stress-test it before execution.
-  Complements migration-planner (creates plans) with adversarial review.
+  Use when an implementation plan, migration plan, or roadmap needs
+  stress-testing before execution
 tools: Read, Grep, Glob, Bash, WebSearch, WebFetch
 permissionMode: plan
 model: opus

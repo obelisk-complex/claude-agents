@@ -1,9 +1,8 @@
 ---
 name: rt-access-control
 description: >
-  Red team agent: probes internet-facing services for broken access control.
-  Tests for IDOR, privilege escalation, forced browsing, HTTP verb tampering,
-  and horizontal/vertical authorisation bypass on authenticated endpoints.
+  Use when authenticated endpoints may have IDOR, privilege escalation,
+  or auth bypass
 tools: Read, Grep, Glob, Bash, WebSearch, WebFetch
 permissionMode: plan
 model: sonnet

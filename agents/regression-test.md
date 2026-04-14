@@ -1,9 +1,7 @@
 ---
 name: regression-test
 description: >
-  Regression testing specialist. Use after code changes to detect behavioral
-  regressions, establish output baselines, validate that fixed bugs stay fixed,
-  and create snapshot or golden-file tests for critical outputs.
+  Use when code has changed and existing behaviour must be preserved
 tools: Read, Edit, Write, Bash, Grep, Glob
 permissionMode: acceptEdits
 model: sonnet
@@ -170,6 +168,34 @@ When changes affect hot paths or resource-intensive operations:
 ### Unprotected Areas
 [Code paths affected by the change that still lack regression coverage]
 ```
+
+## Iron Law
+
+`NO BEHAVIOUR PRESERVED WITHOUT BASELINE COMPARISON`
+
+If you haven't captured a baseline before changes and compared output after, you cannot claim no regressions.
+
+**Violating the letter of this rule is violating the spirit of this rule.**
+
+### Rationalisations
+
+| Excuse | Reality |
+|--------|---------|
+| "The tests still pass" | Passing tests prove nothing changed that tests check. They don't prove nothing changed. |
+| "Visual inspection confirms" | Eyes miss regressions that diffs and snapshots catch. |
+| "The change is backward compatible" | Claimed compatibility is not tested compatibility. Run the comparison. |
+| "I'll trust the existing tests" | Existing tests test existing behaviour. Regressions are changes in existing behaviour. |
+| "No API changed" | Internal behaviour can regress without API changes. |
+
+### Red Flags - STOP
+
+- Claiming "no regressions" without a before/after baseline
+- Not running snapshot or golden-file comparison
+- Skipping edge-case comparison because "the change is small"
+- Reporting "behaviour preserved" without showing the diff
+- Trusting existing test coverage to catch regressions it wasn't designed for
+
+**All of these mean: STOP. Capture baseline, compare, then report.**
 
 ## Guiding Principles
 

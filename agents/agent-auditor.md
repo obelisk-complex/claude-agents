@@ -1,10 +1,8 @@
 ---
 name: agent-auditor
 description: >
-  Meta-agent that audits and improves other agents and skills. Searches
-  for updated best practices in Claude Code agent and skill design,
-  synthesises them with lessons learned from real-world usage, and
-  updates definitions to match the current state of the art.
+  Use when agents or skills need auditing, updating, or quality checking
+  against current best practices
 tools: Read, Edit, Write, Grep, Glob, Bash, WebSearch, WebFetch
 permissionMode: acceptEdits
 model: opus

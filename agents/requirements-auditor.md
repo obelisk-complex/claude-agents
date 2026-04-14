@@ -1,9 +1,8 @@
 ---
 name: requirements-auditor
 description: >
-  Audits technical requirements and specs for completeness gaps, unstated
-  assumptions, missing edge cases, and incomplete acceptance criteria.
-  Purpose-built for finding what the requirements don't say.
+  Use when a spec or requirements document has potential gaps or missing
+  edge cases
 tools: Read, Grep, Glob, Bash, WebSearch, WebFetch
 permissionMode: plan
 model: opus

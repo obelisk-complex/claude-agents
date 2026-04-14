@@ -1,11 +1,8 @@
 ---
 name: migration-planner-sonnet
 description: >
-  Sonnet variant of migration-planner. Plans code migrations, framework
-  upgrades, and large refactors. Read-only — produces a plan, does not
-  execute. Faster and cheaper than the Opus variant. Use Opus for
-  high-risk migrations (database schema changes, auth rewrites, breaking
-  API changes) where risk analysis requires deeper judgment.
+  Use when planning routine migrations or refactors; Sonnet variant,
+  read-only, produces a plan
 tools: Read, Bash, Grep, Glob, WebSearch, WebFetch
 permissionMode: plan
 model: sonnet
