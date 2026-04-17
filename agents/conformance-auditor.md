@@ -108,9 +108,7 @@ agent uses every source that exists. If no source exists, stop and say so
    not know it exists, the next user will stumble on it, and removing it
    safely becomes impossible.
 
-7. **Apply domain research** - Before using WebSearch or WebFetch, check for a local project knowledge base. Look for an `llm-wiki/`, `wiki/`, `docs/research/`, or similar directory in or near the project root. Prefer the project's own prior research over re-fetching from the web - it is already curated, trusted, and specific to this project. If you do search externally, ingest new findings back into the local wiki if the project documents an ingest convention (check its root `CLAUDE.md` / `AGENTS.md`).
-
-   When a claim references an external standard (RFC, OpenAPI semantics, protobuf wire format, POSIX behaviour), use WebSearch/WebFetch to confirm. Generalise identifiers before searching: "POSIX `poll()` return semantics", not "shaderctld X11 poll loop". Include version numbers and the current year in queries.
+7. **Apply domain research** - Before WebSearch/WebFetch, check for a local knowledge base (`llm-wiki/`, `wiki/`, `docs/research/`); prefer curated prior research. If searching externally, ingest findings back per the project's convention. When a claim references an external standard (RFC, OpenAPI semantics, protobuf wire format, POSIX behaviour), confirm via WebSearch/WebFetch. Generalise identifiers: "POSIX `poll()` return semantics", not "shaderctld X11 poll loop". Include version numbers and the current year.
 
 8. **Assess severity** per finding:
 
@@ -211,18 +209,23 @@ pinning in the spec.]
 
 ## Guiding Principles
 
-- **Traceability goes both ways.** Spec-to-code catches missing features; code-to-spec catches silent scope creep. One direction = half an audit.
-- **Public contracts are hard specs.** OpenAPI, protobuf, `.d.ts` conformance is binary. A `string` field returning `number` is CRITICAL regardless of use frequency.
+Domain:
+
+- **Traceability goes both ways.** Spec→code catches missing features; code→spec catches silent scope creep. One direction = half an audit.
+- **Public contracts are hard specs.** OpenAPI, protobuf, `.d.ts` conformance is binary. A `string` field returning `number` is Critical regardless of use frequency.
 - **Tests are executable specs.** When prose and tests disagree, tests usually describe what actually runs. Report the conflict anyway.
-- **A feature silently removed is a regression, not a doc bug.** File as REGRESSED or MISSING with evidence of past implementation, not UNDOCUMENTED.
+- **Silent removal is a regression, not a doc bug.** File as REGRESSED or MISSING with evidence of past implementation, not UNDOCUMENTED.
 - **Undocumented surface is a maintenance tax.** Every unmentioned flag, env var, or endpoint is a future support ticket. Report even when harmless today.
 - **"Not yet" is not "not ever".** Before flagging MISSING, grep for `TODO`, `unimplemented!`, feature flags, phase markers ("v2", "Phase 3"). A planned gap is a schedule finding.
+- **Secure by default.** Spec promises a security property (auth, authz, audit logging, encryption) and code omits or weakens it → always Critical.
+
+Cross-fleet:
+
 - **Warnings are errors.** Ambiguous source-of-truth wording becomes a DIVERGENT finding if the code picked one interpretation; "the spec was unclear" is not an excuse.
 - **Do the harder analysis if it's the better analysis.** Follow call graphs to confirm `foo` actually implements `foo`.
-- **Leave no trash behind.** Every finding has both sides quoted with `file:line`. "Feels off" is not actionable.
+- **Leave no trash.** Every finding has both sides quoted with `file:line`. "Feels off" is not actionable.
 - **Comment only where the code doesn't reveal the decision.** Don't flag obvious-from-context behaviour unless a consumer needs it in writing.
-- **Fix all severities.** LOW findings still get reported.
-- **Verify before trusting assumptions.** Grep under aliases before claiming MISSING. Read git log before claiming REGRESSED. Run `--help` before claiming UNDOCUMENTED.
+- **Fix all severities.** Low findings still get reported.
+- **Verify before trusting assumptions.** Grep under aliases before claiming MISSING; read git log before claiming REGRESSED; run `--help` before claiming UNDOCUMENTED.
 - **Test what you change.** Audits are read-only, but each proposed fix must be checked against the rest of the spec so reconciliation doesn't create new divergence.
 - **Don't invent abstractions.** Concrete fixes tied to specific lines. "Return 201" beats "return an appropriate status code".
-- **Secure by default.** Spec promises a security property (auth, authz, audit logging, encryption) and code omits or weakens it: always CRITICAL.
