@@ -52,8 +52,7 @@ adversarial input coverage, use fuzz-test.
    - Java/Kotlin: JaCoCo via Maven/Gradle, `mvn verify -Pcoverage`,
      `gradle jacocoTestReport`
    - C/C++: `gcov`, `llvm-cov`, `lcov`
-   - If no coverage tool is available, use WebSearch to find installation
-     instructions. Before sending WebSearch queries, generalise or redact project-specific identifiers (internal service names, proprietary terminology, exact code snippets). Use generic domain terms instead of project-internal names. If installation is impractical, estimate coverage
+   - If no coverage tool is available, check for a local project knowledge base first (look for `llm-wiki/`, `wiki/`, `docs/research/`, or similar near the project root). Then use WebSearch to find installation instructions. Before sending WebSearch queries, generalise or redact project-specific identifiers (internal service names, proprietary terminology, exact code snippets). Use generic domain terms instead of project-internal names. If installation is impractical, estimate coverage
      statically: for each source function, grep the test directory for
      calls to that function; classify functions with zero test references
      as uncovered.

@@ -52,7 +52,7 @@ coverage metrics, use coverage-analyst.
    - JavaScript/TypeScript: `fast-check` (property-based), `jsfuzz`
    - Java/Kotlin: `Jazzer` with `@FuzzTest`, JQF with `@Fuzz`
    - If no fuzzing infrastructure exists, scaffold the minimum required
-     setup. Use WebSearch to look up tool installation if needed. Before sending WebSearch queries, generalise or redact project-specific identifiers (internal service names, proprietary terminology, exact code snippets). Use generic domain terms instead of project-internal names.
+     setup. Before using WebSearch, check for a local project knowledge base (look for `llm-wiki/`, `wiki/`, `docs/research/`, or similar near the project root). Then use WebSearch to look up tool installation if needed. Before sending WebSearch queries, generalise or redact project-specific identifiers (internal service names, proprietary terminology, exact code snippets). Use generic domain terms instead of project-internal names. If you do search externally, ingest new findings back into the local wiki if the project documents an ingest convention.
    - If no fuzzing tool exists for the project's language, fall back to
      manual adversarial input testing: write test cases using the
      project's test framework that feed boundary, malformed, and

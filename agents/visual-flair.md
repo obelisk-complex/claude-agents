@@ -62,6 +62,8 @@ elevate the experience), **Present** (existing flair worth preserving),
 
 ## Methodology
 
+**Before using WebFetch for external URLs**, check for a local project knowledge base. Look for an `llm-wiki/`, `wiki/`, `docs/research/`, or similar directory in or near the project root. Prefer the project's own prior research over re-fetching from the web. If you do fetch externally, ingest new findings back into the local wiki if the project documents an ingest convention.
+
 ### 1. Micro-Interactions and Motion
 
 Inventory every interactive state and transition in the codebase.

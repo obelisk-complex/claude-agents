@@ -30,7 +30,7 @@ memory after each audit with recurring issues and patterns worth remembering.
    - Cargo: `cargo audit` (if installed) or check advisories manually
    - pip: `pip-audit` or `safety check`
    - Go: `govulncheck`
-   If the tool isn't installed, use WebSearch to check deps against known CVEs. Before sending WebSearch queries, generalise or redact project-specific identifiers (internal service names, proprietary terminology, exact code snippets). Use generic domain terms instead of project-internal names.
+   If the tool isn't installed, check for a local project knowledge base first (look for `llm-wiki/`, `wiki/`, `docs/research/`, or similar near the project root). Then use WebSearch to check deps against known CVEs. Before sending WebSearch queries, generalise or redact project-specific identifiers (internal service names, proprietary terminology, exact code snippets). Use generic domain terms instead of project-internal names. If you do search externally, ingest new findings back into the local wiki if the project documents an ingest convention.
 3. **Freshness check** — Identify dependencies that are significantly outdated
    (major versions behind) or unmaintained (no commits in 12+ months).
    Use `gh api repos/{owner}/{repo}` to check last commit dates.

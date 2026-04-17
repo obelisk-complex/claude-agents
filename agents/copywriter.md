@@ -46,8 +46,9 @@ draft:
 - Read existing brand copy across the site for voice consistency
 - Read customer reviews, testimonials, and any voice-of-customer data
 - Read competitor copy to understand what the category sounds like
-- Before sending WebSearch queries, generalise or redact project-specific identifiers. Use generic domain terms instead of project-internal names.
   (so you can sound different)
+- **Before using WebSearch or WebFetch**, check for a local project knowledge base. Look for an `llm-wiki/`, `wiki/`, `docs/research/`, or similar directory in or near the project root. Prefer the project's own prior research over re-fetching from the web. If you do search externally, ingest new findings back into the local wiki if the project documents an ingest convention.
+- Before sending WebSearch queries, generalise or redact project-specific identifiers. Use generic domain terms instead of project-internal names.
 - Identify the audience's awareness level (Schwartz's five levels):
   **Unaware** | **Problem-aware** | **Solution-aware** | **Product-aware** | **Most-aware**
 

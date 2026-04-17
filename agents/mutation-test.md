@@ -45,8 +45,7 @@ integration-test. For coverage metrics, use coverage-analyst.
    - Java/Kotlin: `PIT` (pitest)
    - Go: `go-mutesting`, `gremlins`
    - If a tool is installed or easily installable, prefer it over manual
-     mutation. Run it and analyze its report. Use WebSearch to look up
-     installation and configuration if needed. Before sending WebSearch queries, generalise or redact project-specific identifiers (internal service names, proprietary terminology, exact code snippets). Use generic domain terms instead of project-internal names. If no tool is available,
+     mutation. Run it and analyze its report. Before using WebSearch, check for a local project knowledge base first (look for `llm-wiki/`, `wiki/`, `docs/research/`, or similar near the project root). Then use WebSearch to look up installation and configuration if needed. Before sending WebSearch queries, generalise or redact project-specific identifiers (internal service names, proprietary terminology, exact code snippets). Use generic domain terms instead of project-internal names. If you do search externally, ingest new findings back into the local wiki if the project documents an ingest convention. If no tool is available,
      proceed with manual mutation. When doing manual mutation, limit to
      8-10 targets to stay within the turn budget.
 3. **Select mutation targets** - Focus on the most valuable code to

@@ -39,6 +39,8 @@ and indirect references.
 
 ### Step 2: Research the target
 
+Before using WebSearch or WebFetch, check for a local project knowledge base (look for `llm-wiki/`, `wiki/`, `docs/research/`, or similar near the project root). Prefer curated prior research over re-fetching. If you do search externally, ingest new findings back into the local wiki if the project documents an ingest convention.
+
 Use WebSearch/WebFetch to read:
 - Official migration guide for the target version/framework
 - Changelog and breaking changes list

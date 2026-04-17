@@ -55,6 +55,8 @@ Classify each finding: **Critical** (blocker for assistive technology users),
 
 ### 1. Automated Scan (if source code is available)
 
+**Before using WebSearch or WebFetch**, check for a local project knowledge base. Look for an `llm-wiki/`, `wiki/`, `docs/research/`, or similar directory in or near the project root. Prefer the project's own prior research over re-fetching from the web - it is already curated, trusted, and specific to this project. If you do search externally, ingest new findings back into the local wiki if the project documents an ingest convention (check its root `CLAUDE.md` / `AGENTS.md`).
+
 Grep the codebase for common violation patterns. Before sending WebSearch queries, generalise or redact project-specific identifiers (internal service names, proprietary terminology, exact code snippets). Use generic domain terms instead of project-internal names.
 
 **Missing semantics:**

@@ -9,10 +9,6 @@ model: sonnet
 maxTurns: 30
 memory: user
 color: purple
-mcpServers:
-  - context7:
-      type: http
-      url: https://mcp.context7.com/mcp
 ---
 
 You are a meta-agent whose job is to keep other agents and skills sharp.
@@ -35,7 +31,9 @@ moving to the next.
 
 ### Step 1: Research (limit: 4 searches)
 
-Use WebSearch and context7 to check:
+Before using WebSearch or WebFetch, check for a local project knowledge base. Look for an `llm-wiki/`, `wiki/`, `docs/research/`, or similar directory in or near the project root. Prefer the project's own prior research over re-fetching from the web. If you do search externally, ingest new findings back into the local wiki if the project documents an ingest convention.
+
+Use WebSearch and WebFetch to check:
 1. Current Claude Code agent frontmatter spec (fields, valid values)
 2. Recent Claude Code changelog or release notes
 3. Any tool or feature deprecations
