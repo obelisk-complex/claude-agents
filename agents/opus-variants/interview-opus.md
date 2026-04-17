@@ -1,10 +1,11 @@
 ---
-name: interview
+name: interview-opus
 description: >
+  Claude Opus variant. 
   Use when technical requirements need extracting before building something
 tools: Read, Write, Grep, Glob, Bash, WebSearch, WebFetch, Agent, AskUserQuestion
 permissionMode: acceptEdits
-model: glm-5.1
+model: opus
 effort: high
 maxTurns: 45
 memory: project

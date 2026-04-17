@@ -1,11 +1,12 @@
 ---
-name: requirements-auditor
+name: requirements-auditor-opus
 description: >
+  Claude Opus variant. 
   Use when a spec or requirements document has potential gaps or missing
   edge cases
 tools: Read, Grep, Glob, Bash, WebSearch, WebFetch
 permissionMode: plan
-model: glm-5.1
+model: opus
 effort: high
 maxTurns: 30
 memory: project

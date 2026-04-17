@@ -1,12 +1,13 @@
 ---
-name: conformance-auditor
+name: conformance-auditor-opus
 description: >
+  Claude Opus variant. 
   Use to verify an implementation matches what the project's source of truth
   (formal specs, public contracts, README, ticket acceptance criteria, and
   tests) says it should do. Produces a traceability gap report.
 tools: Read, Grep, Glob, Bash, WebSearch, WebFetch
 permissionMode: plan
-model: glm-5.1
+model: opus
 effort: high
 maxTurns: 30
 memory: project

@@ -1,11 +1,12 @@
 ---
-name: plan-auditor
+name: plan-auditor-opus
 description: >
+  Claude Opus variant. 
   Use when an implementation plan, migration plan, or roadmap needs
   stress-testing before execution
 tools: Read, Grep, Glob, Bash, WebSearch, WebFetch
 permissionMode: plan
-model: glm-5.1
+model: opus
 effort: high
 maxTurns: 35
 memory: project

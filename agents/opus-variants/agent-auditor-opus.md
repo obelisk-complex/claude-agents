@@ -1,11 +1,12 @@
 ---
-name: agent-auditor
+name: agent-auditor-opus
 description: >
+  Claude Opus variant. 
   Use when agents or skills need auditing, updating, or quality checking
   against current best practices
 tools: Read, Edit, Write, Grep, Glob, Bash, WebSearch, WebFetch
 permissionMode: acceptEdits
-model: glm-5.1
+model: opus
 effort: high
 maxTurns: 40
 memory: user

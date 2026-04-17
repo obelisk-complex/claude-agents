@@ -10,8 +10,8 @@ A collection of specialised [Claude Code](https://code.claude.com/docs/en/overvi
 
 | Agent | Purpose | Model | Mode | Memory |
 |-------|---------|-------|------|--------|
-| [interview](agents/interview.md) | Structured interview to extract requirements, produces actionable spec | Opus | Write (spec file) | Project |
-| [requirements-auditor](agents/requirements-auditor.md) | Audits specs for completeness gaps, missing NFRs, unstated assumptions | Opus | Read-only | Project |
+| [interview](agents/interview.md) | Structured interview to extract requirements, produces actionable spec | GLM-5.1 | Write (spec file) | Project |
+| [requirements-auditor](agents/requirements-auditor.md) | Audits specs for completeness gaps, missing NFRs, unstated assumptions | GLM-5.1 | Read-only | Project |
 
 ### Code Quality and Review
 
@@ -22,8 +22,8 @@ A collection of specialised [Claude Code](https://code.claude.com/docs/en/overvi
 | [perf-analyst](agents/perf-analyst.md) | Bottleneck identification, profiling, targeted optimisation | Sonnet | Read-only | Project |
 | [dependency-auditor](agents/dependency-auditor.md) | CVE scanning, licence review, supply chain risk | Sonnet | Read-only | Project |
 | [pr-reviewer](agents/pr-reviewer.md) | Pull request review with CI checks and contextual code reading | Sonnet | Read-only | Project |
-| [migration-planner](agents/migration-planner.md) | Framework upgrades, large refactors, breaking change planning | Opus | Read-only | Project |
-| [plan-auditor](agents/plan-auditor.md) | Adversarial review of implementation and migration plans before execution | Opus | Read-only | Project |
+| [migration-planner](agents/migration-planner.md) | Framework upgrades, large refactors, breaking change planning | GLM-5.1 | Read-only | Project |
+| [plan-auditor](agents/plan-auditor.md) | Adversarial review of implementation and migration plans before execution | GLM-5.1 | Read-only | Project |
 | [pre-release](agents/pre-release.md) | Pre-release sweep for debug leftovers, version mismatches, and cruft | Sonnet | Read-only | Project |
 
 ### Platform and Compatibility
@@ -60,11 +60,22 @@ A collection of specialised [Claude Code](https://code.claude.com/docs/en/overvi
 | [rt-request-smuggling](agents/rt-request-smuggling.md) | HTTP request smuggling, CL/TE desync, H2 downgrade, WebSocket abuse | Sonnet | Read-only | Project |
 | [rt-cloud-infra](agents/rt-cloud-infra.md) | Cloud storage exposure, subdomain takeover, DNS misconfiguration, deployment artefacts | Sonnet | Read-only | Project |
 
+### Travel Research
+
+| Agent | Purpose | Model | Mode | Memory |
+|-------|---------|-------|------|--------|
+| [travel-research-coordinator](agents/travel-research-coordinator.md) | Orchestrates travel research agents, compiles results into structured guide with PDF | GLM-5.1 | Write (report + PDF) | Project |
+| [local-insights-researcher](agents/local-insights-researcher.md) | Discovers authentic local hidden gems and off-the-beaten-path experiences | Sonnet | Read-only | Project |
+| [culinary-researcher](agents/culinary-researcher.md) | Researches local food, drink, wine, and spirits recommendations | Sonnet | Read-only | Project |
+| [mainstream-attractions-researcher](agents/mainstream-attractions-researcher.md) | Researches mainstream tourist attractions, clearly labelled as tourist-friendly | Sonnet | Read-only | Project |
+| [itinerary-compiler](agents/itinerary-compiler.md) | Compiles day-by-day itinerary with timed activities and local tips | Sonnet | Read-only | Project |
+| [travel-guide-designer](agents/travel-guide-designer.md) | Creates layout specification and generates PDF travel guide via ReportLab | Sonnet | Write (PDF) | Project |
+
 ### Meta
 
 | Agent | Purpose | Model | Mode | Memory |
 |-------|---------|-------|------|--------|
-| [agent-auditor](agents/agent-auditor.md) | Meta-agent that audits and updates other agents against current best practices | Opus | Read-write | User |
+| [agent-auditor](agents/agent-auditor.md) | Meta-agent that audits and updates other agents against current best practices | GLM-5.1 | Read-write | User |
 
 ## Installation
 
@@ -117,12 +128,31 @@ When using agents from the main conversation, Claude Code spawns them as sub-age
 - **No manufactured findings.** If the code is clean, say so.
 - **Aggressive web search.** Agents check known issue trackers, CVE databases, and current documentation rather than relying solely on static analysis.
 
+## Model Variants
+
+Each agent has a default model suited to its task depth. High-reasoning agents (auditors, planners, interview) use `glm-5.1`; routine agents use `sonnet`.
+
+Variant directories provide Claude-model alternatives for when you have Claude API access:
+
+| Directory | Model | Use when |
+|-----------|-------|---------|
+| `agents/` (default) | `glm-5.1` or `sonnet` | Running via Ollama Pro / LiteLLM proxy |
+| `agents/opus-variants/` | `opus` | Claude API available; maximum reasoning depth |
+| `agents/sonnet-variants/` | `sonnet` | Claude API available; routine tasks |
+
+To switch an agent to its Claude variant, copy the variant file over the default:
+
+```bash
+# Example: use Claude Opus for conformance-auditor
+cp agents/opus-variants/conformance-auditor-opus.md agents/conformance-auditor.md
+```
+
 ## Customisation
 
 Each agent is a Markdown file with YAML frontmatter. You can:
 
 - Adjust `maxTurns` to give agents more or less time
-- Change `model` (e.g. `opus` for deeper analysis, `haiku` for quick checks)
+- Change `model` (e.g. `glm-5.1` for deep reasoning via Ollama Pro, `opus` for Claude API, `haiku` for quick checks)
 - Set `effort` to `low`, `medium`, `high`, or `max` to control reasoning depth
 - Add `memory` (`user`, `project`, or `local`) for cross-session learning
 - Set `color` for visual identification in the UI

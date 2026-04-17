@@ -1,11 +1,12 @@
 ---
-name: blind-spot-auditor
+name: blind-spot-auditor-opus
 description: >
+  Claude Opus variant. 
   Use when an agent's domain coverage may have gaps, blind spots, or
   missing attack vectors
 tools: Read, Grep, Glob, Bash, WebSearch, WebFetch
 permissionMode: plan
-model: glm-5.1
+model: opus
 effort: high
 maxTurns: 35
 memory: user

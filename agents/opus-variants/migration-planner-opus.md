@@ -1,11 +1,12 @@
 ---
-name: migration-planner
+name: migration-planner-opus
 description: >
+  Claude Opus variant. 
   Use when planning framework upgrades, large refactors, or breaking
   changes; read-only, produces a plan
 tools: Read, Bash, Grep, Glob, WebSearch, WebFetch
 permissionMode: plan
-model: glm-5.1
+model: opus
 effort: high
 maxTurns: 30
 memory: project
