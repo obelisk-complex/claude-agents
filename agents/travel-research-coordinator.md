@@ -6,7 +6,7 @@ description: >
   results into a structured report with PDF output
 tools: Read, Write, Bash, Grep, Glob, Agent, WebSearch, WebFetch
 permissionMode: acceptEdits
-model: glm-5.1
+model: sonnet
 effort: high
 maxTurns: 40
 memory: project

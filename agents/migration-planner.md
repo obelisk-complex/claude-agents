@@ -5,7 +5,7 @@ description: >
   changes; read-only, produces a plan
 tools: Read, Bash, Grep, Glob, WebSearch, WebFetch
 permissionMode: plan
-model: glm-5.1
+model: sonnet
 effort: high
 maxTurns: 30
 memory: project

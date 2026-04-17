@@ -5,7 +5,7 @@ description: >
   against current best practices
 tools: Read, Edit, Write, Grep, Glob, Bash, WebSearch, WebFetch
 permissionMode: acceptEdits
-model: glm-5.1
+model: sonnet
 effort: high
 maxTurns: 40
 memory: user

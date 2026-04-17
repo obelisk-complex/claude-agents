@@ -6,7 +6,7 @@ description: >
   tests) says it should do. Produces a traceability gap report.
 tools: Read, Grep, Glob, Bash, WebSearch, WebFetch
 permissionMode: plan
-model: glm-5.1
+model: sonnet
 effort: high
 maxTurns: 30
 memory: project

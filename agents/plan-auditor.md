@@ -5,7 +5,7 @@ description: >
   stress-testing before execution
 tools: Read, Grep, Glob, Bash, WebSearch, WebFetch
 permissionMode: plan
-model: glm-5.1
+model: sonnet
 effort: high
 maxTurns: 35
 memory: project
