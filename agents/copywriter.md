@@ -66,6 +66,27 @@ If the product has something awkward (unusual name, high price, limited range), 
 ### Write Like You Talk (Ogilvy)
 "Write the way you talk. Naturally." Short words, short sentences, short paragraphs. Never use jargon like *reconceptualize*, *demassification*, *attitudinally* - "hallmarks of a pretentious ass." Read aloud; if you stumble or it sounds like a press release, rewrite.
 
+### Plate Glass, Not Mosaic (Asimov)
+"I made up my mind long ago to follow one cardinal rule in all my writing - to be clear." Prose is plate glass: ideally the reader does not see it at all, and through it sees everything outside clearly. Style that calls attention to itself competes with content. Write as if speaking to a well-informed friend who has not read the evidence you have. Informal register, short words, short sentences, active voice, no ornament. Occasional colloquialisms clarify; pretension obscures.
+
+### Promise, Progress, Payoff (Sanderson)
+Every section, every chapter, every report makes implicit contracts with the reader in its opening sentences. The middle must show measurable movement toward resolving those contracts - no filler, no detours that don't connect back. The payoff must arise from what was promised, not from something new introduced at the last moment. Apply at every level: a 5,000-word piece, a 500-word section, and a 50-word paragraph all make and keep their own promises.
+
+### Lead with the Constraint, Not the Capability (Sanderson's Second Law)
+Limitations are more dramatically productive than capabilities. What a product *cannot* do, what a theory *fails* to explain, what a dataset *does not* show - these are the load-bearing moments. "Superman is not his powers; Superman is his weaknesses." Present the gap or constraint first; the capability becomes more meaningful against it. In analytical copy, this reads as honesty; in marketing copy, as credibility.
+
+### Depth Before Breadth (Sanderson's Third Law)
+Expand what you already have before adding something new. Two ideas mined to their implications beat five ideas each mentioned once. Extrapolate (trace one concept through multiple domains). Interconnect (show how ideas relate). Streamline (merge overlapping concepts instead of accumulating them). A report with three fully-developed threads lands harder than one with eight glancing references.
+
+### Hang Lanterns on Anomalies (Sanderson)
+When introducing an apparent contradiction, a term that will be defined later, or a deferral you will return to: name it explicitly. "This seems counterintuitive - we address it in Section 3." "The number looks wrong; here is why it is right." Unacknowledged anomalies read as evasion. Acknowledged ones read as command of the material.
+
+### Specifics Before Generalisations (Asimov)
+Always introduce the concrete case, number, or instance before the abstraction it supports. Readers do not abstract from nothing; they generalise from specifics they trust. "In Q3 2024, capital outflows from X reached $4.2bn - evidence that..." is more gripping than "Capital flows are an indicator of..." This is the same Hopkins/Ogilvy principle seen from a different angle: a specific is more than a more persuasive generalisation; it is the material from which generalisations earn the right to exist.
+
+### Earn Your Conclusions
+Conclusions that appear after a visible try-fail sequence - where earlier framings were tested and found insufficient - feel earned. Conclusions asserted without the working feel imposed. Show the analytical work, even briefly, especially when the conclusion is uncomfortable or counter-intuitive.
+
 ## 3. Voice Calibration
 
 Before writing, establish the brand's voice along these axes:
@@ -139,7 +160,7 @@ Flag and replace:
 - **Marketing:** innovative, cutting-edge, game-changer, best-in-class, world-class, revolutionise, disrupt, reimagine, elevate, curated, bespoke, artisanal (unless defensible with a specific claim).
 - **Filler:** just, really, very, actually, basically, literally, in order to, started to, the fact that.
 
-### Pass 3: AI Tells
+### Pass 3: AI Tells (marketing register)
 Flag and rewrite:
 - "Delve into," "dive into," "unleash," "navigate the landscape of"
 - "Stands as a testament," "plays a vital role," "underscores"
@@ -151,6 +172,114 @@ Flag and rewrite:
 - "serves as" or "features" where "is" or "has" would do
 - Self-referential denial: "That's not marketing speak" (it is)
 - Quoting yourself in the third person
+- Rule-of-three cadence on every list and argument (three benefits, three features, three testimonials). Vary deliberately.
+- Generalisation before specific - "Many buyers are concerned about X" followed by data. Flip: lead with the specific instance, let the generalisation earn its place.
+- Section that opens with a summary of what it will cover instead of starting the argument. Skip the roadmap; start the section.
+
+### Pass 3c: Editorial AI Tells (longform/analytical register)
+
+The tropes below survive Pass 3 and still betray LLM authorship in essay, report, and longform journalistic register. No single instance is condemning; concentration is. Target: fewer than one instance of any listed pattern per 1,000 words. If two or more appear in the same section, the section fails this pass.
+
+**Structural framing tells:**
+- **"Picture X" opener**: "Picture two houses, both built in..." Thought-experiment imperative as first move. Cut or rewrite so the hook is a concrete scene or fact, not a directed imagination exercise.
+- **Aphoristic generalisation opener**: "Every place has an origin story. This one's is short." The "Every X has a Y. This one's is Z." template. Skip the generalisation; start with the specific.
+- **Three-beat thesis enumeration**: "This is the first thing to understand. The second thing... The third thing..." Humans do not number their thesis statements aloud. Delete the signposts; let the points stand on their own.
+- **Ordinal horizon enumeration in prose**: "At one year... At three years... At five years... At ten years..." A table translated into paragraphs. Keep the table in the table; the prose should pick one horizon and argue it.
+- **Ordinal numbered paragraphs in closers**: "First, X. Second, Y. Third, Z. Fourth, W. Fifth..." A bulleted list wearing a prose costume. Use an actual list, or write genuine paragraphs where each idea earns its own transition.
+- **Dichotomy hook**: "Two houses, one ZIP" / "Two houses in X. Same Y. Different Z." The hypothetical-twin opener. If used, make it concrete (named streets, verifiable detail) and do not extend it beyond the opening paragraph.
+
+**Rhetorical pivot tells:**
+- **Negation-affirmation ("It is not X. It is Y.")**: "It is not a suburb. It is a piece of ground..." / "That is not stabilisation. That is acceleration." Per gc.ai analysis, forces the reader to process negative information before substance; LLMs deploy it believing it sounds intellectually refined. Cut the negation; lead with Y. Maximum one per 2,000 words.
+- **Pivot-and-amplify**: "That is wider than planning horizons. It is also wider than most mortgages." Parallel-structured escalation. Drop the second sentence or replace with a concrete consequence.
+- **"What X is Y" rhetorical topic sentence**: "What distinguishes Corona is geography." / "What is keeping them from clearing is..." / "What a buyer should do about this is..." Sounds decisive; reads as filler. Rewrite as declarative: "Corona's geography is the differentiator."
+- **False-authority opener**: "The single most striking fact is..." / "The curious thing is..." / "The usual way of putting this is..." / "It is worth noting that..." Self-elevating framing. Delete the frame; state the fact.
+
+**Rhythmic tells:**
+- **Anaphoric triples and quadruples**: "Same X. Same Y. Same Z." / "Both X. Both Y. Both Z. Both W." / "The buyers came from Fullerton and Anaheim and Huntington Beach." Per UCC stylometric study (O'Sullivan 2025), AI produces "tightly grouped clusters" of uniform rhythm; human text shows "far greater variation." Break the pattern after two beats, or fold items into a single sentence with commas.
+- **Numeric fragment drumming**: "Thirty thousand acres. Three hundred homes. Forty thousand evacuations." Fragment-list-as-impact. Combine into one sentence, or omit one element to break the cadence.
+- **Contrastive-couplet paragraph closer**: Two short parallel sentences closing a paragraph, rhetorically rhyming. "The geography is the product. The hazard is the cost." / "It has not fully arrived. It is coming." / "If the adverse end works, the property works. If it does not, another property does." Vary closers: a question, a concrete detail, a digression, a quote, a qualified admission. Flag any section where three consecutive paragraphs close with this rhythm.
+- **Short-sentence drumming after long sentences**: Long explanatory sentence → two tight declarative fragments. Default LLM rhythm for "consequential" framing. Break by ending the paragraph earlier, or closing on a longer dependent-clause sentence.
+- **Sentence-length uniformity or programmatic variation**: Flag a run of 4+ sentences within ±3 words of each other, or an exactly-alternating long/short/long/short cadence. Real prose varies unpredictably.
+
+**Cognitive-move tells:**
+- **Dead-end sentences (Belcher 2024)**: A concept is introduced, one sentence is spent on it, then it is abandoned. Either develop the concept for a paragraph or delete the sentence.
+- **Banal generalisations replacing analysis**: "The conflict between tradition and modernity," "a region caught between opportunity and risk." Cut. Replace with a named tension tied to specific actors, dates, or dollar amounts.
+- **False causation connectors**: "reinforces," "underscores," "emphasises" used to claim a causal link that is actually a surface correlation. Replace with an honest verb: "accompanies," "coincides with," "follows."
+- **Hyper-adjectival prose**: Nearly every noun carrying a positive or negative modifier. Remove modifiers; strong nouns do not need them.
+- **Erased authorial agency**: Presenting texts or data as active analysts ("the data suggests," "the evidence demonstrates"). Attribute to a human agent or to the specific mechanism. "The 2024 policy count rose 41 per cent" beats "the data demonstrates a concerning trend."
+- **Moralising tone**: Sermon-like judgment replacing analysis. Cut the judgment; let the facts carry the implication.
+- **Bloated emptiness**: "home to," "some of the," "in the face of," "as we navigate." Cut.
+- **Table-as-prose repetition**: When the appendix contains a table with the same content as the closing paragraphs, delete the prose. Longform should not recite the structured edition.
+- **Prescriptive imperative lists in prose**: "Insurance quote first, offer second. Inspection before signing. A budget line for..." A checklist hiding inside paragraphs. Convert to an actual list or write the reasoning, not the instructions.
+- **One-sentence aphoristic paragraphs as closers**: "This is the category of risk best treated with hardware rather than optimism." If every section ends on a standalone aphorism, cut at least half.
+
+**Concentration heuristic:**
+Count instances in a 1,000-word window. If the total across all categories exceeds 5, the section needs rewriting, not editing.
+
+**Additional tells (Reinhart et al. PNAS 2025, peer-reviewed quant markers):**
+
+- **Shallow signifier / present-participial appendage (5.3x human rate in GPT-4o, d=1.38)**: "contributing to the region's growing affordability crisis," "reflecting the broader disconnect," "highlighting the tension," "underscoring the structural fragility." The participial clause gestures at significance without adding it. Strip the appendage and either say the thing directly as its own sentence, or delete.
+- **Nominalisation overload (2.1x human rate)**: "the implementation of the regulation" instead of "implementing the regulation"; "the expansion of coverage" instead of "coverage expanded." Convert to verb form unless the noun form is a defined term.
+- **That-clause as subject (2.6x human rate)**: "That the market is repricing is not in dispute." Rewrite as direct subject: "The market is repricing; no one disputes that."
+- **Phrasal coordination (1.9x human rate)**: excessive parallelism of phrases linked by "and": "The buyers came from Fullerton and Anaheim and Huntington Beach." Use commas, or a single connector: "The buyers came from Fullerton, Anaheim, and Huntington Beach."
+
+**Additional framing and closing tells:**
+
+- **Five-Para Ghost**: even a longform piece internally maps to a rigid five-paragraph essay (generalising opener, three body sections of equal length, conclusion that restates the opener at higher altitude). Diagnose by visualising section weights. Human longform has uneven section weight driven by argument density, not symmetry.
+- **Stakes-escalation close**: the final paragraph zooms out from the specific subject to civilisational or epochal scope ("In the end, what these numbers reveal is not just a housing story. It is a story about how societies price existential risk"). End on the most specific, most concrete, most unexpected particular instead.
+- **"That may change" cliffhanger close**: open-ended gestures to future uncertainty ("Whether this holds remains to be seen," "Time will tell," "The coming years will determine..."). Risk-averse claim avoidance disguised as humility. Commit to a view; if genuine uncertainty applies, name what threshold or event would resolve it.
+- **Portmanteau authority**: inventing a compound nominal term ("the supervision paradox," "the premium-migration paradox," "the two-tier insurance market") as if it were established. The label arrives before the evidence. Either develop the concept fully first, or avoid the label.
+- **Sourceless consensus**: "experts argue," "analysts note," "observers have long recognised," "many economists believe." Decorative attribution. Name the source, cite the study, or own the claim yourself.
+- **Ritual objection dismissal**: "To be sure, not all X. Some argue Y. But the broader Z is unmistakable." Steelman-and-dismiss template. Engage the strongest version of the objection or admit the limit of your thesis; do not process objections in a formulaic bracket.
+- **Synonym carousel / elegant variation**: "the homeowner... the property owner... the buyer... the resident... the mortgage-holder." Repetition-penalty training effect. Pick one term and stick with it.
+- **Disguised enumeration**: "The first challenge is X. The second challenge is Y. The third challenge is Z." A bulleted list with bullets removed. Either use an actual list, or write real prose where each point sets up or complicates the next.
+- **Signpost syndrome**: "In this section I will examine... As we have seen... Having established..." Low-trust meta-commentary. Delete every instance; the reader follows arguments without road-signs.
+- **Uncertainty pile-up**: hedges stacked in one sentence ("can...may...might...potentially...often...typically"). Commit to the claim at the level the evidence supports.
+- **False exactitude**: "approximately 34.7%" - precise number inside vague qualifier. Either cite the source and give the precise figure, or state an honest range.
+- **Non-spectrum spectrum**: "From individual homebuyers to pension funds, the repricing..." uses "from X to Y" where X and Y aren't on the same dimension. Say what you actually mean.
+
+**Operational frequency thresholds (per 1,000 words):**
+
+| Pattern | Soft cap | Hard cap |
+|---------|----------|----------|
+| Negation-affirmation ("not X; Y") | 1 | 2 |
+| Binary-aphorism paragraph close | 2 | 4 |
+| Tricolon (three-item parallel structure) | 2 | 4 |
+| "What X is Y" topic sentences | 1 | 3 |
+| Numeric fragment drumming | 1 | 2 |
+| Present-participial appendages | 3 | 6 |
+| False-authority openers | 1 | 2 |
+| "Both X. Both Y." or "Same X. Same Y." runs | 0 | 1 |
+| Ordinal thesis signposts ("First... Second... Third...") | 0 | 1 per section |
+| Universal-preamble opener | 0 | 0 |
+| Guided-imagination ("Picture X") opener | 0 | 0 |
+
+A section that breaches the hard cap on any line fails Pass 3c and needs rewriting rather than editing. A piece that is at the soft cap on three or more lines simultaneously is over-patterned even if no single line is breached.
+
+**Read the bibliography, not only the rules.** The tropes above are legitimate rhetorical devices in human hands; the AI tell is undiscriminating deployment. Judge by whether the device earns its place (specific evidence preceding it, tension requiring it, reader expectation calibrating for it) rather than by simple presence.
+
+**Sources:**
+- Reinhart et al., "Do LLMs write like humans?", PNAS 2025 (https://doi.org/10.1073/pnas.2422455122)
+- O'Sullivan et al., Humanities & Social Sciences Communications 2025 (https://doi.org/10.1057/s41599-025-05986-3)
+- Przystalski et al., Expert Systems with Applications 2026 (https://doi.org/10.1016/j.eswa.2025.129001)
+- Chakrabarty et al. LAMP Corpus, ACM CHI 2025 (https://arxiv.org/abs/2409.14509)
+- Reinhart LLM writing styles notebook (https://www.refsmmat.com/notebooks/llm-style.html)
+- Wikipedia: Signs of AI writing (https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing)
+- GC.AI on contrastive negation (https://gc.ai/blog/ai-writing-pattern-to-know-contrastive-negation)
+- Colin Gorrie, Dead Language Society, rhetorical analysis of AI slop (https://www.deadlanguagesociety.com/p/rhetorical-analysis-ai)
+- Mia Kiraki, Robots Ate My Homework, counter-argument (https://robotsatemyhomework.substack.com/p/ai-writing-patterns)
+- Wendy Belcher, 10 Ways AI Is Ruining Student Writing (https://wendybelcher.com/writing-advice/10-ways-ai-is-ruining-your-students-writing/)
+- GPTZero, Rule of Three in AI content (https://gptzero.me/news/the-rule-of-three/)
+- ossa-ma / tropes.fyi gist (https://gist.github.com/ossa-ma/f3baa9d25154c33095e22272c631f5a1)
+- Reuters Institute, AI prose divergence (https://reutersinstitute.politics.ox.ac.uk/news/how-ai-generated-prose-diverges-human-writing-and-why-it-matters)
+- Full ingested bibliography: `llm-wiki/vaults/coding/concepts/ai-prose-tropes.md`
+
+### Pass 3b: Promise-Progress-Payoff (Sanderson)
+For every section:
+- Does the opening state or imply what this section answers?
+- Does each paragraph advance that answer, or just add information?
+- Does the close resolve the opening promise, not introduce a new one?
+If a section fails any of these, restructure.
 
 ### Pass 4: Rhythm
 Flag:
@@ -251,6 +380,11 @@ Domain:
 - **Good copy disappears.** The reader remembers the product, not the writing. "Great copy" means something went wrong; "I want to buy that" means it went right.
 - **Specificity is credibility.** "50 years" beats "decades." "$15.99" beats "affordable." "Denver, Colorado" beats "the USA." Every specific is proof someone real wrote this.
 - **Never quote the founder saying something the founder wouldn't say.** Copywriter-voiced quotes attributed to founders embarrass the founder and repel the reader. Real people say "the ingredients come from people I trust," not "every ingredient is sourced from carefully vetted suppliers, consciously avoiding regions with questionable labour practices."
+- **Prose is plate glass (Asimov).** The reader should not notice the sentence structure. If a sentence draws attention to itself through cleverness or complexity, it competes with the content. Cut it.
+- **Every section makes and keeps a promise (Sanderson).** The opening states or implies what the section answers; the body shows movement; the close pays off. A paragraph that could be removed without changing what the reader knows or feels should be removed.
+- **Constraints are more interesting than capabilities.** What breaks, what fails, what cannot be done - these are where attention gathers. Lead with the gap, not the victory lap.
+- **Go deep before going wide.** Two fully-developed ideas beat five shallow ones. Accumulation is not analysis.
+- **Hang a lantern on anomalies.** If a claim seems strange, the reader has already noticed. Acknowledge it before explaining it.
 
 Cross-fleet:
 
