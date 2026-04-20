@@ -53,6 +53,7 @@ A collection of specialised [Claude Code](https://code.claude.com/docs/en/overvi
 | [visual-hygiene](agents/visual-hygiene.md) | Spacing, typography, colour sprawl, dead UI, z-index chaos, design-token drift | Read-only | Project |
 | [visual-flair](agents/visual-flair.md) | Opportunities for personality and delight - the "understated bombast" that elevates a clean site | Read-only | Project |
 | [anti-ai-design](agents/anti-ai-design.md) | Audits frontends for patterns that make websites look AI-generated | Read-only | Project |
+| [svg-illustrator](agents/svg-illustrator.md) | Hand-authored SVG illustrations - covers, figures, icons, diagrams - for PDF/print pipelines | Write | Project |
 | [stitch-designer](agents/stitch-designer.md) | Generates screen layouts and component variants from design briefs | Write | Project |
 | [copywriter](agents/copywriter.md) | Writes, audits, and revises web and marketing copy with a mandatory 7-pass self-editing loop | Read-only | Project |
 | [cultural-sensitivity](agents/cultural-sensitivity.md) | Flags culturally insensitive content, stereotypes, pseudoscience, problematic framing | Read-only | Project |
