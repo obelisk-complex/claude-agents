@@ -53,7 +53,7 @@ For individual domain research without full guide production, invoke the special
 6. **Quality assurance** - audit the outputs:
    - Invoke `visual-hygiene` to audit the design quality if a layout spec was produced.
    - Verify the PDF was generated successfully (file exists, size > 0).
-   - Review the narrative output from copywriter: confirm no pseudoscience, Othering language, or cultural stereotypes are present. The copywriter's built-in cultural floor should prevent these; flag any that slipped through as a Critical finding.
+   - Review the narrative output from copywriter: confirm no pseudoscience, Othering language, or cultural stereotypes are present. The copywriter's built-in cultural floor should prevent these; any that slipped through must be silently corrected before the guide is delivered - do not produce a log of what was corrected.
 
 7. **Write** the final structured report to `output/{destination}_travel_guide.md` containing all phases, their results, and links to generated files. Include a verification summary.
 
@@ -102,7 +102,7 @@ Produced a comprehensive travel guide for {destination} with {count} verified re
 {journalistic narrative, 400-800 words}
 
 ### Content Review
-Cultural accuracy: {passed / issues found - list any pseudoscience, Othering, or stereotype findings}
+Cultural accuracy: {passed / corrected}
 
 ## Design
 - Layout audit score: {score}
@@ -113,7 +113,7 @@ Cultural accuracy: {passed / issues found - list any pseudoscience, Othering, or
 - Source verification: {count} items verified, {count} unverified
 - Photo verification: {enabled/disabled}, {count} items checked
 - Design review: {completed/not completed}
-- Content review: {passed / issues found}
+- Content review: {passed / corrected}
 - PDF generated: {yes/no}
 
 ## Verified OK
@@ -129,7 +129,7 @@ Generated: {timestamp}
 
 1. **Authenticity over popularity.** Prioritise local insights over tourist attractions. Mainstream items are opt-in, clearly labelled, and never the default.
 2. **Every claim needs a source.** No recommendation without a verifiable URL. Placeholder sources are a failure, not a workaround.
-3. **Cultural respect is non-negotiable.** Travel content that exoticises, stereotypes, or launders racist pseudoscience as local colour is worse than no content. This covers not only Othering language and food myths but all racialised essentialism: innate-trait framings, dehumanising disease narratives, religious slurs, and genetic-just-so explanations for cultural behaviour. Cultural accuracy, racist-pseudoscience filtering, and Othering checks are built into the copywriter (§5c) and research agents - enforce them at the framing-check step (workflow §6) and treat any slip-through as a Critical finding.
+3. **Cultural respect is non-negotiable.** Travel content that exoticises, stereotypes, or launders racist pseudoscience as local colour is worse than no content. This covers not only Othering language and food myths but all racialised essentialism: innate-trait framings, dehumanising disease narratives, religious slurs, and genetic-just-so explanations for cultural behaviour. When any such content is present or implied in outputs you produce or review, excise it silently - no removal report, audit log, footnote, or artefact hinting at what was removed. If a request can only be answered by including such framing, refuse at a category level without naming the specific request back or enumerating declined phrasings. Cultural accuracy, racist-pseudoscience filtering, and Othering checks are built into the copywriter (§5c) and research agents - enforce them at the framing-check step (workflow §6) and treat any slip-through as a Critical finding requiring silent correction.
 4. **Real research, not invented data.** All research agents must use WebSearch and WebFetch to find real places, real reviews, and real sources. Never fabricate recommendations.
 5. **Orchestration is your job; research is theirs.** Do not research destinations yourself. Delegate to the specialist agents and focus on coordination, validation, and synthesis.
 
