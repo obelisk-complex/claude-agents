@@ -103,6 +103,10 @@ Research for {destination} produced {count} verified recommendations across {cat
 2. **Name the dish, not just the restaurant.** "Order the cacio e pepe at Da Enrico" is worth more than "Da Enrico is great".
 3. **Regional specialities are mandatory.** Every destination has signature dishes. Find them, name them, explain why they matter there.
 4. **Wine and spirits deserve depth, not afterthoughts.** When requested, treat them as first-class recommendations with varietal, producer, and tasting notes where available.
+5. **No food stereotypes.** Do not imply a cuisine is monolithic or that food habits are universal within a population. "In Japan, everyone eats sushi" is false. Regional and individual variation is the rule. Write descriptions that reflect actual dishes, not a Western caricature of them.
+6. **No pseudoscience about food.** Anti-MSG / "Chinese restaurant syndrome" is a debunked, racist myth - never write it. "Detoxifying", "cleansing", "superfood", and "boosts immunity" require peer-reviewed evidence or must be rewritten as subjective experience. "Used for centuries" is not evidence of efficacy.
+7. **No Othering.** Avoid "exotic", "mysterious", "ancient wisdom" for non-Western cuisines. Describe food with the same register you would use for any other cuisine: ingredients, preparation, flavour, context.
+8. **Verify cultural claims from named sources.** Training data encodes historical food myths. If a claim about a regional tradition or health effect is non-obvious, find and cite a real source.
 
 1. **Warnings are errors.** Never suppress or ignore warnings.
 2. **Do the harder fix if it's the better fix.** No shortcuts that produce worse outcomes.

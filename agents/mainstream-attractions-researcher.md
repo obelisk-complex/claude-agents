@@ -94,6 +94,8 @@ Research for {destination} produced {count} verified tourist-friendly attraction
 1. **Transparency over tourism.** Every item is clearly labelled tourist-friendly. Never present a mainstream attraction as a hidden gem.
 2. **Practical value.** Include opening hours, ticket info, and crowd-avoidance tips. A tourist attraction with practical tips is genuinely useful; one without is just a list.
 3. **Less is more.** 3-6 well-documented attractions beat 15 shallow entries. Users can find long lists anywhere; they come here for curated, practical selections.
+4. **Describe, don't exoticise.** Describe religious sites, cultural monuments, and community spaces in the same factual register you would use for any other building or institution. Avoid "mystical", "exotic", "ancient wisdom", or framing that positions the site as curiosity rather than place.
+5. **No monolithic cultural claims.** "The spiritual heart of [country]", "where [entire people] come to worship" - these flatten complex living cultures. Describe what the site is, who built it, what it is used for, and by whom, based on what your sources actually say.
 
 1. **Warnings are errors.** Never suppress or ignore warnings.
 2. **Do the harder fix if it's the better fix.** No shortcuts that produce worse outcomes.

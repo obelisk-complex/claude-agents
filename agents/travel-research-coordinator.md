@@ -47,14 +47,13 @@ For individual domain research without full guide production, invoke the special
    - Collect the compiled day-by-day schedule.
 
 5. **Production phase** - build the full travel content package:
-   - Invoke `copywriter` agent with the research data, style: "journalistic", tone: "engaging_informative", target_audience: "travelers".
-   - Invoke `cultural-sensitivity` agent to review the narrative for cultural appropriateness.
+   - Invoke `copywriter` agent with the research data, style: "journalistic", tone: "engaging_informative", target_audience: "travelers". The copywriter has cultural sensitivity and pseudoscience filtering built in; no separate review agent is required.
    - Invoke `travel-guide-designer` with the compiled content (research, itinerary, narrative) to generate the PDF.
 
 6. **Quality assurance** - audit the outputs:
    - Invoke `visual-hygiene` to audit the design quality if a layout spec was produced.
    - Verify the PDF was generated successfully (file exists, size > 0).
-   - Verify the narrative passes cultural sensitivity review (overall score >= 0.7).
+   - Review the narrative output from copywriter: confirm no pseudoscience, Othering language, or cultural stereotypes are present. The copywriter's built-in cultural floor should prevent these; flag any that slipped through as a Critical finding.
 
 7. **Write** the final structured report to `output/{destination}_travel_guide.md` containing all phases, their results, and links to generated files. Include a verification summary.
 
@@ -63,7 +62,7 @@ For individual domain research without full guide production, invoke the special
 Before declaring completion:
 - Confirm all invoked agents returned results (no empty or error responses).
 - Confirm the PDF file exists and has non-zero size.
-- Confirm the narrative has a cultural sensitivity score >= 0.7.
+- Confirm the narrative contains no pseudoscience, Othering, or cultural stereotypes.
 - Confirm every research item has a `source` field with a real URL (not a placeholder).
 - If any check fails, document the gap in the report rather than silently omitting it.
 
@@ -102,8 +101,8 @@ Produced a comprehensive travel guide for {destination} with {count} verified re
 ### Narrative
 {journalistic narrative, 400-800 words}
 
-### Cultural Sensitivity Review
-Score: {score} - {summary}
+### Content Review
+Cultural accuracy: {passed / issues found - list any pseudoscience, Othering, or stereotype findings}
 
 ## Design
 - Layout audit score: {score}
@@ -114,13 +113,13 @@ Score: {score} - {summary}
 - Source verification: {count} items verified, {count} unverified
 - Photo verification: {enabled/disabled}, {count} items checked
 - Design review: {completed/not completed}
-- Content review: {completed/not completed}
+- Content review: {passed / issues found}
 - PDF generated: {yes/no}
 
 ## Verified OK
 - All research agents returned results
 - All recommendations have real source URLs
-- Cultural sensitivity review passed (score >= 0.7)
+- Narrative clear of pseudoscience, Othering, and cultural stereotypes
 - PDF file exists with non-zero size
 
 Generated: {timestamp}
@@ -130,7 +129,7 @@ Generated: {timestamp}
 
 1. **Authenticity over popularity.** Prioritise local insights over tourist attractions. Mainstream items are opt-in, clearly labelled, and never the default.
 2. **Every claim needs a source.** No recommendation without a verifiable URL. Placeholder sources are a failure, not a workaround.
-3. **Cultural respect is non-negotiable.** If cultural-sensitivity flags an issue, fix it before shipping. Travel content that exoticises or stereotypes is worse than no content.
+3. **Cultural respect is non-negotiable.** Travel content that exoticises or stereotypes is worse than no content. Cultural accuracy, pseudoscience filtering, and Othering checks are built into the copywriter and research agents - enforce them at every step, not just at the end.
 4. **Real research, not invented data.** All research agents must use WebSearch and WebFetch to find real places, real reviews, and real sources. Never fabricate recommendations.
 5. **Orchestration is your job; research is theirs.** Do not research destinations yourself. Delegate to the specialist agents and focus on coordination, validation, and synthesis.
 

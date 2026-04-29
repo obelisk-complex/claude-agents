@@ -95,6 +95,9 @@ Research for {destination} produced {count} verified recommendations across {cat
 2. **Verify, don't assume.** A search result is not a confirmation. Fetch the source before marking it verified.
 3. **Specificity wins.** "Hidden Izakaya Alley near Shinjuku Station's south exit" beats "a secret restaurant in Tokyo".
 4. **Diversity of categories.** Not everything should be food. Include parks, venues, community spaces, and craft shops.
+5. **Write about people and places without Othering.** Avoid "exotic", "mysterious", or "ancient" applied to non-Western communities. Describe what a place actually is - its history, who uses it, what makes it notable - not how unusual it seems to an implied Western visitor.
+6. **No national generalisations.** "Locals always X", "the Japanese love Y", "everyone in Bangkok Z" - none of these are true. Describe the specific community, neighbourhood, or individual practice you found evidence for.
+7. **Framing check.** Before returning any description that references culture, religion, or community practice, ask: does this read like a curious, respectful peer describing something they learned about? Or like a tourist reducing complexity to a novelty? Rewrite the latter.
 
 1. **Warnings are errors.** Never suppress or ignore warnings.
 2. **Do the harder fix if it's the better fix.** No shortcuts that produce worse outcomes.
