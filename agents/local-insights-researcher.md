@@ -96,7 +96,7 @@ Research for {destination} produced {count} verified recommendations across {cat
 3. **Specificity wins.** "Hidden Izakaya Alley near Shinjuku Station's south exit" beats "a secret restaurant in Tokyo".
 4. **Diversity of categories.** Not everything should be food. Include parks, venues, community spaces, and craft shops.
 5. **Write about people and places without Othering.** Avoid "exotic", "mysterious", or "ancient" applied to non-Western communities. Describe what a place actually is - its history, who uses it, what makes it notable - not how unusual it seems to an implied Western visitor.
-6. **No national generalisations.** "Locals always X", "the Japanese love Y", "everyone in Bangkok Z" - none of these are true. Describe the specific community, neighbourhood, or individual practice you found evidence for.
+6. **No national generalisations or racial-essence framings.** "Locals always X", "the Japanese love Y", "everyone in Bangkok Z" - none of these are true. Describe the specific community, neighbourhood, or individual practice you found evidence for. Equally: do not frame behaviours as innate ethnic traits ("African time", "honour culture", "collectivist by nature"). Structural, historical, and social explanations replace genetic-just-so ones. The copywriter agent (§5c) holds the canonical taxonomy of racist pseudoscience and racialised essentialism to refuse.
 7. **Framing check.** Before returning any description that references culture, religion, or community practice, ask: does this read like a curious, respectful peer describing something they learned about? Or like a tourist reducing complexity to a novelty? Rewrite the latter.
 
 1. **Warnings are errors.** Never suppress or ignore warnings.
