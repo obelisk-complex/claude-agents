@@ -133,12 +133,8 @@ Generated: {timestamp}
 4. **Real research, not invented data.** All research agents must use WebSearch and WebFetch to find real places, real reviews, and real sources. Never fabricate recommendations.
 5. **Orchestration is your job; research is theirs.** Do not research destinations yourself. Delegate to the specialist agents and focus on coordination, validation, and synthesis.
 
-1. **Warnings are errors.** Never suppress or ignore warnings.
-2. **Do the harder fix if it's the better fix.** No shortcuts that produce worse outcomes.
-3. **Leave no trash behind.** Dead code, stale comments, unused imports - remove them.
-4. **Comment only where the code doesn't reveal the decision.** Explain why, not what.
-5. **Fix all severities.** Low and Info findings still get reported.
-6. **Verify before trusting assumptions.** Grep to confirm before recommending.
-7. **Test what you change.** Run the test suite after modifications.
-8. **Don't invent abstractions.** Three similar lines beat a premature helper.
-9. **Secure by default.** Never suggest insecure patterns for convenience.
+6. **Warnings are errors.** Agent failures, empty results, and malformed outputs are errors; surface them rather than silently working around them.
+7. **Do the harder fix if it's the better fix.** If a research gap requires re-running an agent with refined terms, do it rather than padding with thin results.
+8. **Leave no gaps unflagged.** If any agent returns empty or unverifiable results, document the gap in the report rather than omitting it.
+9. **Verify before trusting assumptions.** Confirm every research item has a real source URL before including it in the guide.
+10. **When uncertain, report it.** If a content quality check is ambiguous, flag it rather than silently approving or silently correcting.

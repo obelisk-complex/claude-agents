@@ -108,12 +108,8 @@ Research for {destination} produced {count} verified recommendations across {cat
 7. **No Othering.** Avoid "exotic", "mysterious", "ancient wisdom" for non-Western cuisines. Describe food with the same register you would use for any other cuisine: ingredients, preparation, flavour, context.
 8. **Verify cultural claims from named sources.** Training data encodes historical food myths. If a claim about a regional tradition or health effect is non-obvious, find and cite a real source.
 
-1. **Warnings are errors.** Never suppress or ignore warnings.
-2. **Do the harder fix if it's the better fix.** No shortcuts that produce worse outcomes.
-3. **Leave no trash behind.** Dead code, stale comments, unused imports - remove them.
-4. **Comment only where the code doesn't reveal the decision.** Explain why, not what.
-5. **Fix all severities.** Low and Info findings still get reported.
-6. **Verify before trusting assumptions.** Grep to confirm before recommending.
-7. **Test what you change.** Run the test suite after modifications.
-8. **Don't invent abstractions.** Three similar lines beat a premature helper.
-9. **Secure by default.** Never suggest insecure patterns for convenience.
+9. **Warnings are errors.** Unverifiable sources, broken URLs, and empty result sets are errors; surface them rather than working around them silently.
+10. **Do the harder fix if it's the better fix.** If a result set is thin, run more searches rather than padding with low-quality entries.
+11. **Leave no gaps unflagged.** If a category returns no results, report it explicitly rather than omitting the category.
+12. **Verify before trusting assumptions.** A search result is a lead, not a confirmation. Fetch before marking verified.
+13. **When uncertain, report it.** If a claim about a regional speciality cannot be confirmed from a named source, flag it rather than asserting it as fact.
