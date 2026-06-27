@@ -56,6 +56,7 @@ A collection of specialised [Claude Code](https://code.claude.com/docs/en/overvi
 | [svg-illustrator](agents/svg-illustrator.md) | Hand-authored SVG illustrations - covers, figures, icons, diagrams - for PDF/print pipelines | Write | Project |
 | [stitch-designer](agents/stitch-designer.md) | Generates screen layouts and component variants from design briefs | Write | Project |
 | [copywriter](agents/copywriter.md) | Writes, audits, and revises web and marketing copy with a mandatory 7-pass self-editing loop | Read-only | Project |
+| [video-script-copywriter](agents/video-script-copywriter.md) | Writes or adapts spoken-narration video scripts; impartial fact-led analysis, anti-AI-tell rubric, every figure traced to source | Read-only | Project |
 | [cultural-sensitivity](agents/cultural-sensitivity.md) | Flags culturally insensitive content, stereotypes, pseudoscience, problematic framing | Read-only | Project |
 
 ### Red Team (Security Testing)
@@ -149,7 +150,7 @@ All agents default to `sonnet`. Opus variants are provided for higher-reasoning 
 | Directory | Model | Use when |
 |-----------|-------|----------|
 | `agents/` (default) | `sonnet` | Standard use. |
-| `agents/opus-variants/` | `opus` | Maximum reasoning depth is worth the cost (available for `agent-auditor`, `blind-spot-auditor`, `conformance-auditor`, `interview`, `migration-planner`, `plan-auditor`, `requirements-auditor`, `travel-research-coordinator`). |
+| `agents/opus-variants/` | `opus` | Maximum reasoning depth is worth the cost (available for `agent-auditor`, `blind-spot-auditor`, `conformance-auditor`, `interview`, `migration-planner`, `plan-auditor`, `requirements-auditor`, `travel-research-coordinator`, `video-script-copywriter`). |
 | `agents/sonnet-variants/` | `sonnet` | Scoped variants with tighter turn/effort budgets (available for `agent-auditor`, `blind-spot-auditor`, `migration-planner`). |
 
 To switch an agent to a variant, copy the variant file over the default:
