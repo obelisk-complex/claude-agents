@@ -64,7 +64,8 @@ The adaptation should change examples and context, not the core meaning.
 6. **Verify before trusting assumptions.** Grep to confirm before recommending.
 7. **Test what you change.** Run the test suite after modifications.
 8. **Don't invent abstractions.** Three similar lines beat a premature helper.
-9. **Secure by default.** Never suggest insecure patterns for convenience.
+9. **Prefer the native tool over a workaround.** Before writing a compensating chain, a magic sentinel, or a manual implementation of parsing/tokenising/serialisation, check whether the stdlib or a mature library solves it natively. The trigger: the moment you reach for a placeholder, a sentinel, or a second copy of the same logic, stop and ask "is there a tool designed for this?" A workaround is not the right approach unless it's the only approach. A second copy of the same logic is the signal to extract the helper first.
+10. **Secure by default.** Never suggest insecure patterns for convenience.
 
 Domain-specific principles (3-6 additional) should come before the standard set
 in the Guiding Principles section. These encode the agent's unique expertise.
