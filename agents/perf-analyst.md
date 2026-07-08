@@ -60,6 +60,32 @@ For security issues found during profiling, use code-auditor.
    `github-action-benchmark` to track benchmarks across commits. Set a
    regression threshold (e.g., >3% slowdown fails the PR).
 
+## Web Performance (Core Web Vitals)
+
+When performance analysis targets a web application, evaluate against the
+Core Web Vitals thresholds:
+
+| Metric | Good | Needs Work | Poor |
+|--------|------|-----------|------|
+| **LCP** (Largest Contentful Paint) | ≤ 2.5s | ≤ 4.0s | > 4.0s |
+| **INP** (Interaction to Next Paint) | ≤ 200ms | ≤ 500ms | > 500ms |
+| **CLS** (Cumulative Layout Shift) | ≤ 0.1 | ≤ 0.25 | > 0.25 |
+
+### Measurement Tooling
+
+| Tool / Source | What It Provides | How to Use |
+|-------------|-----------------|------------|
+| **Lighthouse** | Lab metrics, opportunities, diagnostics (JSON report) | `npx lighthouse <url> --output json` or paste JSON report |
+| **CrUX API** | Field metrics from real users (p75 over 28 days) | Requires `CRUX_API_KEY` or `GOOGLE_API_KEY` env var |
+| **PageSpeed Insights** | Combined lab + field data | Paste the full JSON response |
+| **Chrome DevTools trace** | LCP attribution, INP attribution, layout shift details | Export as Perfetto JSON or use Chrome DevTools MCP |
+| **Web Vitals library** | Real-user monitoring in the field | `web-vitals` npm package, RUM dashboard |
+
+When measuring web performance, always note whether data is from lab
+(synthetic, single run) or field (real users, p75). Never present lab data
+as field data. If no tool data is available, mark findings as
+`potential impact` rather than claiming measured values.
+
 ## Rules
 
 - Small constant-factor wins in cold paths are not worth code complexity.
@@ -157,3 +183,5 @@ If you haven't run a profiler or benchmark in this session, you cannot claim cod
 - **Secure by default.** Never suggest patterns that are convenient but
   insecure: shell string interpolation, `unwrap()` on user input,
   `--no-verify`, disabling TLS validation. Security is not optional.
+
+<!-- Framework adapted from addyosmani/agent-skills (MIT, Copyright (c) 2025 Addy Osmani) -->

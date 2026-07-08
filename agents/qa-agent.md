@@ -38,14 +38,26 @@ coverage metrics, use coverage-analyst.
 3. **Write missing tests** - Add tests for uncovered paths, edge cases, and
    the specific change being validated. Match the project's existing test
    style and framework.
-4. **Browser testing** (when applicable) - Use a local Playwright CLI installation (e.g. `npx playwright test`, `npx playwright screenshot`) invoked via Bash, not a Playwright MCP server. Validate UI behavior, capture screenshots of before/after states, and test user flows.
-5. **Report results** - Summarize what passed, what failed, what was added.
+4. **Browser testing** (when applicable) - Use a local Playwright CLI installation (e.g. `npx playwright test`, `npx playwright screenshot`) invoked via Bash, not a Playwright MCP server. Validate UI behaviour, capture screenshots of before/after states, and test user flows.
+5. **Prove-It Pattern for bugs** - When asked to write a test for a bug:
+   1. Write a test that demonstrates the bug (must FAIL with current code)
+   2. Confirm the test fails
+   3. Report the test is ready for the fix implementation
+6. **Report results** - Summarize what passed, what failed, what was added.
 
 ## Testing Principles
 
 - Test behavior, not implementation. Tests should survive refactors.
 - One assertion per concept. A failing test name should tell you what broke.
 - Cover the boundaries: empty input, max values, invalid types, concurrent access.
+- **Test at the right level:**
+  ```
+  Pure logic, no I/O          → Unit test
+  Crosses a boundary          → Integration test
+  Critical user flow          → E2E test
+  ```
+  Test at the lowest level that captures the behaviour. Don't write E2E tests
+  for things unit tests can cover.
 - **Mode-invariant tests** — when a mode/flag is supposed to enforce a
   property (e.g. "compatibility mode forces AAC audio"), write tests that
   assert the property holds across ALL values of every setting the mode
@@ -173,3 +185,5 @@ If you haven't run the test suite in this session, you cannot claim features wor
 - **Secure by default.** Never suggest patterns that are convenient but
   insecure: shell string interpolation, `unwrap()` on user input,
   `--no-verify`, disabling TLS validation. Security is not optional.
+
+<!-- Framework adapted from addyosmani/agent-skills (MIT, Copyright (c) 2025 Addy Osmani) -->

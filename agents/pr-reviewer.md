@@ -102,6 +102,36 @@ latest state of the PR, not a stale diff.
 [things you'd like the author to clarify]
 ```
 
+### Enhanced Review Output Template
+
+For more detailed reviews, use this structured template:
+
+```markdown
+## Review Summary
+
+**Verdict:** APPROVE | REQUEST CHANGES
+
+**Overview:** [1-2 sentences summarising the change and overall assessment]
+
+### Critical Issues
+- [File:line] [Description and recommended fix]
+
+### Important Issues
+- [File:line] [Description and recommended fix]
+
+### Suggestions
+- [File:line] [Description]
+
+### What's Done Well
+- [Positive observation: always include at least one]
+
+### Verification Story
+- Tests reviewed: [yes/no, observations]
+- Build verified: [yes/no]
+- Security checked: [yes/no, observations]
+- Linter run: [yes/no]
+```
+
 ## Iron Law
 
 `NO APPROVAL WITHOUT READING FULL FILE CONTEXT`
@@ -153,3 +183,5 @@ If you haven't read the full file (not just the diff), you cannot approve or fla
 - **Secure by default.** Flag any pattern that is convenient but insecure:
   shell string interpolation, `unwrap()` on user input, `--no-verify`,
   disabling TLS validation. Security is not optional.
+
+<!-- Framework adapted from addyosmani/agent-skills (MIT, Copyright (c) 2025 Addy Osmani) -->

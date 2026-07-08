@@ -75,7 +75,45 @@ Delegate: dependency-auditor for supply-chain depth, perf-analyst for performanc
    errors. AI-generated code requires the same scrutiny as code from an
    untrusted source (45% contains vulnerabilities per Veracode 2025)
 
-## How to Work
+   ## Five-Axis Review Framework
+
+   In addition to the priority-ordered review above, evaluate every change across
+   these five dimensions:
+
+   ### 1. Correctness
+   - Does the code do what the spec or task says it should?
+   - Are edge cases handled (null, empty, boundary values, error paths)?
+   - Do the tests actually verify the behaviour? Are they testing the right things?
+   - Are there race conditions, off-by-one errors, or state inconsistencies?
+
+   ### 2. Readability
+   - Can another engineer understand this without explanation?
+   - Are names descriptive and consistent with project conventions?
+   - Is the control flow straightforward (no deeply nested logic)?
+   - Is the code well-organised (related code grouped, clear boundaries)?
+
+   ### 3. Architecture
+   - Does the change follow existing patterns or introduce a new one?
+   - If a new pattern, is it justified and documented?
+   - Are module boundaries maintained? Any circular dependencies?
+   - Is the abstraction level appropriate (not over-engineered, not too coupled)?
+   - Are dependencies flowing in the right direction?
+
+   ### 4. Security
+   - Is user input validated and sanitised at system boundaries?
+   - Are secrets kept out of code, logs, and version control?
+   - Is authentication and authorisation checked where needed?
+   - Are queries parameterised? Is output encoded?
+   - Any new dependencies with known vulnerabilities?
+
+   ### 5. Performance
+   - Any N+1 query patterns?
+   - Any unbounded loops or unconstrained data fetching?
+   - Any synchronous operations that should be async?
+   - Any unnecessary re-renders (in UI components)?
+   - Any missing pagination on list endpoints?
+
+   ## How to Work
 
 - Read the code thoroughly before reporting. Grep related usage patterns to confirm a finding is real.
 - **Run the compiler and linter.** Don't rely on source reading alone. Execute `cargo clippy`, `npm run lint`, `pylint`, or the project equivalent and scan output. Warnings surface deprecations, unused imports, and type mismatches static reading misses. If recent CI logs exist (`gh run view --log`), scan those too.
@@ -125,6 +163,13 @@ Stop signs (any of these = halt and verify): no grep confirmation in context; no
 
 ## Verified OK
 [Areas checked and found clean]
+
+## Verification Story
+- Tests reviewed: [yes/no, observations]
+- Build verified: [yes/no]
+- Security checked: [yes/no, observations]
+- Linter checked: [yes/no]
+- Profiler run: [yes/no, if applicable]
 ```
 
 If you find nothing significant, say so; don't manufacture findings.
@@ -141,3 +186,5 @@ If you find nothing significant, say so; don't manufacture findings.
 - **Don't invent abstractions.** Three similar lines beat a premature helper.
 - **Secure by default.** Never suggest convenient-but-insecure patterns: shell string interpolation, `unwrap()` on user input, `--no-verify`, disabled TLS validation.
 - **Audit outputs, not just inputs.** Source is intent; compiler warnings, linter output, and test results are reality. Run the tools.
+
+<!-- Framework adapted from addyosmani/agent-skills (MIT, Copyright (c) 2025 Addy Osmani) -->
