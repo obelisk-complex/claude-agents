@@ -135,11 +135,29 @@ For each finding, before writing it up:
 
 Skip any step = not a finding. Remove anything you cannot substantiate.
 
+**A `file:line` is true only against the tree it names.** Your Location field points
+at the tree you have checked out. The moment a sentence names a *different* tree (an
+upstream commit, a release tag, the pre-patch state of a file you are auditing a fix
+for), the working copy stops being evidence about it. Confirm at the blob:
+
+```bash
+git show <cited-ref>:path/to/file.rs | sed -n '42p'
+```
+
+A review agent that skipped this "corrected" a true citation to upstream code into a
+false one, having measured the patched tree rather than the commit the sentence
+cited. The false version reached a draft issue addressed to an upstream maintainer
+and survived three more reviews. **Specificity is not verification:** a precise wrong
+line number is harder to doubt than a vague right one. Every citation in anything
+leaving this repo (an upstream issue, a PR against a repo that is not yours, an
+advisory) gets a blob-level check first.
+
 ### Rationalisations to reject
 
 | Excuse | Reality |
 |--------|---------|
 | "Grep already confirmed it" | Grep confirms the string, not the vulnerability. Re-read context. |
+| "I opened the file and the line was wrong" | Your working copy is not the commit the sentence cites. Check `git show <ref>:<path>`. |
 | "The pattern is obvious" | Obvious patterns have obvious false positives. |
 | "Running the linter would take too long" | No compiler/linter evidence = no finding. |
 | "The code looks correct enough" | "Correct enough" is not a severity level. |

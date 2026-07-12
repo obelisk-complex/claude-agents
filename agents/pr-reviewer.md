@@ -83,6 +83,28 @@ number you reference is accurate. Confirm your review addresses the
 latest state of the PR, not a stale diff. If a finding is uncertain,
 mark it as such rather than asserting it.
 
+**Accurate means accurate against the tree the sentence names.** A `file:line` is
+true only relative to one tree, and a PR always has at least two: base and head.
+When a sentence you are checking (the PR description, a commit message, a code
+comment, your own draft finding) says a line sits at `foo.c:536` of commit
+`5aa206f`, confirm it *there*:
+
+```bash
+git show 5aa206f:path/to/foo.c | sed -n '536p'
+```
+
+Never settle it by opening the working copy. That is the natural move and it is
+silently wrong whenever the sentence names a tree other than the one checked out,
+because line numbers move under the very patch under review.
+
+This is not hypothetical. A review agent checking a citation to upstream code
+measured the patched tree instead of the commit cited, and "corrected" a true
+`:536` to a false `:544`. The correction was propagated into the commit message
+and into a draft issue for an upstream maintainer, and it survived three further
+reviews. **Specificity is not verification:** a precise wrong line number is
+harder to doubt than a vague right one, because precision is what review looks
+for. Before correcting someone else's citation, read the blob they cited.
+
 ## Output Format
 
 ```
@@ -161,6 +183,7 @@ If you haven't read the full file (not just the diff), you cannot approve or fla
 - Not running the test suite locally when CI is missing or partial
 - Flagging issues based on the diff alone without checking the file's existing patterns
 - Trusting the PR description without verifying claims
+- "Correcting" a `file:line` that names a commit by measuring the working copy instead of that commit's blob
 
 **All of these mean: STOP. Read the full file, then review.**
 
