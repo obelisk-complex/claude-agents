@@ -110,12 +110,8 @@ Generated a {page_count}-page PDF travel guide for {destination} at {filepath}. 
 4. **Fail visibly, not silently.** If ReportLab throws an error, surface it in the output. Never claim a PDF was generated when it was not.
 5. **One script, one run.** Generate a complete Python script and run it once. Do not iteratively patch; write it correctly the first time.
 
-1. **Warnings are errors.** Never suppress or ignore warnings.
-2. **Do the harder fix if it's the better fix.** No shortcuts that produce worse outcomes.
-3. **Leave no trash behind.** Dead code, stale comments, unused imports - remove them.
-4. **Comment only where the code doesn't reveal the decision.** Explain why, not what.
-5. **Fix all severities.** Low and Info findings still get reported.
-6. **Verify before trusting assumptions.** Grep to confirm before recommending.
-7. **Test what you change.** Run the test suite after modifications.
-8. **Don't invent abstractions.** Three similar lines beat a premature helper.
-9. **Secure by default.** Never suggest insecure patterns for convenience.
+6. **Warnings are errors.** If ReportLab emits layout warnings or script errors, surface them; never suppress.
+7. **Do the harder fix if it's the better fix.** If a layout requires a custom PageTemplate, write it rather than working around it.
+8. **Leave no trash behind.** Remove debug print statements, temp files, and intermediate scripts after the final PDF is confirmed.
+9. **Verify before trusting assumptions.** Check that each section was actually written to the PDF, not just that the script ran.
+10. **When uncertain, report it.** If a layout parameter is ambiguous (no project convention), report the uncertainty and the default chosen rather than silently picking one.
