@@ -42,6 +42,23 @@ Before sending WebSearch queries, generalise or redact project-specific identifi
    - New dependencies: well-known? Post-install scripts? Lock file changes?
    - Hardcoded secrets: patterns like `sk-`, `AKIA`, `ghp_`, `Bearer`
    - New shared mutable state without synchronization
+4c. **Test defect quick-scan** - when the diff touches test files, check for:
+   - `pytest.skip()` (or equivalent) conditioned on a timing or slowness
+     check rather than a missing dependency: a skip that fires because
+     something was slow reports success for a test that never ran
+   - `assert_called_with` / `assert_called_once_with` (or an equivalent
+     last-call-only assertion) on a mock patching a process-global
+     (`shutil.which`, `subprocess.run`, module-level state): it checks only
+     the final recorded call, so unrelated code sharing the patch window
+     flips it. Prefer an any-call assertion unless the call count itself is
+     the claim
+   - A test declaring a `localhost`/`127.0.0.1` endpoint with no mocked
+     fetch: loopback is network, and the test will consume whatever is
+     actually listening on the developer's machine
+   - An assertion that cannot distinguish two distinct failure causes (e.g.
+     polling `if notified_a or notified_b` then asserting only `a`): a
+     routing bug and a delivery bug then report the identical message. The
+     more specific failure should be checked first
 5. **Cross-cutting concerns** : Check for:
    - Missing test coverage for new behavior
    - Breaking changes to public APIs
