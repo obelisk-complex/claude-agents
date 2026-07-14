@@ -79,8 +79,17 @@ coverage metrics, use coverage-analyst.
   `fast-check` (JS/TS), `rapid` (Go). Complements example-based tests.
 - Flaky tests are bugs in the test suite. When a test is flaky: (1) quarantine
   into a separate suite so it does not block CI, (2) diagnose the source
-  (timing, shared state, external dependency, timezone), (3) fix and
-  un-quarantine. Never use retries as a permanent fix.
+  (timing, shared state, external dependency, timezone, or a mis-sized
+  timeout). A timeout is rarely a budget for the thing the test is nominally
+  about - measure the actual path before widening it; it may be budgeting for
+  a failure or fallback detour, or a cold start, instead. (3) Fix and
+  un-quarantine. (4) Mutation-check the fix: reintroduce the original bug and
+  confirm the test now fails, fast, with a message naming the right defect. A
+  deterministic wait and a vacuous one look identical when green. Never use
+  retries as a permanent fix. Never resolve a slow-but-working test by making
+  it `skip()` on timeout: a skip conditioned on slowness reports success for a
+  test that never ran, which is worse than a failure. Skips belong on
+  absence (dependency not installed), never on slowness.
 - **Authorization boundary tests** - for each authenticated endpoint, write
   a test that verifies a different user cannot access the resource. For each
   admin endpoint, write a test that verifies a regular user is denied. For
