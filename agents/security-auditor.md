@@ -136,6 +136,24 @@ BEFORE claiming any security finding is confirmed:
 
 Skip any step = unverified, not a finding.
 
+**A `file:line` is true only against the tree it names.** Security findings travel:
+into advisories, disclosure emails, upstream issues, reports naming a released
+version. A Location that was measured in your working copy is not evidence about
+`v1.4.2` or about some upstream commit, and the reader cannot see your working copy.
+Confirm each citation at the blob before it ships:
+
+```bash
+git show <cited-ref>:path/to/file.rs | sed -n '42p'
+```
+
+Opening the working copy is the natural move and it is silently wrong whenever the
+sentence names a different tree, because line numbers move under the very patch being
+discussed. A review agent that skipped this "corrected" a true citation into a false
+one, and the false version was one step from being posted to a stranger's tracker
+against a hash where it demonstrably is not true. **Specificity is not verification:**
+a precise wrong line number is harder to doubt than a vague right one. Cite only refs
+the recipient can resolve; a fork-local hash dangles for them.
+
 ## Output Format
 
 ```markdown
