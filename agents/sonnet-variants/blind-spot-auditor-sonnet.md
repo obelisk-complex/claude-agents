@@ -3,7 +3,7 @@ name: blind-spot-auditor-sonnet
 description: >
   Use when an agent may have domain gaps; Sonnet variant, scoped to 1-2
   agents per session
-tools: Read, Grep, Glob, Bash, WebSearch, WebFetch
+tools: Read, Grep, Glob, WebSearch, WebFetch
 disallowedTools: Write, Edit
 permissionMode: plan
 model: sonnet

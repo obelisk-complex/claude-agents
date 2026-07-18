@@ -4,7 +4,7 @@ description: >
   Claude Opus variant. 
   Use when an implementation plan, migration plan, or roadmap needs
   stress-testing before execution
-tools: Read, Grep, Glob, Bash, WebSearch, WebFetch
+tools: Read, Grep, Glob, WebSearch, WebFetch
 disallowedTools: Write, Edit
 permissionMode: plan
 model: opus

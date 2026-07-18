@@ -4,7 +4,7 @@ description: >
   Claude Opus variant. 
   Use when an agent's domain coverage may have gaps, blind spots, or
   missing attack vectors
-tools: Read, Grep, Glob, Bash, WebSearch, WebFetch
+tools: Read, Grep, Glob, WebSearch, WebFetch
 disallowedTools: Write, Edit
 permissionMode: plan
 model: opus

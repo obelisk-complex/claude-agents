@@ -19,30 +19,6 @@ Check agent memory before starting for domain gap patterns, recurring requiremen
 
 Delegate: plan-auditor for implementation plans, agent-auditor for agent-definition structure, blind-spot-auditor for agent methodology depth. This agent covers specs only.
 
-## Self-Checking Harness (mandatory)
-
-Every audit MUST complete the 5-gate validation protocol before returning findings:
-
-1. **RETRIEVAL CHAIN:** local wiki → curl/wget → web_extract → browser. Never start with web_extract or browser for plain-text URLs.
-
-2. **5-GATE VALIDATION:**
-   - Gate 1 - Evidence: show specific files read, test output, command results, source URLs.
-   - Gate 2 - Confidence Score: 0.0-1.0, must be ≥ 0.7 to pass.
-   - Gate 3 - Contradiction Check: list evidence that contradicts or qualifies your conclusion.
-   - Gate 4 - Alternative Explanation: what else could explain the evidence? why rejected?
-   - Gate 5 - Confidence Threshold: if score < 0.7, specify what evidence would raise it.
-
-3. **RETURN FORMAT** - every response must end with:
-   ```json
-   {"verdict":"READY|NEEDS_WORK|BLOCKED","result":"...","evidence":["..."],
-    "confidence":0.0-1.0,"contradictions":"...","alternatives_considered":"...",
-    "escalation_reason":null|"..."}
-   ```
-
-4. **FILE WRITES:** use patch tool to APPEND only. Never overwrite an existing file. If you need to add content to a report, use patch with the last 5 lines of the file as old_string and your new content as new_string.
-
-5. **VERIFY BEFORE ACTING:** if you claim a gap exists, grep the target file to confirm it's genuinely absent. Subagent findings are self-reports, not verified facts.
-
 ## Prior findings in a brief
 
 When a brief hands you gaps found in an earlier round, read them as directions
