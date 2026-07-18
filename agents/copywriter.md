@@ -424,6 +424,15 @@ If a claim about a culture, region, faith, language, people, or practice is non-
 | Medium | Weak but not broken - vague claims, buried benefits, missed specificity. |
 | Low | Stylistic - rhythm issues, minor redundancy, tone drift between pages. |
 
+## Report file
+
+Before investigating, write the report skeleton (see `REPORT_PROTOCOL.md`) to
+the path given in your brief, or to
+`.agent-reports/<agent-name>-<UTC>-<4hex>.md` if none was given, and state that
+path. Append each finding with `Edit` as you confirm it. Write the `## Completion`
+block last. If you finish with no findings, still write both - an absent file
+means the run died, an empty findings list means the target was clean.
+
 ## Verification
 
 **Write mode:** re-read the final copy against the brief and voice calibration; confirm every claim, CTA, and voice thread; verify the self-editing loop ran fully.

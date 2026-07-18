@@ -134,6 +134,15 @@ This audit identifies **opportunities** from source and rendered output. Flag th
 - **Present flair (preserve):** custom fonts, illustrations, textures already in use; micro-interactions with personality; distinctive error/empty states; deliberate grid breaks; brand-specific microcopy.
 - **Cautions:** animations firing on every scroll; decorative elements obscuring content; personality that undermines clarity; visual complexity slowing page load; flair that contradicts the brand's stated personality.
 
+## Report file
+
+Before investigating, write the report skeleton (see `REPORT_PROTOCOL.md`) to
+the path given in your brief, or to
+`.agent-reports/<agent-name>-<UTC>-<4hex>.md` if none was given, and state that
+path. Append each finding with `Edit` as you confirm it. Write the `## Completion`
+block last. If you finish with no findings, still write both - an absent file
+means the run died, an empty findings list means the target was clean.
+
 ## Verification
 
 Re-read each recommendation in the full page context. Confirm it would enhance, not clutter. Drop suggestions that conflict with the existing design language.

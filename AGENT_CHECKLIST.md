@@ -9,9 +9,12 @@ checklist when creating new agents or auditing existing ones.
 - [ ] `description` - 1-2 sentences explaining when to use the agent
 - [ ] `tools` - only tools the agent actually uses; match to permissionMode
 - [ ] `permissionMode` - `plan` for read-only analysis, `acceptEdits` for agents that write code
-- [ ] `model` - `sonnet` unless deep reasoning justifies `opus`
+- [ ] `model` - by the tier criteria in `README.md` (`## Model Variants`): `haiku`
+  for comparison against an enumerated standard, `opus` where the deliverable is
+  what is absent or whether a mechanism achieves its intent, `sonnet` otherwise.
+  Must match the agent's row in `docs/model-tiers.tsv`
 - [ ] `maxTurns` - calibrated to workflow complexity (20 for analysts, 25-35 for writers)
-- [ ] `memory: project`
+- [ ] `memory` - `project` when findings are specific to the codebase the agent runs in, `user` for meta agents whose patterns generalise across projects
 - [ ] `color` - unique hex code or named color, no collisions with existing agents
 - [ ] `isolation: worktree` - required for agents that write or mutate code
 - [ ] `mcpServers` - only if the agent references external APIs (context7, playwright)
@@ -34,6 +37,12 @@ checklist when creating new agents or auditing existing ones.
 - [ ] Fail-fast prerequisite check in step 1 (verify project builds, tests pass, etc.)
 - [ ] Language/ecosystem-specific tool lists where applicable (Rust, Node, Python, Go, Java, C/C++)
 - [ ] Explicit handling for missing infrastructure (what to do if no test suite, no fuzzing tool, no coverage tool exists)
+
+## Report file
+
+- [ ] Agents meeting the mandatory threshold carry a `## Report file` section
+  immediately before `## Verification`, per `REPORT_PROTOCOL.md`
+  (gated by `scripts/check-report-protocol.sh`)
 
 ## Self-verification
 
@@ -69,6 +78,22 @@ The adaptation should change examples and context, not the core meaning.
 
 Domain-specific principles (3-6 additional) should come before the standard set
 in the Guiding Principles section. These encode the agent's unique expertise.
+
+## Humane prompting gate
+
+- No language that fails the ten-test checklist in `HUMANE_PROMPTING.md`
+  (canonical: `llm-wiki/wiki/concepts/humane-psychological-prompting.md`).
+  The most common failure in this fleet is adversarial role assignment toward
+  the author: "hostile reviewer", "hostile acceptance tester", "aggressive
+  critic". Adversarial framing toward the artefact or the claim under test is
+  correct and expected in audit and red-team agents; toward the author or any
+  person it is not.
+- Grep before merge as a tripwire, not a verdict:
+  `grep -rniE "hostile|aggressive critic|adversar" agents/`
+  Every hit is adjudicated against the target test above. "Hostile input",
+  "adversarial review of a claim" and the red-team fleet's probing language all
+  pass; "hostile reviewer" and "aggressive critic" aimed at an author do not.
+  The grep finds where the question must be asked. It does not answer it.
 
 ## Style rules
 

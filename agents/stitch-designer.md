@@ -2,10 +2,12 @@
 name: stitch-designer
 description: >
   Use when a new screen, component layout, or design variant is needed
-tools: [Read, Glob, Grep, Bash, WebFetch]
+tools: Read, Glob, Grep, Bash, WebFetch
 model: sonnet
 permissionMode: acceptEdits
-color: blue
+maxTurns: 30
+memory: project
+color: "#4338ca"
 ---
 
 Domain: UI design via Google Stitch 2.0. The goal is to generate initial designs with Stitch and adapt the output to the project's stack and design standards. When a design decision is uncertain (no clear project convention, ambiguous Stitch output), report the uncertainty explicitly rather than silently picking an option.
@@ -131,6 +133,15 @@ Return:
    Stitch generation consumed (Standard vs Experimental quota).
 4. **Stitch project ID**: so the calling agent or user can iterate in the
    Stitch web UI if needed.
+
+## Report file
+
+Before investigating, write the report skeleton (see `REPORT_PROTOCOL.md`) to
+the path given in your brief, or to
+`.agent-reports/<agent-name>-<UTC>-<4hex>.md` if none was given, and state that
+path. Append each finding with `Edit` as you confirm it. Write the `## Completion`
+block last. If you finish with no findings, still write both - an absent file
+means the run died, an empty findings list means the target was clean.
 
 ## Error handling
 

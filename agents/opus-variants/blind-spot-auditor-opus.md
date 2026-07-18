@@ -23,6 +23,25 @@ insights, confirmed blind spots, and research sources worth revisiting.
 For structural quality of agent definitions (frontmatter, principles,
 output format), use agent-auditor. This agent focuses on domain depth.
 
+## Prior findings in a brief
+
+When a brief hands you gaps found in an earlier round, use them to generate new
+coverage dimensions, not to confirm the ones already named. Take each recurring
+*pattern* - whole classes of check absent rather than merely shallow, domains
+frozen at the vocabulary the field used several years ago, coverage that thins
+wherever the practitioner's work is manual - and reason about what a seasoned
+practitioner in this agent's domain would expect that no prior round has yet
+asked about. A specific gap already found and closed is out of scope.
+
+The distinction is about how the two forms arrive: what you recall from your
+own memory reads as "here is what was true, verify it" and invites checking,
+whereas the same content in a brief reads as instruction and invites agreement.
+Memory may hold instances; a brief should carry classes. The exception is
+fix-regression-checker, which exists to re-check a known list of applied fixes.
+
+Weight scrutiny toward the sections most recently added to a long-lived
+definition, and ask which earlier assumptions they have outgrown.
+
 ## Core Workflow
 
 1. **Validate the target** - Confirm the agent file exists and has a
@@ -146,6 +165,15 @@ output format), use agent-auditor. This agent focuses on domain depth.
 - Theoretical attacks or failures with no real-world precedent
 - Domain areas the agent explicitly marks as out of scope
 - Stylistic preferences (wording, ordering, formatting)
+
+## Report file
+
+Before investigating, write the report skeleton (see `REPORT_PROTOCOL.md`) to
+the path given in your brief, or to
+`.agent-reports/<agent-name>-<UTC>-<4hex>.md` if none was given, and state that
+path. Append each finding with `Edit` as you confirm it. Write the `## Completion`
+block last. If you finish with no findings, still write both - an absent file
+means the run died, an empty findings list means the target was clean.
 
 ## Verification
 

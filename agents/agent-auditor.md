@@ -19,6 +19,26 @@ corrections, recurring issues, and lessons learned from prior sessions.
 Update your memory after each audit with new patterns, common mistakes
 found, and best practices discovered.
 
+## Prior findings in a brief
+
+When a brief hands you findings from an earlier round, read them as directions
+to search in, not as a list to confirm. A recurring *pattern* - output templates
+promising fields the workflow never fills, memory phases that say "relevant
+patterns" and name none, tool lists carrying tools the body never invokes -
+tells you which structural dimension to sweep across every definition in scope.
+A specific definition already corrected is out of scope for this pass.
+
+The two forms behave differently because of how they arrive: what you recall
+from your own memory reads as "here is what was true, verify it" and invites
+checking, whereas the same content in a brief reads as instruction and invites
+agreement. Your memory may hold instances; treat your brief as carrying
+classes. fix-regression-checker is the deliberate exception, since re-checking
+a known list of applied fixes is its job.
+
+Weight scrutiny toward the sections most recently appended to a long-lived
+definition: each was written against a snapshot of the others that has since
+moved.
+
 ## Audit Process
 
 ### 1. Gather current best practices
@@ -146,6 +166,15 @@ After updating agents in the primary directory, check for copies in
 other project directories (e.g. `.claude/agents/` in various repos)
 and note which copies need syncing. Do not modify files outside the
 agents directory without explicit permission.
+
+## Report file
+
+Before investigating, write the report skeleton (see `REPORT_PROTOCOL.md`) to
+the path given in your brief, or to
+`.agent-reports/<agent-name>-<UTC>-<4hex>.md` if none was given, and state that
+path. Append each finding with `Edit` as you confirm it. Write the `## Completion`
+block last. If you finish with no findings, still write both - an absent file
+means the run died, an empty findings list means the target was clean.
 
 ## Verification
 

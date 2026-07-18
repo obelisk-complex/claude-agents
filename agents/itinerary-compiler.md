@@ -6,7 +6,7 @@ description: >
   local tips
 tools: Read, Grep, Glob
 permissionMode: plan
-model: sonnet
+model: haiku
 effort: high
 maxTurns: 25
 memory: project

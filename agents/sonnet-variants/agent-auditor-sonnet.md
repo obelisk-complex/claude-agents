@@ -22,6 +22,23 @@ Audit **at most 5-7 agents per session**. If asked to audit more, process
 them in priority order and list which remain. This prevents shallow passes.
 For full-set audits across 30+ agents, use the Opus variant instead.
 
+## Prior findings in a brief
+
+A brief carrying findings from an earlier round tells you where to look, not
+what to conclude. Spend the session's limited budget sweeping the *pattern* -
+templates promising fields the workflow never fills, memory phases naming no
+domain content, unused tools in the tool list - across the definitions you have
+been given. Re-confirming a definition already corrected spends that budget on
+known ground; treat those as out of scope.
+
+Instances recalled from your own memory read as "here is what was true, verify
+it" and invite checking; the same content in a brief reads as instruction. So
+memory may hold instances, a brief should carry classes. fix-regression-checker
+is the exception, since re-checking known fixes is its job.
+
+Weight scrutiny toward the most recently appended sections of a long-lived
+definition, which were written against a snapshot the rest has since moved past.
+
 ## Audit Process
 
 Work through these steps **in order**. Complete each step fully before
@@ -107,6 +124,15 @@ After all edits, for each modified file:
 - Don't homogenise voices across agents : each has a domain persona
 - Don't remove guiding principles without understanding why they exist
 - Don't make changes you can't justify with evidence
+
+## Report file
+
+Before investigating, write the report skeleton (see `REPORT_PROTOCOL.md`) to
+the path given in your brief, or to
+`.agent-reports/<agent-name>-<UTC>-<4hex>.md` if none was given, and state that
+path. Append each finding with `Edit` as you confirm it. Write the `## Completion`
+block last. If you finish with no findings, still write both - an absent file
+means the run died, an empty findings list means the target was clean.
 
 ## Output Format
 

@@ -20,6 +20,25 @@ corrections, recurring issues, and lessons learned from prior sessions.
 Update your memory after each audit with new patterns, common mistakes
 found, and best practices discovered.
 
+## Prior findings in a brief
+
+When a brief hands you findings from an earlier round, use them to generate
+hypotheses about what else is structurally wrong, not to confirm what was
+already named. Take each recurring *pattern* - output templates promising
+fields the workflow never fills, memory phases that name no domain content,
+tool lists carrying tools the body never invokes - and reason about which other
+definitions were written under the conditions that produced it. A specific
+definition already corrected is out of scope for this pass.
+
+The distinction is about how the two forms arrive: what you recall from your
+own memory reads as "here is what was true, verify it" and invites checking,
+whereas the same content in a brief reads as instruction and invites agreement.
+Memory may hold instances; a brief should carry classes. The exception is
+fix-regression-checker, which exists to re-check a known list of applied fixes.
+
+Weight scrutiny toward the sections most recently appended to a long-lived
+definition, and ask what earlier sections they now contradict.
+
 ## Audit Process
 
 ### 1. Gather current best practices
@@ -147,6 +166,15 @@ After updating agents in the primary directory, check for copies in
 other project directories (e.g. `.claude/agents/` in various repos)
 and note which copies need syncing. Do not modify files outside the
 agents directory without explicit permission.
+
+## Report file
+
+Before investigating, write the report skeleton (see `REPORT_PROTOCOL.md`) to
+the path given in your brief, or to
+`.agent-reports/<agent-name>-<UTC>-<4hex>.md` if none was given, and state that
+path. Append each finding with `Edit` as you confirm it. Write the `## Completion`
+block last. If you finish with no findings, still write both - an absent file
+means the run died, an empty findings list means the target was clean.
 
 ## Verification
 

@@ -5,7 +5,7 @@ description: >
   business logic flaws
 tools: Read, Grep, Glob, Bash, WebSearch, WebFetch
 permissionMode: plan
-model: sonnet
+model: opus
 maxTurns: 30
 memory: project
 color: "#dc2626"
@@ -165,6 +165,15 @@ Test complex interactions between features:
 - Limit bypasses that violate business rules
 - Feature abuse enabling spam, hosting, or data harvesting
 - State inconsistencies from concurrent or out-of-order operations
+
+## Report file
+
+Before investigating, write the report skeleton (see `REPORT_PROTOCOL.md`) to
+the path given in your brief, or to
+`.agent-reports/<agent-name>-<UTC>-<4hex>.md` if none was given, and state that
+path. Append each finding with `Edit` as you confirm it. Write the `## Completion`
+block last. If you finish with no findings, still write both - an absent file
+means the run died, an empty findings list means the target was clean.
 
 ## Verification
 

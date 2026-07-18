@@ -94,6 +94,10 @@ A collection of specialised [Claude Code](https://code.claude.com/docs/en/overvi
 |-------|---------|------|--------|
 | [agent-auditor](agents/agent-auditor.md) | Audits and updates other agents against current best practices | Read-write | User |
 | [blind-spot-auditor](agents/blind-spot-auditor.md) | Finds domain gaps, missing attack vectors, and coverage holes in agent definitions | Read-only | User |
+| [token-usage-auditor](agents/token-usage-auditor.md) | Finds agent and skill text that spends context without buying signal | Read-only | User |
+| [fix-regression-checker](agents/fix-regression-checker.md) | Verifies applied fixes still achieve their intent, not merely that their text survives | Read-only | Project |
+| [skill-auditor](agents/skill-auditor.md) | Audits skills against the skill checklist, including packaging that decides whether a skill loads at all | Read-write | User |
+| [skill-trigger-auditor](agents/skill-trigger-auditor.md) | Predicts whether a skill's description will fire on the situations it covers, and on ones it should not | Read-only | User |
 
 ## Installation
 
@@ -143,14 +147,27 @@ When invoked from the main conversation, Claude Code spawns agents as sub-agents
 - **No manufactured findings.** If the code is clean, say so.
 - **Aggressive verification.** Agents cross-check against CVE databases, current documentation, and the project's own prior research before reporting.
 - **Domain principles plus cross-fleet principles.** Every agent's `Guiding Principles` section splits domain-specific rules from cross-fleet rules (warnings are errors, leave no trash, do the harder fix, secure by default) so behaviour stays consistent across the fleet.
+- **Findings land on disk as they are found.** Long-running agents append to a report file rather than batching a final message, so a run that dies mid-pass still leaves its work behind. See `REPORT_PROTOCOL.md`.
 
 ## Model Variants
 
-All agents default to `sonnet`. Opus variants are provided for higher-reasoning tasks where the extra depth is worth it.
+Each agent's base file carries the model its job needs. That is a design-time property: it follows from the kind of reasoning the agent does, and it is checked against `docs/model-tiers.tsv` by `scripts/check-agent-frontmatter.sh`. The variant directories are a separate, deployment-time mechanism: they let you run a given agent with more or less depth than its default on a particular job.
+
+Tier criteria, so the next person tiers consistently:
+
+| Tier | The agent's work is |
+|------|---------------------|
+| `haiku` | Comparison against an explicit, enumerated standard, where every finding is a mismatch someone could point at. No absence-detection, no reasoning about whether a mechanism achieves an intent. |
+| `sonnet` | Domain reasoning over code or prose against a stated target, where the target exists but mapping it onto the artefact needs judgement. The default: anything you cannot confidently place in the other two tiers belongs here. |
+| `opus` | Naming what is *not* there, or judging whether a mechanism achieves its intent rather than whether text matches, or synthesising across several artefacts. |
+
+The commonest error is demoting an agent whose checklist looks mechanical but whose individual items are themselves absence-detection ("flag any user-facing commit missing from the changelog", "flag CSS classes defined but never used"). Read the workflow steps, not the agent's summary.
+
+A fourth disqualifier sits outside the three criteria, because they measure kinds of reasoning and this one measures prose: an agent that must judge the register of its own output belongs on `sonnet` or above, whatever its workflow looks like. The case that found this gap was `mainstream-attractions-researcher`, whose steps are pure field extraction but whose guiding principles carry an anti-exoticisation standard - no Orientalist register, no monolithic cultural claims. Every step passed the haiku test and the agent still failed it. Where the cost of a wrong demotion is output that flattens a culture rather than output that misses a finding, leave the default alone.
 
 | Directory | Model | Use when |
 |-----------|-------|----------|
-| `agents/` (default) | `sonnet` | Standard use. |
+| `agents/` (default) | Per `docs/model-tiers.tsv` | Standard use. |
 | `agents/opus-variants/` | `opus` | Maximum reasoning depth is worth the cost (available for `agent-auditor`, `blind-spot-auditor`, `conformance-auditor`, `interview`, `migration-planner`, `plan-auditor`, `requirements-auditor`, `travel-research-coordinator`). |
 | `agents/sonnet-variants/` | `sonnet` | Scoped variants with tighter turn/effort budgets (available for `agent-auditor`, `blind-spot-auditor`, `migration-planner`). |
 
@@ -160,6 +177,8 @@ To switch an agent to a variant, copy the variant file over the default:
 # Example: use the Opus variant of conformance-auditor
 cp agents/opus-variants/conformance-auditor-opus.md agents/conformance-auditor.md
 ```
+
+Do this in your own `.claude/agents/`, not in this repo: overwriting a base file here puts two agents under one name and `scripts/check-agent-frontmatter.sh` will fail.
 
 ## Customisation
 

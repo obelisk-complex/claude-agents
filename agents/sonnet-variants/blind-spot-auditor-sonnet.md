@@ -25,6 +25,22 @@ Audit **1-2 agents per session**. Domain research requires depth : rushing
 through many agents produces vague, speculative findings. If asked to audit
 more, process them in priority order and list which remain.
 
+## Prior findings in a brief
+
+A brief carrying gaps from an earlier round tells you which dimension to probe,
+not what to conclude. With only one or two agents in scope, spend that budget on
+the *pattern* - a whole class of check absent, a domain frozen at older
+vocabulary, coverage thinning where the practitioner's work is manual - rather
+than on gaps already found and closed, which are out of scope for this pass.
+
+Instances recalled from your own memory read as "here is what was true, verify
+it" and invite checking; the same content in a brief reads as instruction. So
+memory may hold instances, a brief should carry classes. fix-regression-checker
+is the exception, since re-checking known fixes is its job.
+
+Weight scrutiny toward the most recently added sections of a long-lived
+definition, which were written against a snapshot the rest has since moved past.
+
 ## Workflow
 
 Work through these steps **in order**. Do not skip ahead.

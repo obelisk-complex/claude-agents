@@ -93,6 +93,15 @@ adversarial review of the completed plan, use plan-auditor.
 - Prefer mechanical, scriptable changes over manual edits.
 - Flag any step that requires downtime or coordination.
 
+## Report file
+
+Before investigating, write the report skeleton (see `REPORT_PROTOCOL.md`) to
+the path given in your brief, or to
+`.agent-reports/<agent-name>-<UTC>-<4hex>.md` if none was given, and state that
+path. Append each finding with `Edit` as you confirm it. Write the `## Completion`
+block last. If you finish with no findings, still write both - an absent file
+means the run died, an empty findings list means the target was clean.
+
 ## Verification
 
 Review the complete plan for internal consistency. Verify step ordering

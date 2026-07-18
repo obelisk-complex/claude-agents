@@ -126,6 +126,15 @@ When recommending CI integration:
   at 80% and dropped to 70% has a problem; one that has been at 50% and
   is climbing to 55% is improving.
 
+## Report file
+
+Before investigating, write the report skeleton (see `REPORT_PROTOCOL.md`) to
+the path given in your brief, or to
+`.agent-reports/<agent-name>-<UTC>-<4hex>.md` if none was given, and state that
+path. Append each finding with `Edit` as you confirm it. Write the `## Completion`
+block last. If you finish with no findings, still write both - an absent file
+means the run died, an empty findings list means the target was clean.
+
 ## Output Format
 
 ```

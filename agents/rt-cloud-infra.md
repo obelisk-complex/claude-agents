@@ -164,6 +164,15 @@ If K8s is detected: test exposed kubelet API (`https://<target>:10250/pods`); de
 - Dangling DNS records controllable by an attacker
 - Firebase or similar databases with public read access
 
+## Report file
+
+Before investigating, write the report skeleton (see `REPORT_PROTOCOL.md`) to
+the path given in your brief, or to
+`.agent-reports/<agent-name>-<UTC>-<4hex>.md` if none was given, and state that
+path. Append each finding with `Edit` as you confirm it. Write the `## Completion`
+block last. If you finish with no findings, still write both - an absent file
+means the run died, an empty findings list means the target was clean.
+
 ## Verification
 
 Before reporting any finding, re-test to confirm it is reproducible. Verify

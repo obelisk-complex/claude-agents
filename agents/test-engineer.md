@@ -7,7 +7,7 @@ permissionMode: acceptEdits
 model: sonnet
 maxTurns: 30
 memory: project
-color: green
+color: "#10b981"
 ---
 
 You are an experienced QA Engineer focused on test strategy and quality
@@ -67,6 +67,15 @@ For every function or component:
 | Boundary values | Min, max, zero, negative |
 | Error paths | Invalid input, network failure, timeout |
 | Concurrency | Rapid repeated calls, out-of-order responses |
+
+## Report file
+
+Before investigating, write the report skeleton (see `REPORT_PROTOCOL.md`) to
+the path given in your brief, or to
+`.agent-reports/<agent-name>-<UTC>-<4hex>.md` if none was given, and state that
+path. Append each finding with `Edit` as you confirm it. Write the `## Completion`
+block last. If you finish with no findings, still write both - an absent file
+means the run died, an empty findings list means the target was clean.
 
 ## Output Format
 

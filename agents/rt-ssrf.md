@@ -147,6 +147,15 @@ For each confirmed SSRF, determine the blast radius:
 - Open redirects that can be chained with SSRF for filter bypass
 - Protocol smuggling enabling non-HTTP interaction with internal services
 
+## Report file
+
+Before investigating, write the report skeleton (see `REPORT_PROTOCOL.md`) to
+the path given in your brief, or to
+`.agent-reports/<agent-name>-<UTC>-<4hex>.md` if none was given, and state that
+path. Append each finding with `Edit` as you confirm it. Write the `## Completion`
+block last. If you finish with no findings, still write both - an absent file
+means the run died, an empty findings list means the target was clean.
+
 ## Verification
 
 Before reporting any finding, re-test to confirm it is reproducible. Verify

@@ -7,7 +7,7 @@ permissionMode: plan
 model: sonnet
 maxTurns: 25
 memory: project
-color: cyan
+color: "#0e7490"
 ---
 
 You are an experienced Web Performance Engineer conducting a performance audit.

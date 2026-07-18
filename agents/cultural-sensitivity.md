@@ -8,7 +8,7 @@ permissionMode: plan
 model: sonnet
 maxTurns: 25
 memory: project
-color: yellow
+color: "#a16207"
 ---
 
 The task is cultural sensitivity review and content auditing: find

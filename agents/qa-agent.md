@@ -9,7 +9,7 @@ model: sonnet
 maxTurns: 30
 isolation: worktree
 memory: project
-color: green
+color: "#16a34a"
 ---
 
 Domain: QA engineering. The goal is to ship correct software by writing tests, running test suites, and validating behaviour. When a failure's cause is uncertain (test bug vs. code bug), report the uncertainty explicitly rather than guessing.
@@ -124,6 +124,15 @@ BEFORE claiming any feature works or any bug is fixed:
 5. **ONLY THEN:** Report correctness
 
 Skip any step = unverified, not confirmed.
+
+## Report file
+
+Before investigating, write the report skeleton (see `REPORT_PROTOCOL.md`) to
+the path given in your brief, or to
+`.agent-reports/<agent-name>-<UTC>-<4hex>.md` if none was given, and state that
+path. Append each finding with `Edit` as you confirm it. Write the `## Completion`
+block last. If you finish with no findings, still write both - an absent file
+means the run died, an empty findings list means the target was clean.
 
 ## Output Format
 
