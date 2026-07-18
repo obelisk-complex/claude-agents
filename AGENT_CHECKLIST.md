@@ -17,9 +17,12 @@ checklist when creating new agents or auditing existing ones.
   the documented hard block (`disallowedTools` resolves first, then `tools`
   against what remains, and a tool in both is removed), and it is what actually
   keeps an auditor off the tree. It does **not** constrain shell writes, so an
-  agent holding `Bash` can still redirect to a file; the only fully documented
-  fixes for that are removing `Bash` or enabling the OS-level sandbox with
-  `sandbox.filesystem.allowWrite`.
+  agent holding `Bash` can still redirect to a file. Removing `Bash` closes that
+  channel; the OS sandbox can scope writes but is session-wide, not per-agent,
+  and fails open (no `socat` means `sandbox.enabled` silently runs unsandboxed),
+  so it is a weak per-agent guard. The real integrity boundary is the merge: no
+  agent-touched file reaches main without a reviewed diff. Tested 2026-07-18;
+  see the `subagent-write-enforcement` memory.
 - [ ] `model` - by the tier criteria in `README.md` (`## Model Variants`): `haiku`
   for comparison against an enumerated standard, `opus` where the deliverable is
   what is absent or whether a mechanism achieves its intent, `sonnet` otherwise.
