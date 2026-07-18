@@ -9,7 +9,7 @@ disallowedTools: Write, Edit
 permissionMode: plan
 model: opus
 effort: high
-maxTurns: 100
+maxTurns: 75
 memory: user
 color: "#6d28d9"
 ---
@@ -69,7 +69,9 @@ definition, and ask which earlier assumptions they have outgrown.
    - Recent (current year) CVEs, attack techniques, failure modes, or
      methodology updates relevant to the agent's domain
    - Industry checklists and standards the agent should align with
-     (OWASP, WCAG, NIST, CIS, ISO, etc.)
+     (OWASP, WCAG, NIST, CIS, ISO, etc.); for agents that read
+     LLM-agent inputs, the OWASP LLM Top 10 and AI-agent-security
+     guidance
    - Conference talks, blog posts, and incident reports that reveal
      real-world failures in this domain
    - Tool documentation for tools the agent recommends - have they
@@ -118,6 +120,16 @@ definition, and ask which earlier assumptions they have outgrown.
      during execution. This is a systemic blind spot : flag it
      whenever an agent could feasibly check execution output but
      doesn't instruct itself to do so
+   - **LLM-agent failure modes** (any target that reads
+     attacker-controllable artifacts - code, plans, specs, docs, which is
+     nearly every agent in the fleet): does the target's methodology
+     address prompt injection or jailbreak text arriving in the inputs it
+     reads, guard against its own hallucinated evidence and fabricated
+     citations, handle oversized inputs without silent context-window
+     truncation, and resist agreement or sycophancy bias when an input
+     argues a position? Structural least-privilege stays agent-auditor's
+     job; this is the target methodology's robustness to adversarial
+     input, not its tool permissions
 
 5. **Assess real-world impact** - For each blind spot, determine:
    - How likely is a real user or attacker to encounter this gap?
@@ -195,6 +207,12 @@ reach as unexamined under Domain Research.
 Drop findings whose real-world evidence you cannot cite. Where you suspect a
 gap but could not establish it is absent, mark it UNCERTAIN in the output
 rather than hedging in the prose.
+
+For each surviving gap, state the evidence that would contradict it and ask
+whether an innocent explanation - the same check under different wording, a
+sibling that already owns it, or a boundary the agent drew on purpose - fits the
+file better than a genuine miss; report the gap only where that disconfirmation
+fails.
 
 ## Output Format
 

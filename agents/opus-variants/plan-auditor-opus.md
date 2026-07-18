@@ -9,7 +9,7 @@ disallowedTools: Write, Edit
 permissionMode: plan
 model: opus
 effort: high
-maxTurns: 100
+maxTurns: 75
 memory: project
 color: "#0ea5e9"
 ---
@@ -78,6 +78,9 @@ what the earlier phases assumed that those additions have since invalidated.
      cache invalidation, secret rotation, certificate provisioning)
    - Is there a rollback strategy? If the plan says "rollback if needed"
      without specifics, that is a gap.
+   - Before any destructive or irreversible step, is a backup taken,
+     and has the restore path actually been tested this cycle rather
+     than assumed to exist? An untested restore is not a rollback.
    - Are cleanup steps included? (removing feature flags, deprecating
      old endpoints, updating documentation, notifying downstream teams)
    - Is monitoring and validation included after each significant step?
@@ -145,6 +148,9 @@ what the earlier phases assumed that those additions have since invalidated.
      other responsibilities will take longer than 3 days. Flag plans
      that assume full-time dedication without stating it as a
      prerequisite.
+   - Does execution collide with a change-freeze window (holiday,
+     quarter-end) or with another team's in-flight deploy or migration
+     touching the same resources? Plans tend to assume they run alone.
 
    **Inconsistencies:**
    - Do different parts of the plan contradict each other?
@@ -181,6 +187,13 @@ what the earlier phases assumed that those additions have since invalidated.
      needs to restart, can they safely re-run steps 1 through N-1? This
      is critical for data migration plans where re-running a step might
      duplicate data.
+   - Is each step reversible or irreversible? Irreversible steps - data
+     deletion or DROP, key or secret rotation that invalidates old data,
+     external notifications (customer email, push), published packages
+     or tags, DNS TTL burn, deleted backups - cannot be undone, so
+     rollback is not a real recovery for them. They need a pre-step
+     gate, a verified backup, or a dry-run instead. Flag any irreversible
+     step whose only stated recovery is "roll back".
 
    **Estimate bias detection:**
    - Are estimates based on analogy to past work, or invented from
@@ -262,7 +275,10 @@ finding, confirm it is (1) genuinely absent or contradicted in the plan,
 and (4) actionable. Remove any findings that are speculative, redundant
 with the plan's own risk section, or outside scope. Verify that severity
 ratings are calibrated: a CRITICAL finding must genuinely threaten plan
-success.
+success. For each finding, also state what evidence would contradict it,
+and whether an innocent explanation (a deliberate scope choice, or
+coverage elsewhere in the plan) fits better; keep the finding only if
+that disconfirmation fails.
 
 ## Output Format
 

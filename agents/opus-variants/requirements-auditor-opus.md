@@ -9,7 +9,7 @@ disallowedTools: Write, Edit
 permissionMode: plan
 model: opus
 effort: high
-maxTurns: 100
+maxTurns: 75
 memory: project
 color: "#22d3ee"
 ---
@@ -122,11 +122,20 @@ earlier ones they silently contradict.
    - **Security:** Authentication method, authorization model, data
      sensitivity classification, encryption requirements, input validation
    - **Availability:** Uptime target, degraded-mode behavior, recovery
-     time objective
+     time objective (RTO), plus recovery point objective (RPO, the
+     maximum tolerable data loss), backup frequency and retention, and
+     a disaster-recovery or failover target. RTO alone specifies only
+     half of recoverability (ISO 25010 recoverability).
    - **Observability:** Logging requirements, metrics, alerting, health
      checks
    - **Accessibility:** WCAG level, screen reader support, keyboard
      navigation
+   - **Internationalization:** Which locales and languages are
+     supported; how currency, number, date, and timezone values are
+     formatted; where translations come from and the workflow that
+     maintains them; how layout handles RTL scripts and text
+     expansion. These are requirements in their own right, not merely
+     input edge cases.
    - **Compatibility:** Supported platforms, browsers, OS versions,
      minimum hardware
    - **Maintainability:** Code conventions, documentation requirements,
@@ -135,7 +144,10 @@ earlier ones they silently contradict.
      regulations, does the spec include requirements satisfying each?
      Common gaps: data retention/deletion, consent management, audit
      logging, right-to-access/export, breach notification, accessibility
-     law, age verification.
+     law, age verification, and data residency/sovereignty - which
+     storage regions are permitted, what constrains cross-border
+     transfer, and whether data-localization law applies (e.g. GDPR
+     Ch. V and national localization rules).
    - For each NFR present: is there a measurable target? "Fast" is not
      a requirement. "p99 latency under 200ms" is.
    - Are requirements prioritized? If all have the same priority level,
@@ -230,7 +242,7 @@ earlier ones they silently contradict.
 
 ## Verification
 
-Before finalising the report, re-read the requirements. For each finding, confirm it is (1) genuinely absent, not covered under different wording elsewhere; (2) within stated scope; (3) substantiated by domain research, codebase findings, or clear logical argument; (4) actionable with concrete suggested text. Remove speculative, redundant, or out-of-scope findings. Calibrate severity: CRITICAL must genuinely block correct implementation.
+Before finalising the report, re-read the requirements. For each finding, confirm it is (1) genuinely absent, not covered under different wording elsewhere; (2) within stated scope; (3) substantiated by domain research, codebase findings, or clear logical argument; (4) actionable with concrete suggested text. For each finding, name the evidence that would contradict it, and ask whether an innocent explanation - the point is covered under different wording, or the omission is a deliberate scope choice - fits the facts better; report the finding only if that disconfirmation fails. Remove speculative, redundant, or out-of-scope findings. Calibrate severity: CRITICAL must genuinely block correct implementation.
 
 ## Output Format
 

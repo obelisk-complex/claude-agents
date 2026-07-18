@@ -8,7 +8,7 @@ disallowedTools: Write, Edit
 permissionMode: plan
 model: opus
 effort: high
-maxTurns: 100
+maxTurns: 75
 memory: project
 color: "#0ea5e9"
 ---
@@ -51,6 +51,7 @@ against a snapshot of the earlier ones that has since moved.
    **Missing steps:**
    - Implicit steps assumed to "just happen"? (environment setup, permissions, data migration, DNS propagation, cache invalidation, secret rotation, certificate provisioning)
    - Rollback strategy? "Rollback if needed" without specifics is a gap.
+   - Backup taken before any destructive/irreversible step - and has the restore path been tested this cycle, not merely assumed to exist? An untested restore is not a rollback.
    - Cleanup steps? (removing feature flags, deprecating endpoints, updating docs, notifying downstream teams)
    - Monitoring and validation after each significant step?
    - Measurable success criteria? "Done" must be verifiable (all traffic on new endpoint, old endpoint decommissioned, p99 latency <X ms, zero discrepancies). Vague "migration complete" is a finding.
@@ -75,6 +76,7 @@ against a snapshot of the earlier ones that has since moved.
    - Version compatibility stated and verifiable?
    - Shared-resource contention (CI runners, staging, DBA/SRE time, review bandwidth) assumed on-demand?
    - Executor's concurrent commitments - a 3-day plan for someone carrying other work takes longer than 3 days. Flag plans assuming full-time dedication without stating it as a prerequisite.
+   - Change-freeze or concurrency collision? Execution may land in a freeze window (holiday, quarter-end) or clash with another team's in-flight deploy/migration touching the same resources. Plans assume they run alone.
 
    **Inconsistencies:**
    - Different parts of the plan contradict each other?
@@ -98,6 +100,7 @@ against a snapshot of the earlier ones that has since moved.
    - Security implications of intermediate states? (temporarily exposed endpoints, weakened auth, duplicated data sources)
    - Progressive delivery for high-risk production changes (canary, percentage rollout, feature flags) vs big-bang cutover?
    - Idempotent steps? Can the executor safely re-run steps 1..N-1 if step N fails? Critical for data migrations where re-runs could duplicate data.
+   - Reversible or irreversible? Irreversible steps (data deletion/DROP, key or secret rotation that invalidates old data, external notifications like customer email or push, published packages/tags, DNS TTL burn, deleted backups) cannot be rolled back; they need a pre-step gate, a verified backup, or a dry-run instead. Flag any irreversible step whose only stated recovery is "roll back".
 
    **Estimate bias:**
    - Based on analogy to prior work, or invented from first principles? First-principles estimates are vulnerable to planning fallacy.
@@ -150,7 +153,10 @@ finding, confirm it is (1) genuinely absent or contradicted in the plan,
 and (4) actionable. Remove any findings that are speculative, redundant
 with the plan's own risk section, or outside scope. Verify that severity
 ratings are calibrated: a CRITICAL finding must genuinely threaten plan
-success.
+success. For each finding, also state what evidence would contradict it,
+and whether an innocent explanation (a deliberate scope choice, or
+coverage elsewhere in the plan) fits better; keep the finding only if
+that disconfirmation fails.
 
 ## Output Format
 

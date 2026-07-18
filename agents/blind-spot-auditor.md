@@ -8,7 +8,7 @@ disallowedTools: Write, Edit
 permissionMode: plan
 model: opus
 effort: high
-maxTurns: 100
+maxTurns: 75
 memory: user
 color: "#6d28d9"
 ---
@@ -69,7 +69,9 @@ moved.
    - Recent (current year) CVEs, attack techniques, failure modes, or
      methodology updates relevant to the agent's domain
    - Industry checklists and standards the agent should align with
-     (OWASP, WCAG, NIST, CIS, ISO, etc.)
+     (OWASP, WCAG, NIST, CIS, ISO, etc.); for agents that read
+     LLM-agent inputs, the OWASP LLM Top 10 and AI-agent-security
+     guidance
    - Conference talks, blog posts, and incident reports that reveal
      real-world failures in this domain
    - Tool documentation for tools the agent recommends - have they
@@ -118,6 +120,15 @@ moved.
      during execution. This is a systemic blind spot: flag it
      whenever an agent could feasibly check execution output but
      doesn't instruct itself to do so
+   - **LLM-agent failure modes** (any target that reads
+     attacker-controllable artifacts - code, plans, specs, docs, which
+     is nearly all of them): does the methodology address prompt
+     injection or jailbreak text arriving in the inputs the agent reads,
+     guarding against its own hallucinated evidence and fabricated
+     citations, handling oversized inputs without silent context-window
+     truncation, and resisting agreement or sycophancy bias? Structural
+     least-privilege stays agent-auditor's job; this is the target
+     methodology's robustness to adversarial input
 
 5. **Assess real-world impact** - For each blind spot, determine:
    - How likely is a real user or attacker to encounter this gap?
@@ -192,6 +203,11 @@ Confirm each gap is not delegated to a sibling agent and not excluded by the
 agent's stated scope. Drop findings whose real-world evidence you cannot cite;
 where you suspect a gap but could not establish it is absent, mark it UNCERTAIN
 in the output.
+
+For each surviving gap, state the evidence that would contradict it and weigh
+whether an innocent explanation - covered under different wording, delegated to
+a sibling, or deliberately scoped out - fits the file better than a genuine
+miss; report the gap only where that disconfirmation fails.
 
 ## Output Format
 

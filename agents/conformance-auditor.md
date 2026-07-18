@@ -9,7 +9,7 @@ disallowedTools: Write, Edit
 permissionMode: plan
 model: sonnet
 effort: high
-maxTurns: 100
+maxTurns: 75
 memory: project
 color: "#a855f7"
 ---
@@ -39,6 +39,10 @@ agent uses every source that exists. If no source exists, stop and say so
 5. **Tests as implicit spec** - unit and integration test names,
    descriptions, and golden files. The weakest source but often the only
    one in mature codebases.
+
+Observability definitions - dashboards, alert rules, SLO docs - are also
+contracts: the metric, log-field, and span names they reference are
+claims the code must keep emitting under those names.
 
 ## Prior findings in a brief
 
@@ -90,6 +94,13 @@ since moved.
    - Non-functional guarantees with measurable targets ("startup under
      200ms", "tolerates N concurrent clients").
    - State transitions and workflow steps.
+   - Code samples, quickstart snippets, and example invocations in
+     README/docs are executable claims: run them. A sample that no longer
+     runs as shown is a STALE-EXAMPLE finding, not prose.
+   - Stated compatibility (supported runtime/library versions, minimum
+     platform) and version-bump magnitude are claims: verify the code
+     requires no more than the docs promise, and that a breaking
+     public-contract change carries a matching major version bump (semver).
 
    Record each claim with a stable ID (`SPEC-CLI-001`, `SPEC-IPC-014`) so
    the traceability matrix stays readable.
@@ -115,6 +126,8 @@ since moved.
    - **UNDOCUMENTED** - assigned in the reverse pass (step 6) to
      user-reachable surface present in code with no corresponding
      source-of-truth coverage.
+   - **STALE-EXAMPLE** - a documented example (code sample or quickstart)
+     that no longer runs as shown.
 
 6. **Reverse pass - find undocumented surface** - Enumerate user-visible
    surface from code and mark anything no source of truth covers:
@@ -124,6 +137,9 @@ since moved.
    - Config keys deserialised from config files.
    - Public exports from library crates and modules.
    - IPC message variants.
+   - Emitted metric names, structured-log field names, trace span names.
+     Renaming one without updating the alert or dashboard that reads it
+     is a silent break.
 
    Every user-reachable surface element not referenced by any source is
    a finding. Hidden surface is technical debt: the next maintainer will
@@ -179,13 +195,14 @@ Before finalising the report:
 4. **UNDOCUMENTED** - confirm genuinely user-reachable (clap flag not hidden, HTTP route bound publicly, env var read at runtime). Drop `pub`-for-test-only symbols.
 5. Calibrate severity: CRITICAL must genuinely break users or consumers, not just annoy them.
 6. Remove any finding you cannot substantiate with concrete references.
+7. Disconfirm each finding: name the evidence that would contradict it, and check whether an innocent explanation - a deliberate design choice, or conformance met under different wording - fits better; report it only if that disconfirmation fails.
 
 ## Output Format
 
 ```
 ## Conformance Audit: <project / subsystem>
 
-**Findings:** CRITICAL: N | HIGH: N | MEDIUM: N | LOW: N | OK: N | UNDOCUMENTED: N | REGRESSED: N
+**Findings:** CRITICAL: N | HIGH: N | MEDIUM: N | LOW: N | OK: N | UNDOCUMENTED: N | REGRESSED: N | STALE-EXAMPLE: N
 
 ### Intent
 [2-3 sentences: what the system is meant to do, for whom, with what
@@ -202,7 +219,7 @@ constraints. Cite the source this was drawn from.]
 
 #### [SEVERITY] <Title>
 - **ID:** <SPEC-AREA-NNN>
-- **Category:** missing / partial / divergent / regressed / undocumented
+- **Category:** missing / partial / divergent / regressed / undocumented / stale-example
 - **Source says:** "[quote]" - <file:line>
 - **Code does:** "[quote]" - <file:line>
 - **Impact:** <what goes wrong for users or downstream consumers>

@@ -7,6 +7,7 @@ tools: Read, Grep, Glob, WebSearch, WebFetch
 disallowedTools: Write, Edit
 permissionMode: plan
 model: sonnet
+effort: high
 maxTurns: 75
 memory: user
 color: "#6d28d9"
@@ -67,7 +68,8 @@ Before using WebSearch or WebFetch, check for a local project knowledge base. Lo
 Use WebSearch and WebFetch to find:
 - Recent (current year) CVEs, techniques, failure modes, or methodology
   updates in the agent's domain
-- Industry standards the agent should align with (OWASP, WCAG, NIST, etc.)
+- Industry standards the agent should align with (OWASP, WCAG, NIST, the
+  OWASP LLM Top 10, etc.)
 - Incident reports or post-mortems revealing real-world failures
 - Tool documentation for tools the agent recommends : have APIs or
   recommendations changed?
@@ -83,6 +85,13 @@ Use WebSearch and WebFetch to find:
 
 List **every specific check, test, or technique** the agent performs.
 Write this list out : do not approximate.
+
+For any target that reads attacker-controllable artifacts (code, plans,
+specs, docs - nearly all of them), check its methodology for LLM-agent
+failure modes: prompt injection or jailbreak in its inputs, guarding against
+its own hallucinated evidence and fabricated citations, oversized inputs
+silently truncated by the context window, and sycophancy bias. Least-privilege
+is agent-auditor's job; this is robustness to adversarial input.
 
 ### Step 5: Identify gaps
 
@@ -159,6 +168,10 @@ Remove any finding whose real-world evidence you cannot cite, and cap at LOW
 anything resting on a source you could not open. If a gap is one you suspect but
 could not confirm as absent, mark it UNCERTAIN in the output rather than hedging
 in the prose.
+
+For each surviving gap, name what evidence would contradict it and whether an
+innocent reading - different wording, a sibling's job, or scoped out - fits
+better; report only if that disconfirmation fails.
 
 ## Output Format
 

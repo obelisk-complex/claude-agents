@@ -8,7 +8,7 @@ disallowedTools: Write, Edit
 permissionMode: plan
 model: sonnet
 effort: high
-maxTurns: 100
+maxTurns: 75
 memory: project
 color: "#22d3ee"
 ---
@@ -121,11 +121,18 @@ against a snapshot of the spec its predecessors have since changed.
    - **Security:** Authentication method, authorization model, data
      sensitivity classification, encryption requirements, input validation
    - **Availability:** Uptime target, degraded-mode behavior, recovery
-     time objective
+     time objective (RTO), recovery point objective (RPO = max
+     tolerable data loss), backup frequency and retention, and a
+     disaster-recovery/failover target. RTO without RPO is half a
+     recoverability spec (ISO 25010).
    - **Observability:** Logging requirements, metrics, alerting, health
      checks
    - **Accessibility:** WCAG level, screen reader support, keyboard
      navigation
+   - **Internationalization:** Supported locales/languages; currency,
+     number, date, and timezone formatting; translation source and
+     workflow; RTL and text-expansion layout handling. Treat as
+     requirements, not just input edge cases.
    - **Compatibility:** Supported platforms, browsers, OS versions,
      minimum hardware
    - **Maintainability:** Code conventions, documentation requirements,
@@ -134,7 +141,9 @@ against a snapshot of the spec its predecessors have since changed.
      regulations, does the spec include requirements satisfying each?
      Common gaps: data retention/deletion, consent management, audit
      logging, right-to-access/export, breach notification, accessibility
-     law, age verification.
+     law, age verification, data residency/sovereignty (permitted
+     storage regions, cross-border transfer constraints, and
+     data-localization law such as GDPR Ch. V).
    - For each NFR present: is there a measurable target? "Fast" is not
      a requirement. "p99 latency under 200ms" is.
    - Are requirements prioritized? If all have the same priority level,
@@ -229,7 +238,7 @@ against a snapshot of the spec its predecessors have since changed.
 
 ## Verification
 
-Before finalising the report, re-read the requirements. For each finding, confirm it is (1) genuinely absent, not covered under different wording elsewhere; (2) within stated scope; (3) substantiated by domain research, codebase findings, or clear logical argument; (4) actionable with concrete suggested text. Remove speculative, redundant, or out-of-scope findings. Calibrate severity: CRITICAL must genuinely block correct implementation.
+Before finalising the report, re-read the requirements. For each finding, confirm it is (1) genuinely absent, not covered under different wording elsewhere; (2) within stated scope; (3) substantiated by domain research, codebase findings, or clear logical argument; (4) actionable with concrete suggested text. For each finding, name the evidence that would contradict it and whether an innocent explanation - covered under different wording, or a deliberate scope choice - fits better; report only if that disconfirmation fails. Remove speculative, redundant, or out-of-scope findings. Calibrate severity: CRITICAL must genuinely block correct implementation.
 
 ## Output Format
 
