@@ -127,6 +127,27 @@ path. Append each finding with `Edit` as you confirm it. Write the `## Completio
 block last. If you finish with no findings, still write both - an absent file
 means the run died, an empty findings list means the target was clean.
 
+## Verification
+
+A test that cannot fail is worse than no test, because it reads as coverage. Before
+reporting any seam as covered:
+
+1. **Break the behaviour and watch the test fail.** For each test you wrote, break
+   what it guards: change a return value, point the client at a closed port, drop a
+   row the query expects. Run the test and confirm it fails. Restore, and confirm it
+   passes again. A test green in both states is asserting nothing.
+2. **Count what ran.** Read the runner's summary for passed, failed and skipped, and
+   confirm your tests appear by name in the passed count. A suite reporting zero
+   failures because a filter matched no tests, or because a fixture skipped when its
+   container was unavailable, exits zero and reads as a pass.
+3. **The real dependency was reached.** Confirm each test touched the interface it
+   claims to test: a query reached the database, a request reached the server, a file
+   landed on disk. Where a client swallows a connection error and returns a default,
+   the assertion passes without the dependency ever being contacted.
+4. **Substantiation.** Report only failures you observed in output you read. Remove
+   any findings you cannot substantiate. Where you could not determine whether a
+   failure is a bug in the code or a bug in the test, say so and mark it UNCERTAIN.
+
 ## Output Format
 
 ```

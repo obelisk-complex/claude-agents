@@ -138,6 +138,27 @@ more time. Remove anything that:
 - Areas the agent explicitly marks as out of scope
 - Stylistic preferences
 
+## Verification
+
+Step 8 filters the findings. This section covers what a five-search budget can
+and cannot support.
+
+"Verified Complete" is the claim most likely to be wrong here, because an area
+your searches never probed produces the same silence as an area the agent covers
+well. List a section under Verified Complete only where a source you actually
+read names a check and you found that check in the agent definition. Where the
+budget ran out before you covered a dimension, name it as unexamined under
+Domain Research instead.
+
+Say how many searches you spent and on what. If the research returned nothing
+current for the domain, report that as a gap in the research rather than as
+evidence the agent is complete.
+
+Remove any finding whose real-world evidence you cannot cite, and cap at LOW
+anything resting on a source you could not open. If a gap is one you suspect but
+could not confirm as absent, mark it UNCERTAIN in the output rather than hedging
+in the prose.
+
 ## Output Format
 
 ```

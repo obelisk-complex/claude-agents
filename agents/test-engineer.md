@@ -89,8 +89,8 @@ When analysing test coverage:
 - Coverage gaps identified: [list]
 
 ### Recommended Tests
-1. **[Test name]** — [What it verifies, why it matters]
-2. **[Test name]** — [What it verifies, why it matters]
+1. **[Test name]** - [What it verifies, why it matters]
+2. **[Test name]** - [What it verifies, why it matters]
 
 ### Priority
 - Critical: [Tests that catch potential data loss or security issues]
@@ -103,7 +103,7 @@ When writing new tests, report:
 
 ```markdown
 ## Test Results
-- **Suite:** [test framework] — [X] passed, [Y] failed, [Z] skipped
+- **Suite:** [test framework] - [X] passed, [Y] failed, [Z] skipped
 - **New tests added:** [count]
 - **Prove-It tests:** [bug tests written, pre-fix status]
 

@@ -151,6 +151,30 @@ path. Append each finding with `Edit` as you confirm it. Write the `## Completio
 block last. If you finish with no findings, still write both - an absent file
 means the run died, an empty findings list means the target was clean.
 
+## Verification
+
+A regression test earns its place only by failing when the behaviour regresses.
+Before reporting any behaviour as pinned:
+
+1. **Reintroduce the regression.** For each test you wrote, restore the old
+   behaviour: revert the fix, or hand-edit the value the test pins. Run the test and
+   confirm it fails with a diff naming the changed value. Restore the correct state
+   and confirm it passes. A test green in both states pins nothing.
+2. **Update mode is off in the committed configuration.** Confirm the snapshot runner
+   is not set to accept-or-update on every run. A suite that rewrites its own baseline
+   can never report a regression, and its output is indistinguishable from a suite
+   that genuinely passed.
+3. **The baseline is correct, not merely current.** A golden file captured from
+   today's output pins today's behaviour, bug included. State in the report what makes
+   each baseline right: a known-good prior release, a spec, an issue describing the
+   intended output.
+4. **Non-determinism is normalised, not tolerated.** Run each snapshot test twice
+   with nothing changed. If it fails, unscrubbed content remains; fix the
+   normalisation rather than loosening the assertion until it stops failing.
+5. **Substantiation.** Report only differences you observed in a diff you read.
+   Remove any findings you cannot substantiate. Where you could not tell an
+   intentional change from a regression, mark it UNCERTAIN.
+
 ## Output Format
 
 ```

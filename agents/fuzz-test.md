@@ -135,6 +135,32 @@ path. Append each finding with `Edit` as you confirm it. Write the `## Completio
 block last. If you finish with no findings, still write both - an absent file
 means the run died, an empty findings list means the target was clean.
 
+## Verification
+
+"No crashes found" is a claim about the harness, not about the code, unless the
+harness is capable of crashing. Before reporting any target as clean:
+
+1. **Prove the harness reports a crash.** Add a deliberate fault (an unconditional
+   panic, or an out-of-bounds index behind a byte the fuzzer will reach), run a short
+   campaign, and confirm the fuzzer halts and writes an artefact. Remove the fault
+   and confirm the harness still builds. A harness that catches its own panics, or
+   that wraps the target in an error-swallowing call, reports a clean run over code
+   it never allowed to fail.
+2. **Read the execution counters, not just the exit status.** Check total executions
+   and executions per second. A campaign that finished with zero executions, or that
+   rejected almost every input at an early length or magic-byte check, exits zero and
+   looks like a clean run. If nearly all inputs are rejected early, improve the seed
+   corpus or dictionary before drawing any conclusion about crash-safety.
+3. **Reproduce each crash outside the fuzzer.** Feed the minimised artefact to the
+   target directly and confirm the same failure and the same stack. A crash that
+   appears only under the fuzzer is a harness bug until shown otherwise.
+4. **Confirm each regression test fails on the unfixed code.** A test built from a
+   crashing input must reproduce the crash before the fix lands, or it is pinning
+   nothing.
+5. **Substantiation.** Report only crashes you reproduced. Remove any findings you
+   cannot substantiate. Where you have a reproducer but not a root cause, report the
+   reproducer and mark the cause UNCERTAIN rather than guessing.
+
 ## Output Format
 
 ```

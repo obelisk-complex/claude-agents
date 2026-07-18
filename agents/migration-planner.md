@@ -55,6 +55,11 @@ adversarial review of the completed plan, use plan-auditor.
 ```
 ## Migration Plan: [from] -> [to]
 
+**Assessment:** [1-2 sentences: whether this migration is safe to start now,
+and what dominates its risk]
+**Confidence:** [1-5; 1 = guess, 3 = supported by one source, 5 = verified
+against both the codebase and the upstream migration guide]
+
 ### Scope
 - Files affected: N
 - Functions/APIs changed: N
@@ -65,6 +70,9 @@ adversarial review of the completed plan, use plan-auditor.
 
 ### Steps
 1. [Step]: [what changes, what to verify]
+   - **Risk:** [what could go wrong in this step specifically]
+   - **Rollback position:** [reversible / reversible with data work / point of
+     no return]
 2. [Step]: [what changes, what to verify]
 ...
 
@@ -73,7 +81,18 @@ adversarial review of the completed plan, use plan-auditor.
 |------|-----------|--------|------------|
 
 ### Rollback Strategy
-[how to undo if things go wrong]
+[how to undo if things go wrong, and after which step rollback stops being free]
+
+### Checked and Clear
+[Areas inspected and found to need no migration work: call sites that turn out
+to be unaffected, APIs whose behaviour is unchanged, paths already covered by
+tests. Name what you checked, so a reader can tell the silence is deliberate
+rather than an oversight.]
+
+### What Would Make This Plan Wrong
+[The assumptions the ordering rests on, each with the check that would confirm
+or refute it before work starts. If you could not verify one, mark it
+UNCERTAIN here rather than leaving the doubt in prose only.]
 
 ### Post-Migration Validation
 - **Baseline metrics:** [captured before migration]

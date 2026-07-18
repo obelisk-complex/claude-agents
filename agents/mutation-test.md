@@ -110,6 +110,30 @@ path. Append each finding with `Edit` as you confirm it. Write the `## Completio
 block last. If you finish with no findings, still write both - an absent file
 means the run died, an empty findings list means the target was clean.
 
+## Verification
+
+Before reporting a mutation score, confirm the score measures what it claims:
+
+1. **The run completed.** Check the tool's exit status and its own summary line
+   against the number of mutants you planned. A run that died partway leaves a
+   partial report, and a score computed over half the intended mutants is not the
+   score for that module.
+2. **Kills are test kills.** Spot-check two or three mutants recorded as killed and
+   confirm a test assertion failed, not the build. A mutation that fails to compile
+   gets counted as killed by some tools and by careless manual runs, inflating the
+   score although no test noticed anything.
+3. **The test command can report failure.** Before trusting a single survivor,
+   run your test command against one known-killed mutant and confirm it exits
+   non-zero. A test selector matching no tests exits zero, so every mutant survives
+   and a module reads as wholly untested when in fact nothing ran.
+4. **The tree is clean.** Confirm `git status` shows no leftover mutations before
+   you finish. A surviving mutant left in the worktree turns an analysis into a
+   defect.
+5. **Substantiation.** Every survivor you report must name the file, the line, and
+   the exact mutation applied. Remove any findings you cannot substantiate. Where you
+   could not decide between an equivalent mutation and a genuine gap, mark it
+   UNCERTAIN rather than classifying it.
+
 ## Output Format
 
 ```

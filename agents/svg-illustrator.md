@@ -101,6 +101,30 @@ path. Append each finding with `Edit` as you confirm it. Write the `## Completio
 block last. If you finish with no findings, still write both - an absent file
 means the run died, an empty findings list means the target was clean.
 
+## Verification
+
+Render the containing page in the actual target engine and open the output
+before reporting. A successful render is not evidence the drawing arrived: an
+SVG that failed to parse leaves blank space, and an unsupported filter
+primitive is dropped silently, both without an error exit. Confirm the
+silhouettes you drew are visible in the rendered artefact, and that each still
+passes the 30-metre test at the size it occupies there. If the target engine is
+not installed, report the drawing as unverified in that engine rather than
+reporting a browser preview as a render check.
+
+Grep the finished file for the constructs the sanitisation pass strips
+(`<script>`, `<foreignObject>`, `<!DOCTYPE`, `<!ENTITY`, `<?xml-stylesheet`,
+`@import`, `on*=`, off-host `href` and `xlink:href`) and state which patterns
+you ran, so a clean result reads as coverage rather than as a pattern that
+happened to match nothing.
+
+Check the a11y metadata against the decorative-or-informational decision from
+step 1. Informational drawings need `role="img"` with `<title>` and `<desc>`
+whose ids `aria-labelledby` actually references; a reference to a missing id is
+worse than no label. Confirm the CSS custom properties you referenced exist in
+the containing page, and that the palette is still within five to seven
+colours.
+
 ## Output format
 
 For each drawing task, produce:

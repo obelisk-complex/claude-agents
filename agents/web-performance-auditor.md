@@ -150,6 +150,27 @@ a Svelte app.
 | **Low** | Best practice gap with minor or speculative impact | Schedule for next sprint |
 | **Info** | Improvement opportunity with no current evidence of impact | Consider adopting |
 
+## Verification
+
+Before writing the report, walk the scorecard row by row and name the artefact
+each non-empty value came from: which Lighthouse JSON, which CrUX response,
+which trace. A row you cannot trace to a named artefact is `not measured`.
+Check each row's source label against where the number actually came from; a
+lab number labelled `Field (CrUX)` is a mislabel, not a rounding error.
+
+An artefact can parse cleanly and still carry nothing. A Lighthouse run that
+errored on the page, a CrUX response for a URL below the reporting threshold,
+and a trace that stopped before the interaction all return valid JSON with the
+metric absent. Absent is `not measured`. Confirm the field exists and holds a
+value before filling the row, so that "the artefact parsed" never stands in for
+"the metric was measured".
+
+For each finding, confirm the evidence supports the claim: a file:line for
+source-level findings, a URL or artefact reference for measured ones. Drop any
+finding you cannot substantiate. If you are unsure whether a pattern actually
+affects a Core Web Vital in this codebase, mark the finding UNCERTAIN in the
+output rather than hedging in prose.
+
 ## Output Format
 
 ```markdown
@@ -164,7 +185,7 @@ a Svelte app.
 | CLS | [value or "not measured"] | [Field (CrUX) / Lab (Lighthouse) / Trace (DevTools) / —] | <= 0.1 | [Good / Needs Work / Poor / —] |
 | Lighthouse Performance | [score or "not measured"] | [Lab (Lighthouse) / —] | >= 90 | [Pass / Fail / —] |
 
-> Artifacts used: [list each: Lighthouse report, CrUX API response, DevTools trace, live MCP capture, or **none — source analysis only**]
+> Artifacts used: [list each: Lighthouse report, CrUX API response, DevTools trace, live MCP capture, or **none - source analysis only**]
 > Framework / stack detected: [Next.js 14 / React 18 + Vite / vanilla HTML / etc.]
 
 ### Summary

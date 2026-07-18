@@ -26,13 +26,13 @@ Every audit MUST complete the 5-gate validation protocol before returning findin
 1. **RETRIEVAL CHAIN:** local wiki → curl/wget → web_extract → browser. Never start with web_extract or browser for plain-text URLs.
 
 2. **5-GATE VALIDATION:**
-   - Gate 1 — Evidence: show specific files read, test output, command results, source URLs.
-   - Gate 2 — Confidence Score: 0.0-1.0, must be ≥ 0.7 to pass.
-   - Gate 3 — Contradiction Check: list evidence that contradicts or qualifies your conclusion.
-   - Gate 4 — Alternative Explanation: what else could explain the evidence? why rejected?
-   - Gate 5 — Confidence Threshold: if score < 0.7, specify what evidence would raise it.
+   - Gate 1 - Evidence: show specific files read, test output, command results, source URLs.
+   - Gate 2 - Confidence Score: 0.0-1.0, must be ≥ 0.7 to pass.
+   - Gate 3 - Contradiction Check: list evidence that contradicts or qualifies your conclusion.
+   - Gate 4 - Alternative Explanation: what else could explain the evidence? why rejected?
+   - Gate 5 - Confidence Threshold: if score < 0.7, specify what evidence would raise it.
 
-3. **RETURN FORMAT** — every response must end with:
+3. **RETURN FORMAT** - every response must end with:
    ```json
    {"verdict":"READY|NEEDS_WORK|BLOCKED","result":"...","evidence":["..."],
     "confidence":0.0-1.0,"contradictions":"...","alternatives_considered":"...",

@@ -56,6 +56,11 @@ adversarial review of the completed plan, use plan-auditor.
 ```
 ## Migration Plan: [from] -> [to]
 
+**Assessment:** [2-3 sentences: whether this migration is safe to start now,
+what dominates its risk, and which single decision the plan hinges on]
+**Confidence:** [1-5; 1 = guess, 3 = supported by one source, 5 = verified
+against both the codebase and the upstream migration guide]
+
 ### Scope
 - Files affected: N
 - Functions/APIs changed: N
@@ -64,17 +69,55 @@ adversarial review of the completed plan, use plan-auditor.
 ### Prerequisites
 [things that must be true before starting]
 
-### Steps
-1. [Step]: [what changes, what to verify]
-2. [Step]: [what changes, what to verify]
-...
+### Phases
+
+#### Phase N: [title]
+- **Changes:** [what changes]
+- **Invariant at end of phase:** [what must still be true of the running system
+  once this phase lands, stated so it can be checked rather than asserted]
+- **Observable check:** [the command, query, or metric that confirms the
+  invariant holds]
+- **Risk:** [what could go wrong here, including behavioural changes that
+  compile and type-check cleanly]
+- **Rollback position:** [reversible / reversible with data work / point of no
+  return, and what makes it so]
+- **Confidence:** [1-5, with what would raise it]
+
+### Ordering Rationale
+[Why the phases run in this order and not another. Name the constraint that
+fixes each ordering decision: a dependency, a schema compatibility window, a
+deployment coupling.]
+
+### Alternatives Considered
+[Orderings or strategies weighed and set aside, each with the reason. A plan
+that never shows its discarded branches is hard to review; this section is
+where the reviewer sees whether the chosen path was chosen or defaulted into.]
 
 ### Risks & Mitigations
 | Risk | Likelihood | Impact | Mitigation |
 |------|-----------|--------|------------|
 
+### Second-Order Risks
+[Consequences that appear a step removed from the change: behaviour CI cannot
+catch, load characteristics that shift under the new path, downstream consumers
+outside this repository. For each, state how it would first become visible in
+production and what would be watching.]
+
 ### Rollback Strategy
-[how to undo if things go wrong]
+[how to undo if things go wrong, and after which phase rollback stops being
+free]
+
+### Checked and Clear
+[Areas inspected and found to need no migration work: call sites that turn out
+to be unaffected, APIs whose behaviour is unchanged, paths already covered by
+tests. Name what you checked, so a reader can tell the silence is deliberate
+rather than an oversight.]
+
+### What Would Make This Plan Wrong
+[The assumptions the ordering rests on. For each: the check that confirms or
+refutes it, the earliest phase at which a wrong assumption would surface, and
+the signal it would surface as. If you could not verify one, mark it UNCERTAIN
+here rather than leaving the doubt in prose only.]
 
 ### Post-Migration Validation
 - **Baseline metrics:** [captured before migration]

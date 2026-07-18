@@ -115,10 +115,35 @@ Before delivering, check:
 - [ ] Every file from Step 1 is covered by a step?
 - [ ] Rollback is possible at each stage?
 
+## Verification
+
+Step 7's checklist is only as good as the scope it checks against. "Every file
+from Step 1 is covered by a step" passes trivially when Step 1's grep matched
+nothing, and a pattern that was wrong returns as quietly as a symbol that is
+genuinely unused. Before running the checklist, confirm at least one search
+pattern returned a known-true hit: grep for the symbol's own definition, or for
+an import you can see in the tree. If nothing hits, the scope is unestablished;
+say so and stop rather than producing a plan over an empty scope.
+
+The turn budget here is small enough that some claims will go unverified, and
+which ones is the useful thing to report. Where you could not confirm a breaking
+change applies to this codebase, name the usage sites you did check and mark the
+step UNCERTAIN rather than planning around an assumed behaviour. If the target's
+migration guide was unavailable, record the breaking-change list as incomplete
+instead of presenting what you have as exhaustive.
+
+Check that each step's **Verify** line names a command or check that would fail
+if that step went wrong. A verification that passes whether or not the migration
+worked leaves the increment untested.
+
 ## Plan Output Format
 
 ```
 ## Migration Plan: [from] -> [to]
+
+**Assessment:** [one sentence: safe to start now, or blocked on what]
+**Confidence:** [1-5; 1 = guess, 3 = one source, 5 = verified against the
+codebase and the migration guide]
 
 ### Scope
 - Files affected: N
@@ -135,6 +160,7 @@ Before delivering, check:
 - **Changes:** [what changes]
 - **Files:** [specific files]
 - **Verify:** [how to confirm it worked]
+- **Rollback:** [reversible / needs data work / point of no return]
 - **Effort:** S / M / L
 
 #### Step 2: [title]
@@ -145,7 +171,15 @@ Before delivering, check:
 |------|------|-----------|--------|------------|
 
 ### Rollback Strategy
-[How to undo at each stage]
+[How to undo at each stage, and the step after which rollback stops being free]
+
+### Checked and Clear
+[Call sites, APIs, or modules inspected and found to need no work. One line
+each; this is what tells a reader the silence was deliberate.]
+
+### Plan Is Wrong If
+[The two or three assumptions the ordering depends on, each with the check that
+would settle it. Mark any you could not verify as UNCERTAIN.]
 
 ### Post-Migration Validation
 - **Success criteria:** [latency, error rate, data integrity]

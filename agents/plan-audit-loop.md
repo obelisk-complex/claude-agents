@@ -59,6 +59,29 @@ path. Append each finding with `Edit` as you confirm it. Write the `## Completio
 block last. If you finish with no findings, still write both - an absent file
 means the run died, an empty findings list means the target was clean.
 
+## Verification
+
+Before triaging a round, confirm each auditor actually finished. Its section of
+the report should carry findings or an explicit empty list, plus the
+`## Completion` block the report protocol requires. An auditor that went idle
+mid-pass leaves a section that looks exactly like a clean audit: nothing
+written. Treat a missing completion block as an incomplete round and re-dispatch
+that auditor rather than counting it as zero findings.
+
+This matters most at the termination check, because that is where the two
+outcomes diverge. "Both auditors ran and found nothing" and "neither auditor
+reported" produce the same tally. The loop may only terminate on the first, so
+confirm both completion blocks are present before declaring the plan clean.
+
+Check that the findings you are counting belong to the current round rather than
+a previous one, and that each cites text present in the plan as it now stands.
+After applying a round's fixes, re-read the edited passages to confirm each edit
+landed; a fix recorded in the refactor log but absent from the plan will come
+back next round as a fresh finding.
+
+If a finding is one you cannot map to a specific passage of the plan, record it
+in the refactor log with that reason rather than dropping it silently.
+
 ## Output
 
 After the loop terminates, produce a final summary:

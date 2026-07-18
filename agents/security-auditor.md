@@ -71,43 +71,43 @@ relevant.
 Use these as a minimum baseline when reviewing:
 
 ### OWASP Top 10 (Web Application)
-1. **Broken Access Control** — missing authorisation checks, IDOR, privilege
+1. **Broken Access Control** - missing authorisation checks, IDOR, privilege
    escalation
-2. **Cryptographic Failures** — weak algorithms, missing TLS, hardcoded keys
-3. **Injection** — SQL, NoSQL, OS command, LDAP injection
-4. **Insecure Design** — missing threat modeling, unvalidated assumptions
-5. **Security Misconfiguration** — default credentials, verbose errors,
+2. **Cryptographic Failures** - weak algorithms, missing TLS, hardcoded keys
+3. **Injection** - SQL, NoSQL, OS command, LDAP injection
+4. **Insecure Design** - missing threat modeling, unvalidated assumptions
+5. **Security Misconfiguration** - default credentials, verbose errors,
    unpatched components
-6. **Vulnerable and Outdated Components** — known CVEs in dependencies
-7. **Identification and Authentication Failures** — weak passwords, session
+6. **Vulnerable and Outdated Components** - known CVEs in dependencies
+7. **Identification and Authentication Failures** - weak passwords, session
    fixation, missing MFA
-8. **Software and Data Integrity Failures** — unsigned updates, untrusted
+8. **Software and Data Integrity Failures** - unsigned updates, untrusted
    CI/CD pipelines
-9. **Security Logging and Monitoring Failures** — missing audit logs,
+9. **Security Logging and Monitoring Failures** - missing audit logs,
    insufficient incident detection
-10. **Server-Side Request Forgery (SSRF)** — fetching user-supplied URLs
+10. **Server-Side Request Forgery (SSRF)** - fetching user-supplied URLs
     without allowlisting
 
 ### OWASP Top 10 for LLM Applications
-1. **Prompt Injection** — direct and indirect prompt injection via untrusted
+1. **Prompt Injection** - direct and indirect prompt injection via untrusted
    model input
-2. **Sensitive Information Disclosure** — PII, secrets, or system prompts
+2. **Sensitive Information Disclosure** - PII, secrets, or system prompts
    leaked in model output
-3. **Supply Chain** — third-party models, plugins, or datasets with unknown
+3. **Supply Chain** - third-party models, plugins, or datasets with unknown
    provenance
-4. **Data and Model Poisoning** — training data contamination, fine-tuning
+4. **Data and Model Poisoning** - training data contamination, fine-tuning
    with malicious input
-5. **Improper Output Handling** — model output used in `eval`, SQL, shell,
+5. **Improper Output Handling** - model output used in `eval`, SQL, shell,
    or `innerHTML` without sanitisation
-6. **Excessive Agency** — tool permissions too broad, no human confirmation
+6. **Excessive Agency** - tool permissions too broad, no human confirmation
    for destructive actions
-7. **System Prompt Leakage** — system prompt extractable via crafted user
+7. **System Prompt Leakage** - system prompt extractable via crafted user
    messages
-8. **Vector and Embedding Weaknesses** — adversarial queries that bypass
+8. **Vector and Embedding Weaknesses** - adversarial queries that bypass
    RAG guardrails
-9. **Misinformation** — hallucinated content presented as fact without
+9. **Misinformation** - hallucinated content presented as fact without
    verification
-10. **Unbounded Consumption** — no rate, token, or recursion limits on
+10. **Unbounded Consumption** - no rate, token, or recursion limits on
     model calls
 
 ## Severity Classification

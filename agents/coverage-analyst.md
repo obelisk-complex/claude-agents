@@ -135,6 +135,35 @@ path. Append each finding with `Edit` as you confirm it. Write the `## Completio
 block last. If you finish with no findings, still write both - an absent file
 means the run died, an empty findings list means the target was clean.
 
+## Verification
+
+Before reporting any number, confirm the measurement actually happened:
+
+1. **Exit status and stderr.** Check what the coverage command returned, not just
+   whether a report file appeared. A tool that exits non-zero and prints nothing has
+   produced no data; reporting that as 0% coverage invents a finding out of a failed
+   run.
+2. **The denominator is non-zero.** Confirm the report names the files you expected
+   to measure and that total line and branch counts are non-zero. A path filter or
+   exclusion regex matching nothing yields a clean-looking report over an empty set,
+   and 100% of no files reads exactly like 100% of the codebase. Give the measured
+   file count in the report so the denominator is visible to the reader.
+3. **The suite ran under the tool.** Compare the test count in the coverage run
+   against a normal run of the suite. A harness that compiles the code but executes
+   no tests reports every line uncovered, which looks like a catastrophic gap rather
+   than a broken invocation.
+4. **Any gate you recommend can fail.** Where you propose a CI coverage threshold,
+   demonstrate it failing: set it one point above current coverage and confirm the
+   command exits non-zero. A threshold applied to an empty file set passes forever
+   and reads as protection.
+5. **Substantiation.** Every uncovered path you list must trace to a specific line
+   in the tool's output. Remove any findings you cannot substantiate. If no tool was
+   available and you fell back to static estimation, label those numbers as estimates
+   rather than presenting them as measured coverage.
+
+If you are unsure whether a gap is real or a tool artefact, mark it UNCERTAIN in the
+report rather than asserting it.
+
 ## Output Format
 
 ```

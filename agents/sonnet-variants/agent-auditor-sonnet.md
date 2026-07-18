@@ -134,6 +134,27 @@ path. Append each finding with `Edit` as you confirm it. Write the `## Completio
 block last. If you finish with no findings, still write both - an absent file
 means the run died, an empty findings list means the target was clean.
 
+## Verification
+
+Step 6 covers the edits. This section covers the session's account of itself,
+which is where a budget-limited pass goes wrong.
+
+Count the agents you actually opened and compare that number against the set you
+were given. Every agent in the brief appears either in the per-agent assessment
+or in "Remaining (not audited this session)"; one in neither has been silently
+dropped. An empty "Remaining" list claims you reached the whole set, so write it
+only when the counts agree.
+
+"Up to date" must mean you ran the checklist against that agent and it passed,
+not that the budget ran out before you reached it. Where you opened an agent but
+only skimmed it, say which parts of the checklist you applied rather than
+reporting a clean status over an unchecked file.
+
+Remove any finding you cannot substantiate from the Step 1 research or the agent
+file itself. If a change rests on a best practice you could not confirm in
+current documentation, mark it UNCERTAIN in the report rather than asserting the
+rationale.
+
 ## Output Format
 
 ```
