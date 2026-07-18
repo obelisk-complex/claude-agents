@@ -4,10 +4,11 @@ description: >
   Use when code has been changed or a PR needs review, before claiming
   changes are safe
 tools: Read, Grep, Glob, Bash, WebSearch, WebFetch
+disallowedTools: Write, Edit
 permissionMode: plan
 model: sonnet
 effort: medium
-maxTurns: 25
+maxTurns: 75
 memory: project
 color: "#be123c"
 ---

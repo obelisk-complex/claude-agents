@@ -4,10 +4,11 @@ description: >
   Use when an implementation plan, migration plan, or roadmap needs
   stress-testing before execution
 tools: Read, Grep, Glob, Bash, WebSearch, WebFetch
+disallowedTools: Write, Edit
 permissionMode: plan
 model: opus
 effort: high
-maxTurns: 35
+maxTurns: 100
 memory: project
 color: "#0ea5e9"
 ---
@@ -164,15 +165,6 @@ against a snapshot of the earlier ones that has since moved.
 - Findings about the plan's domain that are better handled by a
   specialised agent (security, CI, dependencies)
 - Restating the plan's own "Risks" section back to it
-
-## Report file
-
-Before investigating, write the report skeleton (see `REPORT_PROTOCOL.md`) to
-the path given in your brief, or to
-`.agent-reports/<agent-name>-<UTC>-<4hex>.md` if none was given, and state that
-path. Append each finding with `Edit` as you confirm it. Write the `## Completion`
-block last. If you finish with no findings, still write both - an absent file
-means the run died, an empty findings list means the target was clean.
 
 ## Verification
 

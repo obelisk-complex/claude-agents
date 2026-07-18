@@ -4,9 +4,10 @@ description: >
   Use when dependencies are added, before releases, or for supply chain
   risk assessment
 tools: Read, Bash, Grep, Glob, WebSearch, WebFetch
+disallowedTools: Write, Edit
 permissionMode: plan
 model: sonnet
-maxTurns: 25
+maxTurns: 75
 memory: project
 color: orange
 ---

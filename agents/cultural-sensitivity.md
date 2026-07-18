@@ -3,10 +3,11 @@ name: cultural-sensitivity
 description: >
   Use when content may contain stereotypes, problematic framing,
   or cultural insensitivity
-tools: Read, Grep, Glob, Bash
+tools: Read, Grep, Glob
+disallowedTools: Write, Edit
 permissionMode: plan
 model: sonnet
-maxTurns: 25
+maxTurns: 75
 memory: project
 color: "#a16207"
 ---

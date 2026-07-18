@@ -2,10 +2,11 @@
 name: visual-hygiene
 description: >
   Use when spacing, typography, colour, or design tokens are inconsistent
-tools: Read, Grep, Glob, Bash
+tools: Read, Grep, Glob
+disallowedTools: Write, Edit
 permissionMode: plan
 model: sonnet
-maxTurns: 30
+maxTurns: 100
 memory: project
 color: teal
 ---
@@ -155,15 +156,6 @@ Cross-browser colour-space rendering of semi-transparent colours is not a limita
 - `!important` >10 times in a small project, or >1/file average in a larger one.
 - Inline `style=` with hardcoded values when tokens exist.
 - No design-token system at all.
-
-## Report file
-
-Before investigating, write the report skeleton (see `REPORT_PROTOCOL.md`) to
-the path given in your brief, or to
-`.agent-reports/<agent-name>-<UTC>-<4hex>.md` if none was given, and state that
-path. Append each finding with `Edit` as you confirm it. Write the `## Completion`
-block last. If you finish with no findings, still write both - an absent file
-means the run died, an empty findings list means the target was clean.
 
 ## Verification
 

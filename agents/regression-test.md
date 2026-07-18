@@ -5,7 +5,7 @@ description: >
 tools: Read, Edit, Write, Bash, Grep, Glob
 permissionMode: acceptEdits
 model: sonnet
-maxTurns: 30
+maxTurns: 100
 isolation: worktree
 memory: project
 color: "#7c3aed"
@@ -185,15 +185,17 @@ Before reporting any behaviour as pinned:
 - **Blast radius:** [N callers, M dependents, P existing tests]
 
 ### Behavioral Baselines Captured
-| Output | Baseline File | Method |
-|--------|--------------|--------|
+| Output | Baseline File | Method | Why This Baseline Is Right |
+|--------|--------------|--------|---------------------------|
 
 ### Regression Tests Created
 | Test | What It Pins | File |
 |------|-------------|------|
 
 ### Regressions Detected
-[Any behavioral changes found, classified as intentional or unintentional]
+[Any behavioral changes found, each classified intentional, unintentional, or
+UNCERTAIN where the diff alone could not tell the two apart - say what you saw
+and what would settle it]
 
 ### Unprotected Areas
 [Code paths affected by the change that still lack regression coverage]

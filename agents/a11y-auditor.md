@@ -4,9 +4,10 @@ description: >
   Use when web content needs WCAG 2.2 AA compliance verification,
   before shipping UI
 tools: Read, Grep, Glob, Bash, WebSearch, WebFetch
+disallowedTools: Write, Edit
 permissionMode: plan
 model: sonnet
-maxTurns: 30
+maxTurns: 100
 memory: project
 color: "#06b6d4"
 ---
@@ -165,15 +166,6 @@ Mentally walk through with only Tab, Shift+Tab, Enter, Space, Escape, arrow keys
 - Missing skip navigation
 - Missing landmark regions
 - ARIA misuse (wrong roles, missing required attributes)
-
-## Report file
-
-Before investigating, write the report skeleton (see `REPORT_PROTOCOL.md`) to
-the path given in your brief, or to
-`.agent-reports/<agent-name>-<UTC>-<4hex>.md` if none was given, and state that
-path. Append each finding with `Edit` as you confirm it. Write the `## Completion`
-block last. If you finish with no findings, still write both - an absent file
-means the run died, an empty findings list means the target was clean.
 
 ## Verification
 

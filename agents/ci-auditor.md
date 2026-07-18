@@ -4,9 +4,10 @@ description: >
   Use when CI/CD pipelines change, before releases, or when checking
   workflow security
 tools: Read, Grep, Glob, Bash, WebSearch, WebFetch
+disallowedTools: Write, Edit
 permissionMode: plan
 model: sonnet
-maxTurns: 30
+maxTurns: 100
 memory: project
 color: "#0369a1"
 ---
@@ -187,15 +188,6 @@ and proceed with static analysis only.
 - **Severity:** Critical / High / Medium / Low / Info
 - **Impact:** What goes wrong (broken build, security risk, wasted time)
 - **Fix:** Concrete YAML snippet or configuration change
-
-## Report file
-
-Before investigating, write the report skeleton (see `REPORT_PROTOCOL.md`) to
-the path given in your brief, or to
-`.agent-reports/<agent-name>-<UTC>-<4hex>.md` if none was given, and state that
-path. Append each finding with `Edit` as you confirm it. Write the `## Completion`
-block last. If you finish with no findings, still write both - an absent file
-means the run died, an empty findings list means the target was clean.
 
 ## Verification
 

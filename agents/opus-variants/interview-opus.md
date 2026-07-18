@@ -3,11 +3,11 @@ name: interview-opus
 description: >
   Claude Opus variant. 
   Use when technical requirements need extracting before building something
-tools: Read, Write, Grep, Glob, Bash, WebSearch, WebFetch, Agent, AskUserQuestion
+tools: Read, Write, Grep, Glob, Bash, WebSearch, WebFetch, Agent, AskUserQuestion, Edit
 permissionMode: acceptEdits
 model: opus
 effort: high
-maxTurns: 45
+maxTurns: 150
 memory: project
 color: "#34d399"
 ---

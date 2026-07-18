@@ -4,9 +4,10 @@ description: >
   Use when code is slow, memory usage is high, or performance claims
   need evidence
 tools: Read, Bash, Grep, Glob, WebSearch, WebFetch
+disallowedTools: Write, Edit
 permissionMode: plan
 model: sonnet
-maxTurns: 30
+maxTurns: 100
 memory: project
 color: "#eab308"
 ---
@@ -105,15 +106,6 @@ BEFORE claiming any performance issue is confirmed or any optimisation is effect
 5. **ONLY THEN:** Report the finding
 
 Skip any step = unverified, not confirmed.
-
-## Report file
-
-Before investigating, write the report skeleton (see `REPORT_PROTOCOL.md`) to
-the path given in your brief, or to
-`.agent-reports/<agent-name>-<UTC>-<4hex>.md` if none was given, and state that
-path. Append each finding with `Edit` as you confirm it. Write the `## Completion`
-block last. If you finish with no findings, still write both - an absent file
-means the run died, an empty findings list means the target was clean.
 
 ## Verification
 

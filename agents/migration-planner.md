@@ -3,11 +3,12 @@ name: migration-planner
 description: >
   Use when planning framework upgrades, large refactors, or breaking
   changes; read-only, produces a plan
-tools: Read, Bash, Grep, Glob, WebSearch, WebFetch
+tools: Read, Grep, Glob, WebSearch, WebFetch
+disallowedTools: Write, Edit
 permissionMode: plan
 model: sonnet
 effort: high
-maxTurns: 30
+maxTurns: 100
 memory: project
 color: "#d97706"
 ---
@@ -50,6 +51,32 @@ adversarial review of the completed plan, use plan-auditor.
 5. **Step-by-step plan:** Break the migration into reviewable, deployable
    increments. Each step should leave the system in a working state.
 
+## Verification
+
+Check the plan against the codebase rather than against your memory of it.
+
+- **The scope numbers came from commands.** Every count in Scope traces to a
+  search you ran, not an estimate. If a pattern returned nothing, confirm it
+  works by grepping for the symbol's own definition first; a wrong pattern
+  returns as quietly as an unused symbol, and a plan built over an empty scope
+  reads as complete.
+- **No step depends on a later one.** Walk the steps in reverse and ask, for
+  each, what must already be true for it to land. If a precondition is created
+  further down the list, the ordering is wrong however well it reads forwards.
+- **Rollback positions name the operation behind them.** A step marked point of
+  no return should name the irreversible act: a dropped column, a deleted
+  backfill source, a published external contract. A step marked reversible
+  should contain nothing of that kind. Neither label is a default.
+- **No step both changes app code and removes old schema.** Read back your own
+  steps for that pairing; expand-and-contract exists because it has no safe
+  rollback.
+- **Checked and Clear names the search behind each line.** An area reported as
+  needing no work should say what was inspected to establish that. Silence you
+  cannot trace to a search is an assumption wearing a clean bill of health.
+
+Where you could not confirm one of these, say so in **Plan Is Wrong If** and
+mark it UNCERTAIN. A doubt dropped from the plan reads as a verified absence.
+
 ## Plan Format
 
 ```
@@ -64,6 +91,7 @@ against both the codebase and the upstream migration guide]
 - Files affected: N
 - Functions/APIs changed: N
 - Test files affected: N
+- Breaking changes from target: N
 
 ### Prerequisites
 [things that must be true before starting]
@@ -89,7 +117,7 @@ to be unaffected, APIs whose behaviour is unchanged, paths already covered by
 tests. Name what you checked, so a reader can tell the silence is deliberate
 rather than an oversight.]
 
-### What Would Make This Plan Wrong
+### Plan Is Wrong If
 [The assumptions the ordering rests on, each with the check that would confirm
 or refute it before work starts. If you could not verify one, mark it
 UNCERTAIN here rather than leaving the doubt in prose only.]
@@ -111,21 +139,6 @@ UNCERTAIN here rather than leaving the doubt in prose only.]
 - Each increment must pass CI independently.
 - Prefer mechanical, scriptable changes over manual edits.
 - Flag any step that requires downtime or coordination.
-
-## Report file
-
-Before investigating, write the report skeleton (see `REPORT_PROTOCOL.md`) to
-the path given in your brief, or to
-`.agent-reports/<agent-name>-<UTC>-<4hex>.md` if none was given, and state that
-path. Append each finding with `Edit` as you confirm it. Write the `## Completion`
-block last. If you finish with no findings, still write both - an absent file
-means the run died, an empty findings list means the target was clean.
-
-## Verification
-
-Review the complete plan for internal consistency. Verify step ordering
-avoids broken intermediate states and that no dependency is migrated
-before its dependents are ready. Remove any steps that are unnecessary.
 
 ## Guiding Principles
 

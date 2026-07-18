@@ -5,10 +5,11 @@ description: >
   experiences for a travel destination; discovers places known to residents
   rather than tourists
 tools: Read, Grep, Glob, WebSearch, WebFetch
+disallowedTools: Write, Edit
 permissionMode: plan
 model: sonnet
 effort: high
-maxTurns: 25
+maxTurns: 75
 memory: project
 color: "#4f46e5"
 ---

@@ -60,28 +60,42 @@ file mean "did not run" and an empty findings list mean "found nothing". Those
 two states are indistinguishable if a clean run writes nothing, and telling them
 apart is most of the value.
 
-## Mandatory or advisory, keyed on run length
+## Mandatory or advisory, keyed on capability
 
-Mandatory when any of:
+The entry condition is capability, not run length. An agent carrying a
+`## Report file` section must have `Write` and `Edit` in its `tools:` line:
+`Write` to create the skeleton, `Edit` to append findings to it. Without both,
+the section is inert from its first step, and an agent that cannot create the
+file will not report that it failed to.
 
-- the agent is dispatched as one of several in parallel;
-- its `maxTurns` is 30 or more;
+An agent that has `Write` and `Edit` is under the protocol when any of:
+
+- it is dispatched as one of several in parallel;
+- the brief names a report path;
 - it has `permissionMode: acceptEdits`, so a partial run leaves half-finished
-  edits that someone has to reconstruct;
-- the brief names a report path.
+  edits that someone has to reconstruct.
 
 Advisory otherwise, and an agent may state in its own body that it opts out with
 a reason.
 
-The threshold is `maxTurns >= 30` rather than a blanket rule because the
-economics reverse below it. The skeleton is roughly 60 tokens. The real cost is
-one `Edit` call per finding, and a tool call plus its result costs far more than
-the finding's text. For a short agent producing two findings in a five-turn run
-the protocol is a net token loss and buys almost nothing, because a five-turn
-run rarely dies mid-pass. The benefit scales with run length; the cost scales
-with finding count. Agents below the threshold that produce many small findings
-(`visual-hygiene`, `pre-release`) are the worst case for this protocol and are
-what the advisory tier exists for. Do not make it universal to make it tidy.
+The old threshold was `maxTurns >= 30`, used as a proxy for run length. That
+proxy is dead: the fleet's floor is now 75, so every agent clears 30 and the
+condition selects everything. The cost argument behind it has not vanished,
+though, so here is what is still true. The skeleton is roughly 60 tokens. The
+real cost is one `Edit` call per finding, and a tool call plus its result costs
+far more than the finding's text; the cost still scales with finding count, not
+with run length. What changed is the other side: a higher cap does not make a
+run long, it only stops a long run being cut short, so a raised `maxTurns` is
+not evidence that any particular agent now runs long enough to be worth the
+overhead. A genuinely short pass still rarely dies mid-pass, and for one
+producing two findings the protocol is still a net loss.
+
+The parallel-dispatch and named-path conditions are what carry the rule now, and
+they are better signals than turn count ever was: both describe a run whose
+findings someone else is waiting on, which is exactly when a silent death is
+expensive. An agent that produces many small findings in a short solo pass
+(`visual-hygiene`, `pre-release`) remains the worst case, and remains the reason
+the advisory tier exists. Do not make it universal to make it tidy.
 
 ## The block that goes into an agent body
 
@@ -99,5 +113,8 @@ block last. If you finish with no findings, still write both - an absent file
 means the run died, an empty findings list means the target was clean.
 ```
 
-`scripts/check-report-protocol.sh` gates this: every agent meeting the mandatory
-threshold must carry a `## Report file` section.
+`scripts/check-report-protocol.sh` gates this. It still selects its qualifying
+set by `maxTurns >= 30` or `permissionMode: acceptEdits`, which now matches the
+whole fleet, and it checks for the section's text rather than for `Write` and
+`Edit`. Both need reconciling against the capability rule above; the gate is
+owned separately from this document.

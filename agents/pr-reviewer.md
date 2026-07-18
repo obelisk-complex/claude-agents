@@ -3,9 +3,10 @@ name: pr-reviewer
 description: >
   Use when a PR is open and needs review, before approving or merging
 tools: Read, Bash, Grep, Glob, WebSearch, WebFetch
+disallowedTools: Write, Edit
 permissionMode: plan
 model: sonnet
-maxTurns: 25
+maxTurns: 75
 memory: project
 color: "#2563eb"
 ---

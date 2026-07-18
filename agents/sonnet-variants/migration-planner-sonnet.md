@@ -3,10 +3,11 @@ name: migration-planner-sonnet
 description: >
   Use when planning routine migrations or refactors; Sonnet variant,
   read-only, produces a plan
-tools: Read, Bash, Grep, Glob, WebSearch, WebFetch
+tools: Read, Grep, Glob, WebSearch, WebFetch
+disallowedTools: Write, Edit
 permissionMode: plan
 model: sonnet
-maxTurns: 25
+maxTurns: 75
 memory: project
 color: "#d97706"
 ---
@@ -149,7 +150,8 @@ codebase and the migration guide]
 - Files affected: N
 - Functions/APIs changed: N
 - Test files affected: N
-- Breaking changes from target: N
+- Breaking changes from target: N [add "list incomplete - migration guide
+  unavailable" where you could not read the target's guide]
 
 ### Prerequisites
 [Things that must be true before starting]
@@ -162,6 +164,8 @@ codebase and the migration guide]
 - **Verify:** [how to confirm it worked]
 - **Rollback:** [reversible / needs data work / point of no return]
 - **Effort:** S / M / L
+- **Certainty:** [confirmed against the usage sites named here / UNCERTAIN -
+  which sites you checked and what about the breaking change is unconfirmed]
 
 #### Step 2: [title]
 ...

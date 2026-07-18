@@ -8,12 +8,27 @@ checklist when creating new agents or auditing existing ones.
 - [ ] `name` - lowercase with hyphens (e.g., `integration-test`)
 - [ ] `description` - 1-2 sentences explaining when to use the agent
 - [ ] `tools` - only tools the agent actually uses; match to permissionMode
-- [ ] `permissionMode` - `plan` for read-only analysis, `acceptEdits` for agents that write code
+- [ ] `permissionMode` - `plan` states the agent's intent is read-only analysis,
+  `acceptEdits` that it writes. **`plan` is a declaration, not an enforcement
+  boundary.** Tested 2026-07-18: two `plan` agents created and edited files
+  successfully, confirmed on disk. Do not rely on it to keep an agent away from
+  the code it audits.
+- [ ] `disallowedTools` - required on every `plan` agent: `Write, Edit`. This is
+  the documented hard block (`disallowedTools` resolves first, then `tools`
+  against what remains, and a tool in both is removed), and it is what actually
+  keeps an auditor off the tree. It does **not** constrain shell writes, so an
+  agent holding `Bash` can still redirect to a file; the only fully documented
+  fixes for that are removing `Bash` or enabling the OS-level sandbox with
+  `sandbox.filesystem.allowWrite`.
 - [ ] `model` - by the tier criteria in `README.md` (`## Model Variants`): `haiku`
   for comparison against an enumerated standard, `opus` where the deliverable is
   what is absent or whether a mechanism achieves its intent, `sonnet` otherwise.
   Must match the agent's row in `docs/model-tiers.tsv`
-- [ ] `maxTurns` - calibrated to workflow complexity (20 for analysts, 25-35 for writers)
+- [ ] `maxTurns` - a runaway backstop, not a budget: 75 for analysts, 100 for
+  writers, 150-200 for orchestrators and multi-phase work. Set it high. A cap
+  that bites truncates the agent mid-pass and it returns silently, which costs
+  more to diagnose than a long run costs to let finish; the relative ordering
+  encodes job size, so keep a bigger job above a smaller one
 - [ ] `memory` - `project` when findings are specific to the codebase the agent runs in, `user` for meta agents whose patterns generalise across projects
 - [ ] `color` - unique hex code or named color, no collisions with existing agents
 - [ ] `isolation: worktree` - required for agents that write or mutate code
@@ -40,8 +55,11 @@ checklist when creating new agents or auditing existing ones.
 
 ## Report file
 
-- [ ] Agents meeting the mandatory threshold carry a `## Report file` section
-  immediately before `## Verification`, per `REPORT_PROTOCOL.md`
+- [ ] Any agent carrying a `## Report file` section has both `Write` and `Edit`
+  in `tools:` - `Write` creates the skeleton, `Edit` appends findings. Without
+  both, the section is inert from its first step
+- [ ] Agents under the protocol carry the section immediately before
+  `## Verification`, per `REPORT_PROTOCOL.md`
   (gated by `scripts/check-report-protocol.sh`)
 
 ## Self-verification

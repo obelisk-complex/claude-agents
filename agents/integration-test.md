@@ -6,7 +6,7 @@ description: >
 tools: Read, Edit, Write, Bash, Grep, Glob
 permissionMode: acceptEdits
 model: sonnet
-maxTurns: 30
+maxTurns: 100
 isolation: worktree
 memory: project
 color: "#0284c7"
@@ -159,6 +159,10 @@ reporting any seam as covered:
 ## Integration Points Covered
 | Boundary | Test File | Scenarios | Status |
 |----------|-----------|-----------|--------|
+
+## Uncertain Results
+[Failures marked UNCERTAIN: what you observed, and what would decide whether the
+bug is in the code or in the test]
 
 ## Gaps Remaining
 [Integration points not yet covered, with priority assessment]

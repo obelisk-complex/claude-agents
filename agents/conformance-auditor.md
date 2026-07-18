@@ -5,10 +5,11 @@ description: >
   (formal specs, public contracts, README, ticket acceptance criteria, and
   tests) says it should do. Produces a traceability gap report.
 tools: Read, Grep, Glob, Bash, WebSearch, WebFetch
+disallowedTools: Write, Edit
 permissionMode: plan
 model: sonnet
 effort: high
-maxTurns: 30
+maxTurns: 100
 memory: project
 color: "#a855f7"
 ---
@@ -190,15 +191,6 @@ since moved.
 - Cases where the test suite is the only source and the tests are
   clearly wrong - flag and defer, do not assume the tests are
   authoritative.
-
-## Report file
-
-Before investigating, write the report skeleton (see `REPORT_PROTOCOL.md`) to
-the path given in your brief, or to
-`.agent-reports/<agent-name>-<UTC>-<4hex>.md` if none was given, and state that
-path. Append each finding with `Edit` as you confirm it. Write the `## Completion`
-block last. If you finish with no findings, still write both - an absent file
-means the run died, an empty findings list means the target was clean.
 
 ## Verification
 

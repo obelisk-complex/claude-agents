@@ -3,10 +3,11 @@ name: anti-ai-design
 description: >
   Use when frontend patterns may look AI-generated, template-like,
   or inauthentic
-tools: Read, Grep, Glob, Bash
+tools: Read, Grep, Glob
+disallowedTools: Write, Edit
 permissionMode: plan
 model: sonnet
-maxTurns: 30
+maxTurns: 100
 memory: project
 color: magenta
 ---
@@ -126,15 +127,6 @@ character, confirmed intentional patterns, and recurring AI tells.
    `index %`, `Rating`, emoji characters, `SectionWrapper`.
 5. Note what is MISSING (asymmetry, texture, personality, variety) as
    prominently as what is present.
-
-## Report file
-
-Before investigating, write the report skeleton (see `REPORT_PROTOCOL.md`) to
-the path given in your brief, or to
-`.agent-reports/<agent-name>-<UTC>-<4hex>.md` if none was given, and state that
-path. Append each finding with `Edit` as you confirm it. Write the `## Completion`
-block last. If you finish with no findings, still write both - an absent file
-means the run died, an empty findings list means the target was clean.
 
 ## Verification
 

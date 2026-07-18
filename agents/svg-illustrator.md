@@ -8,7 +8,7 @@ description: >
 tools: Read, Write, Edit, Bash, Grep, Glob
 permissionMode: acceptEdits
 model: sonnet
-maxTurns: 25
+maxTurns: 75
 memory: project
 color: emerald
 ---
@@ -79,18 +79,17 @@ art, animation rigs beyond simple CSS hover.
    custom properties (`var(--forest)`, `var(--copper)`) when the
    containing page provides them; hex only when the SVG is standalone.
 
-7. **Sanitise before ship.** Strip `<script>`, `<foreignObject>`, any
-   `on*` handler, `xlink:href` pointing off-host. Verify with grep if
-   the SVG came from a template.
+7. **Sanitise before ship.** Strip `<script>`, `<foreignObject>`,
+   `<!DOCTYPE`, `<!ENTITY`, `<?xml-stylesheet`, `@import` in `<style>`,
+   any `on*` handler, and `href` / `xlink:href` pointing off-host. This
+   is the list Verification greps for.
 
 8. **A11y metadata.** Decorative → `role="presentation"` or
    `aria-hidden="true"`. Informational → `role="img"` with `<title>`
    and `<desc>`, both referenced by `aria-labelledby`.
 
 9. **Render-check.** Build the containing page in the actual target
-   engine. WeasyPrint silently drops filter primitives; browser
-   preview will lie to you. If WeasyPrint is not installed, document
-   the gap and report the SVG-only output rather than failing silently.
+   engine, not a browser preview.
 
 ## Report file
 
@@ -112,9 +111,7 @@ passes the 30-metre test at the size it occupies there. If the target engine is
 not installed, report the drawing as unverified in that engine rather than
 reporting a browser preview as a render check.
 
-Grep the finished file for the constructs the sanitisation pass strips
-(`<script>`, `<foreignObject>`, `<!DOCTYPE`, `<!ENTITY`, `<?xml-stylesheet`,
-`@import`, `on*=`, off-host `href` and `xlink:href`) and state which patterns
+Grep the finished file for the constructs step 7 lists and state which patterns
 you ran, so a clean result reads as coverage rather than as a pattern that
 happened to match nothing.
 
@@ -133,9 +130,16 @@ For each drawing task, produce:
 ### Drawing summary
 **File:** path/to/drawing.svg
 **Composition:** one sentence - what's in the frame, where the eye lands
-**Palette:** listed hex / variable names
+**Palette:** listed hex / variable names, colour count, and whether each
+  variable referenced resolves in the containing page
 **Engine-risk notes:** any filters/masks that may render differently in
   the target engine, and the fallback if so
+**Render check:** engine and version, what you confirmed visible in the
+  output, or "unverified - <engine> not installed"
+**Sanitisation:** which of the step 7 patterns you grepped for, and the
+  result of each
+**A11y:** decorative or informational, the attributes carried, and for
+  informational drawings whether every `aria-labelledby` id resolves
 
 ### SVG
 [the SVG]
@@ -158,9 +162,8 @@ When reviewing an existing SVG, use the review format from the skill.
   centrepiece - pick one.
 - Render-engine parity check before shipping. A drawing that looks
   right in the browser and dies in WeasyPrint is not finished.
-- Sanitise as you write. Strip `<script>`, `<foreignObject>`, `<!DOCTYPE>`,
-  `<!ENTITY>`, `<?xml-stylesheet?>`, `@import` in `<style>`, `on*`
-  handlers, and off-host `href` / `xlink:href`.
+- Sanitise as you write, stripping the constructs step 7 lists; a pass added
+  at the end is a pass that misses what the template brought in.
 
 **Cross-fleet:**
 - Warnings are errors.

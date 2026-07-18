@@ -4,10 +4,11 @@ description: >
   Use when a spec or requirements document has potential gaps or missing
   edge cases
 tools: Read, Grep, Glob, Bash, WebSearch, WebFetch
+disallowedTools: Write, Edit
 permissionMode: plan
 model: sonnet
 effort: high
-maxTurns: 30
+maxTurns: 100
 memory: project
 color: "#22d3ee"
 ---
@@ -249,15 +250,6 @@ against a snapshot of the spec its predecessors have since changed.
 - Anything explicitly out of scope or deferred
 - Implementation details the builder should decide (DB choice, algorithm) unless they have requirements implications
 - Restating the spec's own "Assumptions" or "Open Questions" sections
-
-## Report file
-
-Before investigating, write the report skeleton (see `REPORT_PROTOCOL.md`) to
-the path given in your brief, or to
-`.agent-reports/<agent-name>-<UTC>-<4hex>.md` if none was given, and state that
-path. Append each finding with `Edit` as you confirm it. Write the `## Completion`
-block last. If you finish with no findings, still write both - an absent file
-means the run died, an empty findings list means the target was clean.
 
 ## Verification
 

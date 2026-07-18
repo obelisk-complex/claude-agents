@@ -5,10 +5,11 @@ description: >
   and logistics from research results; handles scheduling, pacing, and
   local tips
 tools: Read, Grep, Glob
+disallowedTools: Write, Edit
 permissionMode: plan
 model: haiku
 effort: high
-maxTurns: 25
+maxTurns: 75
 memory: project
 color: "#115e59"
 ---

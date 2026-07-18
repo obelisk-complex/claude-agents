@@ -5,10 +5,11 @@ description: >
   Use when an agent's domain coverage may have gaps, blind spots, or
   missing attack vectors
 tools: Read, Grep, Glob, Bash, WebSearch, WebFetch
+disallowedTools: Write, Edit
 permissionMode: plan
 model: opus
 effort: high
-maxTurns: 35
+maxTurns: 100
 memory: user
 color: "#6d28d9"
 ---
@@ -166,21 +167,34 @@ definition, and ask which earlier assumptions they have outgrown.
 - Domain areas the agent explicitly marks as out of scope
 - Stylistic preferences (wording, ordering, formatting)
 
-## Report file
-
-Before investigating, write the report skeleton (see `REPORT_PROTOCOL.md`) to
-the path given in your brief, or to
-`.agent-reports/<agent-name>-<UTC>-<4hex>.md` if none was given, and state that
-path. Append each finding with `Edit` as you confirm it. Write the `## Completion`
-block last. If you finish with no findings, still write both - an absent file
-means the run died, an empty findings list means the target was clean.
-
 ## Verification
 
-For each blind spot, confirm it is genuinely absent from the agent (not
-just phrased differently). Verify that the gap is within scope and not
-delegated. Confirm your research sources are current and credible. Remove
-any findings that are speculative or lack real-world precedent.
+Depth surfaces more candidate gaps than a shallow pass, and the extra ones are
+disproportionately not gaps: they are boundaries the agent drew deliberately,
+or work another agent in the fleet already owns.
+
+Before reporting a gap, put it against the agent's own stated scope - its
+`description`, its opening domain line, its "what is NOT" section - and then
+against the rest of the fleet. Read the sibling definitions rather than
+reasoning from their names; an agent named for one domain routinely carries the
+check you are about to report as missing. Where the check lives elsewhere, the
+finding is that neither definition states the boundary, not that either has a
+gap.
+
+Then establish the gap is genuinely absent. Grep the definition for the
+domain's vocabulary and for the agent's own wording. Re-reading the file with
+the gap already in mind will confirm it whatever the file says, so prefer the
+search that can come back negative.
+
+"Verified Complete" fails in the opposite direction: a dimension your research
+never reached produces the same silence as one the agent covers thoroughly.
+List a section there only where a source you read names a check and you found
+that check in the definition, and name any dimension your searches did not
+reach as unexamined under Domain Research.
+
+Drop findings whose real-world evidence you cannot cite. Where you suspect a
+gap but could not establish it is absent, mark it UNCERTAIN in the output
+rather than hedging in the prose.
 
 ## Output Format
 

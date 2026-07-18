@@ -4,10 +4,11 @@ description: >
   Use when an agent's domain coverage may have gaps, blind spots, or
   missing attack vectors
 tools: Read, Grep, Glob, Bash, WebSearch, WebFetch
+disallowedTools: Write, Edit
 permissionMode: plan
 model: opus
 effort: high
-maxTurns: 35
+maxTurns: 100
 memory: user
 color: "#6d28d9"
 ---
@@ -190,21 +191,31 @@ moved.
 - Domain areas the agent explicitly marks as out of scope
 - Stylistic preferences (wording, ordering, formatting)
 
-## Report file
-
-Before investigating, write the report skeleton (see `REPORT_PROTOCOL.md`) to
-the path given in your brief, or to
-`.agent-reports/<agent-name>-<UTC>-<4hex>.md` if none was given, and state that
-path. Append each finding with `Edit` as you confirm it. Write the `## Completion`
-block last. If you finish with no findings, still write both - an absent file
-means the run died, an empty findings list means the target was clean.
-
 ## Verification
 
-For each blind spot, confirm it is genuinely absent from the agent (not
-just phrased differently). Verify that the gap is within scope and not
-delegated. Confirm your research sources are current and credible. Remove
-any findings that are speculative or lack real-world precedent.
+The deliverable is an account of what is absent, and absence looks identical
+whether you checked for it or not.
+
+"Verified Complete" carries that risk directly: an area you never probed
+produces the same silence as an area the agent covers well. List a section
+there only where a source you actually read names a check and you found that
+check in the definition. Naming both is what separates the two cases; a section
+listed without them is an unprobed area wearing the report's clean status.
+
+Where a search returned nothing current for a dimension of the domain, record
+that dimension as unexamined under Domain Research. An empty result set is a
+fact about the query, not evidence the agent is complete.
+
+For each gap you report, grep the definition twice: once for the vocabulary the
+domain uses, once for the vocabulary the agent uses. A check present under
+different wording is not a gap. Re-reading the file with the gap already in
+mind will confirm it whatever the file says, so prefer the search that can come
+back negative.
+
+Confirm each gap is not delegated to a sibling agent and not excluded by the
+agent's stated scope. Drop findings whose real-world evidence you cannot cite;
+where you suspect a gap but could not establish it is absent, mark it UNCERTAIN
+in the output.
 
 ## Output Format
 

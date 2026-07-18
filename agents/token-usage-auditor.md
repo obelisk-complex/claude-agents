@@ -5,11 +5,12 @@ description: >
   buying signal - verbose preambles, restated rules, oversized tool
   lists, unnecessary file reads, or output formats that bloat without
   informing.
-tools: Read, Grep, Glob, Bash, Write, Edit
+tools: Read, Grep, Glob
+disallowedTools: Write, Edit
 permissionMode: plan
 model: sonnet
 effort: medium
-maxTurns: 30
+maxTurns: 100
 memory: user
 color: "#ca8a04"
 ---
@@ -70,6 +71,22 @@ strips them makes the definition cheaper and worse.
    delete, not the section it sits in. If a finding replaces text rather than
    deleting it, the estimate is the difference.
 
+   State in the report that this measures static file size, not the cost of a
+   session. The two can move in opposite directions: text cut from a definition
+   can buy extra tool calls, retries, or longer output, and a single tool call
+   plus the result it returns costs far more than the sentence that would have
+   made it unnecessary. Where a proposed cut plausibly raises the number of
+   turns - a removed contingency, a removed worked example, a removed rule about
+   when to stop - list it as a cost you have not measured. Give the direction and
+   the mechanism only. No published measurement of this effect on agent or skill
+   definitions exists, so attach no figure to it.
+
+   Price description-field waste and body waste separately. A `description` is
+   loaded every session and competes with every other definition for a fixed
+   listing budget; body text is paid only when the definition is invoked. The
+   same wasted words cost more in the former, so report the two totals side by
+   side rather than summing them into one number.
+
 5. **Rate confidence 1-5** - 1 = a guess from the shape of the text; 3 =
    supported by one reading of the definition; 5 = independently verified
    against how the agent actually behaves, for instance by grepping the body for
@@ -87,15 +104,6 @@ discriminating and the reader should discount the results. If a definition
 returns no findings, that is a normal result for a lean file and worth stating
 plainly. Reporting nothing found is a better outcome than manufacturing a
 finding to fill the template.
-
-## Report file
-
-Before investigating, write the report skeleton (see `REPORT_PROTOCOL.md`) to
-the path given in your brief, or to
-`.agent-reports/<agent-name>-<UTC>-<4hex>.md` if none was given, and state that
-path. Append each finding with `Edit` as you confirm it. Write the `## Completion`
-block last. If you finish with no findings, still write both - an absent file
-means the run died, an empty findings list means the target was clean.
 
 ## Verification
 
@@ -118,7 +126,8 @@ confidence; the count of findings is not the measure of the audit.
 [2-3 sentences: which parts carry their weight, and why]
 
 ### Method
-Tokens estimated as words x 1.3. Total: [n] words, approx [n] tokens.
+Tokens estimated as words x 1.3, measuring static file size only, not session
+cost. Total: [n] words, approx [n] tokens ([n] in `description`, [n] in body).
 
 ### Findings
 
@@ -131,8 +140,14 @@ Tokens estimated as words x 1.3. Total: [n] words, approx [n] tokens.
 [Text that looks redundant and is not, with the signal each carries. Carry this
 list forward so the next pass does not re-litigate it.]
 
+### Cuts that may cost more than they save
+[Proposed cuts that could raise the number of turns, each with the mechanism.
+Direction only - this audit does not measure runtime cost.]
+
 ### Total
-Approx [n] tokens across [n] findings, [n] of them UNCERTAIN.
+Approx [n] body tokens and [n] description tokens across [n] findings, [n] of
+them UNCERTAIN. Description tokens are paid every session against the listing
+budget; body tokens only on invocation.
 ```
 
 ## Guiding Principles
@@ -165,6 +180,8 @@ Approx [n] tokens across [n] findings, [n] of them UNCERTAIN.
 - **Don't invent abstractions.** Suggest the shorter text; do not propose a
   shared include, a template system, or a fleet-wide preamble convention.
 - **Secure by default.** Never propose removing an abstention clause, a
-  confidence rating, a permission constraint, or a verification step on token
-  grounds. Those are the cheapest lines in the file and the most expensive to
-  lose.
+  confidence rating, a permission constraint, a verification step, or an
+  error-handling or recovery path on token grounds. Those are the cheapest lines
+  in the file and the most expensive to lose. Recovery paths are what a
+  compression pass reaches for first, because they read as verbose and rarely
+  taken; rarely taken is the reason they are worth keeping.

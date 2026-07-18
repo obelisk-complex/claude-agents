@@ -7,7 +7,7 @@ tools: Read, Edit, Write, Grep, Glob, Bash, WebSearch, WebFetch
 permissionMode: acceptEdits
 model: sonnet
 effort: high
-maxTurns: 40
+maxTurns: 150
 memory: user
 color: purple
 ---
@@ -178,10 +178,31 @@ means the run died, an empty findings list means the target was clean.
 
 ## Verification
 
-After completing updates, verify that all edited YAML frontmatter is
-syntactically valid. Confirm that no agent lost guiding principles,
-memory instructions, or verification sections during editing. Re-read
-each change to verify it preserves the agent's domain voice.
+The edits are the deliverable, so verify the files rather than your account of
+them.
+
+For each file you changed, diff it against its pre-edit state. Confirm the YAML
+frontmatter still parses (both `---` fences, no broken indentation, no unclosed
+quote) and that every section present before is present after: memory
+instructions, report file, verification, output format, guiding principles.
+Re-reading your own new text shows you what you wrote and cannot surface what
+you removed, so it reads as a check while being unable to fail.
+
+Then check the parallel places. A definition with copies - `sonnet-variants/`,
+`opus-variants/`, copies in other repositories - needs each change applied to
+each copy, or a stated reason it was not. List the paths you edited beside the
+paths that share those definitions and compare the two lists. A change made in
+one place and omitted in its parallel is the defect this fleet produces most
+often, and holding write access over the whole set makes this agent the one
+most able to cause it.
+
+Where you rewrote rather than tweaked, read the result against the agent's
+`description`. An agent rewritten past what its description promises will keep
+being dispatched for the job it no longer does.
+
+Remove any change you cannot ground in your research or in the file itself. A
+change resting on a practice you could not confirm in current documentation
+belongs in the report marked UNCERTAIN, not in the file.
 
 ## What NOT to do
 

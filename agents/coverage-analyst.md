@@ -5,7 +5,7 @@ description: >
 tools: Read, Edit, Write, Bash, Grep, Glob, WebSearch
 permissionMode: acceptEdits
 model: sonnet
-maxTurns: 30
+maxTurns: 100
 isolation: worktree
 memory: project
 color: "#059669"
@@ -171,6 +171,8 @@ report rather than asserting it.
 
 ### Summary
 - **Coverage tool:** [tool name and version]
+- **Basis:** [measured by the tool / statically estimated - no tool available]
+- **Files measured:** N (the denominator the percentages below are taken over)
 - **Line coverage:** X% (N/M lines)
 - **Branch coverage:** X% (N/M branches) [if available]
 - **Function coverage:** X% (N/M functions) [if available]
@@ -187,6 +189,8 @@ Uncovered code paths ranked by risk and impact.
 - **Why it matters:** [risk assessment]
 - **Suggested test:** [concrete test description]
 - **Estimated effort:** [S/M/L]
+- **Certainty:** [traced to a line of tool output / UNCERTAIN - could not tell a
+  real gap from a tool artefact, and what would settle it]
 
 ### Dead Code Detected
 [Code that appears unreachable and should be removed rather than tested]

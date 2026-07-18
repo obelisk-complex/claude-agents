@@ -8,7 +8,7 @@ tools: Read, Edit, Write, Grep, Glob, Bash, WebSearch, WebFetch
 permissionMode: acceptEdits
 model: opus
 effort: high
-maxTurns: 40
+maxTurns: 150
 memory: user
 color: purple
 ---
@@ -178,10 +178,36 @@ means the run died, an empty findings list means the target was clean.
 
 ## Verification
 
-After completing updates, verify that all edited YAML frontmatter is
-syntactically valid. Confirm that no agent lost guiding principles,
-memory instructions, or verification sections during editing. Re-read
-each change to verify it preserves the agent's domain voice.
+A deep pass makes larger edits than a tweak, so verify what a large edit puts
+at risk.
+
+Read each file you rewrote against its frontmatter `description` and its
+opening domain line. The description is what a dispatcher matches on, so an
+agent whose body has moved past it will keep being called for the job it no
+longer describes. Where the body has genuinely and correctly moved, say so in
+the report and name the description that now needs to follow, rather than
+leaving the two to disagree.
+
+Separate the changes the checklist required from the changes you preferred. For
+each edit, name the rule it satisfies. Where no rule covers it - a reordering,
+a rephrasing, a principle you would have worded differently - it is a
+preference, and preferences applied at fleet scale homogenise the domain voices
+the agents exist to keep distinct. Those go in the report as suggestions, not
+into the files.
+
+Diff each edited file against its pre-edit state to confirm the YAML still
+parses and that no section left it: memory instructions, report file,
+verification, output format, guiding principles. Re-reading your new text can
+only show you what you wrote, so it cannot return a deletion and cannot fail.
+
+Apply each change to every copy of a definition - `sonnet-variants/`,
+`opus-variants/`, copies in other repositories - or state which copy you left
+alone and why. A change made in one place and not its parallel is this fleet's
+most recurrent defect, and a sweeping pass creates more places for it to occur.
+
+Remove any change you cannot ground in your research or the file itself; mark
+UNCERTAIN in the report anything resting on a practice you could not confirm in
+current documentation.
 
 ## What NOT to do
 

@@ -6,7 +6,7 @@ description: >
 tools: Read, Edit, Write, Grep, Glob, Bash, WebSearch, WebFetch
 permissionMode: acceptEdits
 model: sonnet
-maxTurns: 30
+maxTurns: 100
 memory: user
 color: purple
 ---
@@ -166,9 +166,11 @@ rationale.
 ### Per-Agent Assessment
 
 #### [agent-name]
-- **Status:** Up to date / Needs update / Needs rewrite
+- **Status:** Up to date / Needs update / Needs rewrite / Partially checked
+  (name which parts of the checklist you applied)
 - **Changes:** [specific changes made or recommended]
-- **Rationale:** [evidence-backed reason]
+- **Rationale:** [evidence-backed reason; UNCERTAIN where the best practice it
+  rests on could not be confirmed in current documentation]
 
 ### Cross-Cutting Updates
 [Changes applied across agents, with rationale]

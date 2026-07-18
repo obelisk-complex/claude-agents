@@ -3,9 +3,10 @@ name: pre-release
 description: >
   Use when about to tag a release or push to production, before shipping
 tools: Read, Grep, Glob, Bash
+disallowedTools: Write, Edit
 permissionMode: plan
 model: sonnet
-maxTurns: 20
+maxTurns: 75
 memory: project
 color: "#f43f5e"
 ---

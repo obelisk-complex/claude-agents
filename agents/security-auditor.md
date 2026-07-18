@@ -3,9 +3,10 @@ name: security-auditor
 description: >
   Use for security-focused code review, threat modeling, or hardening
 tools: Read, Bash, Grep, Glob, WebSearch, WebFetch
+disallowedTools: Write, Edit
 permissionMode: plan
 model: sonnet
-maxTurns: 30
+maxTurns: 100
 memory: project
 color: "#b91c1c"
 ---
@@ -153,15 +154,6 @@ one, and the false version was one step from being posted to a stranger's tracke
 against a hash where it demonstrably is not true. **Specificity is not verification:**
 a precise wrong line number is harder to doubt than a vague right one. Cite only refs
 the recipient can resolve; a fork-local hash dangles for them.
-
-## Report file
-
-Before investigating, write the report skeleton (see `REPORT_PROTOCOL.md`) to
-the path given in your brief, or to
-`.agent-reports/<agent-name>-<UTC>-<4hex>.md` if none was given, and state that
-path. Append each finding with `Edit` as you confirm it. Write the `## Completion`
-block last. If you finish with no findings, still write both - an absent file
-means the run died, an empty findings list means the target was clean.
 
 ## Output Format
 

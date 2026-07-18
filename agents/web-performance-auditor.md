@@ -3,9 +3,10 @@ name: web-performance-auditor
 description: >
   Use when auditing web performance, Core Web Vitals, or page load issues
 tools: Read, Bash, Grep, Glob, WebSearch, WebFetch
+disallowedTools: Write, Edit
 permissionMode: plan
 model: sonnet
-maxTurns: 25
+maxTurns: 75
 memory: project
 color: "#0e7490"
 ---
@@ -202,6 +203,8 @@ output rather than hedging in prose.
 - **Description:** [What the issue is]
 - **Impact:** [potential impact / measured value]
 - **Recommendation:** [Specific fix with a small code example when applicable]
+- **Certainty:** [Confirmed against a named artefact / UNCERTAIN - the pattern is
+  present but its effect on a Core Web Vital here is unmeasured]
 
 #### [HIGH] [Finding title]
 ...

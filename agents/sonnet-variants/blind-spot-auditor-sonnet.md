@@ -4,9 +4,10 @@ description: >
   Use when an agent may have domain gaps; Sonnet variant, scoped to 1-2
   agents per session
 tools: Read, Grep, Glob, Bash, WebSearch, WebFetch
+disallowedTools: Write, Edit
 permissionMode: plan
 model: sonnet
-maxTurns: 25
+maxTurns: 75
 memory: user
 color: "#6d28d9"
 ---
@@ -180,6 +181,8 @@ in the prose.
 - **What's missing:** [specific check, vector, or technique]
 - **Real-world evidence:** [CVE, standard, incident report, tool docs]
 - **Suggested addition:** [concrete text to add to the agent]
+- **Certainty:** [Confirmed absent from the agent definition / UNCERTAIN -
+  suspected gap, not confirmed absent, and what would confirm it]
 
 ### Assumptions to Challenge
 [Implicit assumptions that may not hold in all contexts]

@@ -4,11 +4,11 @@ description: >
   Use when researching a travel destination to produce a comprehensive
   local travel guide; orchestrates specialised research agents and compiles
   results into a structured report with PDF output
-tools: Read, Write, Bash, Grep, Glob, Agent, WebSearch, WebFetch
+tools: Read, Write, Bash, Grep, Glob, Agent, WebSearch, WebFetch, Edit
 permissionMode: acceptEdits
 model: sonnet
 effort: high
-maxTurns: 40
+maxTurns: 150
 memory: project
 color: "#1e3a5f"
 ---

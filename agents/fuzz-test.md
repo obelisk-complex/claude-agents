@@ -5,7 +5,7 @@ description: >
 tools: Read, Edit, Write, Bash, Grep, Glob, WebSearch
 permissionMode: acceptEdits
 model: sonnet
-maxTurns: 30
+maxTurns: 100
 isolation: worktree
 memory: project
 color: "#84cc16"
@@ -179,7 +179,8 @@ harness is capable of crashing. Before reporting any target as clean:
 
 #### [SEVERITY] Crash in `function_name` - description
 - **Minimized input:** `fuzz/artifacts/crash-abc123` (N bytes)
-- **Root cause:** [null dereference / overflow / infinite loop / etc.]
+- **Root cause:** [null dereference / overflow / infinite loop / etc., or
+  UNCERTAIN - reproducer confirmed, cause not established]
 - **Location:** `src/parser.rs:87`
 - **Regression test:** `tests/regression/fuzz_crash_001.rs`
 

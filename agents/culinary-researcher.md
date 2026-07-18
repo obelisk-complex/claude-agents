@@ -5,10 +5,11 @@ description: >
   for a travel destination; covers restaurants, street food, bars, and
   regional specialities with optional wine and spirits deep-dives
 tools: Read, Grep, Glob, WebSearch, WebFetch
+disallowedTools: Write, Edit
 permissionMode: plan
 model: sonnet
 effort: high
-maxTurns: 25
+maxTurns: 75
 memory: project
 color: "#92400e"
 ---

@@ -5,7 +5,7 @@ description: >
 tools: Read, Edit, Write, Bash, Grep, Glob
 permissionMode: acceptEdits
 model: sonnet
-maxTurns: 30
+maxTurns: 100
 memory: project
 color: "#10b981"
 ---

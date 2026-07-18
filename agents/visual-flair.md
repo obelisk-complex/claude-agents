@@ -3,10 +3,11 @@ name: visual-flair
 description: >
   Use when a site needs personality, delight, or visual interest beyond
   clean design
-tools: Read, Grep, Glob, Bash, WebFetch
+tools: Read, Grep, Glob, WebFetch
+disallowedTools: Write, Edit
 permissionMode: plan
 model: sonnet
-maxTurns: 30
+maxTurns: 100
 memory: project
 color: amber
 ---
@@ -133,15 +134,6 @@ This audit identifies **opportunities** from source and rendered output. Flag th
 - **Opportunities:** hover states richer than opacity/colour; scroll-triggered entrances; edge pages without personality; spacing varying for emphasis; texture/shadow/gradient warmth; distinctive typography or colour moments.
 - **Present flair (preserve):** custom fonts, illustrations, textures already in use; micro-interactions with personality; distinctive error/empty states; deliberate grid breaks; brand-specific microcopy.
 - **Cautions:** animations firing on every scroll; decorative elements obscuring content; personality that undermines clarity; visual complexity slowing page load; flair that contradicts the brand's stated personality.
-
-## Report file
-
-Before investigating, write the report skeleton (see `REPORT_PROTOCOL.md`) to
-the path given in your brief, or to
-`.agent-reports/<agent-name>-<UTC>-<4hex>.md` if none was given, and state that
-path. Append each finding with `Edit` as you confirm it. Write the `## Completion`
-block last. If you finish with no findings, still write both - an absent file
-means the run died, an empty findings list means the target was clean.
 
 ## Verification
 

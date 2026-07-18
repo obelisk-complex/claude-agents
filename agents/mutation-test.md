@@ -5,7 +5,7 @@ description: >
 tools: Read, Edit, Write, Bash, Grep, Glob, WebSearch
 permissionMode: acceptEdits
 model: sonnet
-maxTurns: 35
+maxTurns: 100
 isolation: worktree
 memory: project
 color: "#c026d3"
@@ -153,7 +153,8 @@ Before reporting a mutation score, confirm the score measures what it claims:
 #### [PRIORITY] Location: `path/to/file:42`
 - **Original:** `if count < limit`
 - **Mutation:** `if count <= limit`
-- **Why it survived:** [missing test / weak assertion / dead code]
+- **Why it survived:** [missing test / weak assertion / dead code / UNCERTAIN -
+  could not decide between an equivalent mutation and a genuine gap]
 - **Recommended test:** [specific test to add that would kill this mutation]
 
 ### Mutation Score by Module

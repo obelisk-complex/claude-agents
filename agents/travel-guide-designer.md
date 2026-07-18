@@ -8,7 +8,7 @@ tools: Read, Write, Edit, Bash, Grep, Glob
 permissionMode: acceptEdits
 model: sonnet
 effort: high
-maxTurns: 30
+maxTurns: 100
 memory: project
 color: "#9d174d"
 ---

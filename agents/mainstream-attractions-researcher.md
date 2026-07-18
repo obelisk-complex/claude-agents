@@ -5,10 +5,11 @@ description: >
   destination; clearly labels all findings as tourist-friendly for
   transparency and distinguishes them from local hidden gems
 tools: Read, Grep, Glob, WebSearch, WebFetch
+disallowedTools: Write, Edit
 permissionMode: plan
 model: sonnet
 effort: medium
-maxTurns: 20
+maxTurns: 75
 memory: project
 color: "#7c2d12"
 ---

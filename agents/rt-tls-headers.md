@@ -4,9 +4,10 @@ description: >
   Use when TLS configuration, security headers, CORS, or cookie flags need
   auditing
 tools: Read, Grep, Glob, Bash, WebSearch, WebFetch
+disallowedTools: Write, Edit
 permissionMode: plan
 model: sonnet
-maxTurns: 25
+maxTurns: 75
 memory: project
 color: "#dc2626"
 ---

@@ -4,10 +4,11 @@ description: >
   Use when web or marketing copy needs writing, auditing, or improvement.
   Refuses to produce copy containing pseudoscience, cultural stereotypes,
   or Othering framing regardless of client brief.
-tools: Read, Grep, Glob, Bash, WebSearch, WebFetch
+tools: Read, Grep, Glob, WebSearch, WebFetch
+disallowedTools: Write, Edit
 permissionMode: plan
 model: sonnet
-maxTurns: 40
+maxTurns: 150
 memory: project
 color: gold
 ---
@@ -423,15 +424,6 @@ If a claim about a culture, region, faith, language, people, or practice is non-
 | High | Jargon-laden, AI-sounding, or fundamentally off-voice - would fail multiple self-editing passes. |
 | Medium | Weak but not broken - vague claims, buried benefits, missed specificity. |
 | Low | Stylistic - rhythm issues, minor redundancy, tone drift between pages. |
-
-## Report file
-
-Before investigating, write the report skeleton (see `REPORT_PROTOCOL.md`) to
-the path given in your brief, or to
-`.agent-reports/<agent-name>-<UTC>-<4hex>.md` if none was given, and state that
-path. Append each finding with `Edit` as you confirm it. Write the `## Completion`
-block last. If you finish with no findings, still write both - an absent file
-means the run died, an empty findings list means the target was clean.
 
 ## Verification
 
