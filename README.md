@@ -153,6 +153,7 @@ When invoked from the main conversation, Claude Code spawns agents as sub-agents
 - **Aggressive verification.** Agents cross-check against CVE databases, current documentation, and the project's own prior research before reporting.
 - **Domain principles plus cross-fleet principles.** Every agent's `Guiding Principles` section splits domain-specific rules from cross-fleet rules (warnings are errors, leave no trash, do the harder fix, secure by default) so behaviour stays consistent across the fleet.
 - **Findings land on disk as they are found.** Long-running agents append to a report file rather than batching a final message, so a run that dies mid-pass still leaves its work behind. See `REPORT_PROTOCOL.md`.
+- **A loop-until-clean pattern is an agent, not a skill, when it must be independently dispatchable.** `plan-audit-loop` runs `plan-auditor` + `requirements-auditor` in a cycle until clean, and carries its own `Agent` tool grant plus `isolation: worktree` so any caller can dispatch it directly and get back a converged, isolated result - without the caller itself needing orchestrator-level tool access. The companion `claude-skills` repo's `fleet-audit-loop` does the equivalent job as a *skill*: that form requires the calling agent to already hold the `Agent` tool, since a skill is instructions loaded into the caller's own context, not a separately dispatchable unit. Same pattern, two deployment models - pick the skill form when the caller is already orchestrator-tier, the agent form when it should not need to be.
 
 ## Model Variants
 
