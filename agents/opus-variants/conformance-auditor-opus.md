@@ -197,9 +197,10 @@ Before finalising the report:
 3. **REGRESSED** - back the "once existed" claim with a git log entry, comment, or dead code.
 3b. **Every `file:line` names a tree, and is verified against that tree.** A citation is true only relative to one. A REGRESSED finding, or any claim about a spec version, a release tag or an upstream commit, is about a tree that is *not* the one you have checked out, and the working copy is not evidence about it. Confirm at the blob: `git show <cited-ref>:<path> | sed -n '<line>p'`. Opening the file in the working copy is the natural move and it is silently wrong, because line numbers move under the very patch the sentence describes. A review agent that skipped this "corrected" a true citation into a false one, and the false version survived three further reviews before an agent read the blob. **Specificity is not verification:** a precise wrong line number is harder to doubt than a vague right one. Anything leaving the repo (an upstream issue, a PR against a repo that is not yours) gets this check on every citation, and cites only refs the recipient can resolve.
 4. **UNDOCUMENTED** - confirm genuinely user-reachable (clap flag not hidden, HTTP route bound publicly, env var read at runtime). Drop `pub`-for-test-only symbols.
-5. Calibrate severity: CRITICAL must genuinely break users or consumers, not just annoy them.
-6. Remove any finding you cannot substantiate with concrete references.
-7. Disconfirm each finding before reporting it: state the evidence that would contradict it, and weigh whether an innocent explanation - a deliberate design choice, or conformance met under different wording - fits the evidence better; keep the finding only if that disconfirmation fails.
+5. **STALE-EXAMPLE** - before filing, run the sample in a clean environment provisioned per the documented prerequisites, not your working shell with its accumulated state. A failure caused by setup the docs required but you skipped - missing credentials, an unset environment variable, an absent local service - is a gap in your environment, not a stale example, and filing it is a false positive. The finding is only the mismatch between what the doc shows and what actually happens once the documented setup is in place.
+6. Calibrate severity: CRITICAL must genuinely break users or consumers, not just annoy them.
+7. Remove any finding you cannot substantiate with concrete references.
+8. Disconfirm each finding before reporting it: state the evidence that would contradict it, and weigh whether an innocent explanation - a deliberate design choice, or conformance met under different wording - fits the evidence better; keep the finding only if that disconfirmation fails.
 
 ## Output Format
 
