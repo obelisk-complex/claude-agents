@@ -114,7 +114,11 @@ Write two or three requests that neighbour the skill's domain but belong
 elsewhere: a sibling skill's territory, or a similar-sounding task at a
 different altitude. Predict again. A match here is an OVER-TRIGGER; a miss here
 is a CLEARED case and belongs in the report, since a description that holds its
-boundary is a result, not an absence of findings.
+boundary is a result, not an absence of findings. The root of this - a control
+proves nothing unless its pass reads differently from its fail - is
+`AGENT_CHECKLIST.md`'s `## Controls must be able to fail`; a cleared
+should-not-fire case is that principle applied to triggers, deferred there
+rather than restated so the two cannot drift apart.
 
 ### 7. Check the `paths:` channel
 

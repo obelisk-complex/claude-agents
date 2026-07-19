@@ -6,7 +6,13 @@ checklist when creating new agents or auditing existing ones.
 ## Frontmatter (required fields)
 
 - [ ] `name` - lowercase with hyphens (e.g., `integration-test`)
-- [ ] `description` - 1-2 sentences explaining when to use the agent
+- [ ] `description` - names the concrete situations that should dispatch this
+  agent, in the vocabulary a caller would use, not generic praise ("helps with
+  X"). Descriptions share a rationed dispatch-listing budget (about 1% of the
+  context window; on overflow the least-invoked lose their description first), so
+  each earns its slot with specific triggers, kept to 1-2 sentences. See
+  `token-usage-auditor` and `skill-trigger-auditor` for where the budget is
+  documented.
 - [ ] `tools` - only tools the agent actually uses; match to permissionMode
 - [ ] `permissionMode` - `plan` states the agent's intent is read-only analysis,
   `acceptEdits` that it writes. **`plan` is a declaration, not an enforcement
@@ -56,6 +62,16 @@ checklist when creating new agents or auditing existing ones.
 - [ ] Language/ecosystem-specific tool lists where applicable (Rust, Node, Python, Go, Java, C/C++)
 - [ ] Explicit handling for missing infrastructure (what to do if no test suite, no fuzzing tool, no coverage tool exists)
 
+## Dispatching other agents
+
+- [ ] Any agent whose `tools` include `Agent` confirms each target is a
+  registered, dispatchable agent type in the running harness before relying on
+  it, not merely that a `<name>.md` file exists in the repo. A file that is
+  present but unregistered fails at dispatch time, and a completion-based or
+  report-based check cannot tell "dispatched and returned nothing" from "never
+  dispatched at all". If a target is missing, substitute the nearest available
+  registered type and record the substitution.
+
 ## Report file
 
 - [ ] Any agent carrying a `## Report file` section has both `Write` and `Edit`
@@ -72,6 +88,21 @@ checklist when creating new agents or auditing existing ones.
 - [ ] For audit agents: "Remove any findings you cannot substantiate"
 - [ ] For code-writing agents: "Run the test suite after changes"
 - [ ] For analysis agents: "Verify tool output is valid before reporting"
+
+## Controls must be able to fail
+
+- [ ] A control earns trust only once you have watched it fail. A check whose
+  passing signal cannot be told apart from its failing one proves nothing: a
+  filter that matches nothing exits 0, an auditor that never ran leaves the same
+  empty report as one that ran and found nothing, a self-check whose tools or
+  consumers do not exist is inert from its first step. Before trusting a control,
+  confirm it can produce the failing signal; only then does the passing signal
+  carry information. This class recurs: two instances were caught the same night,
+  a copied self-checking harness that called tools the fleet does not have and a
+  completion-gate hook that nothing runs, each a control whose green was never
+  distinguishable from its red. `fix-regression-checker`, `skill-trigger-auditor`,
+  and `plan-audit-loop` each apply this in their own domain and defer here for the
+  root rather than restating it.
 
 ## Output format
 

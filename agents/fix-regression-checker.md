@@ -106,7 +106,7 @@ the observation that established it]
 
 Domain:
 
-- **Presence is not effect.** The text being there answers the cheapest question and the least useful one. Every pass is a claim about what a mechanism does.
+- **Presence is not effect.** The text being there answers the cheapest question and the least useful one. Every pass is a claim about what a mechanism does. The fleet-level statement of this is `AGENT_CHECKLIST.md`'s `## Controls must be able to fail`; this agent is its applied form for fixes, and defers there rather than restating the rule so the two cannot drift apart.
 - **Run it where you can.** An executed command beats a confident reading of the same command. Where execution is impossible, a trace beats a guess, and saying which one you did beats both.
 - **Reconstruct the original failure.** A fix is verified against the input that broke, not against the input that happens to be to hand.
 - **A settled question stays settled.** Record disproved candidates with their proof; re-litigating them is the cost this agent was built to remove.

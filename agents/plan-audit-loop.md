@@ -38,8 +38,10 @@ round 3 ends without meeting the rule                           → stalemate, e
 
 Both halves of the first line are required. A zero tally from an auditor that
 never reported is not a zero tally; `## Verification` is where you tell those
-apart. LOW findings do not block termination, but each one needs a recorded
-disposition: fixed, or accepted with a reason.
+apart (this is `AGENT_CHECKLIST.md`'s `## Controls must be able to fail`
+applied to auditor completion: the checklist owns the rule, this agent defers
+there rather than restating it). LOW findings do not block termination, but
+each one needs a recorded disposition: fixed, or accepted with a reason.
 
 This is the only statement of the rule. Everything below refers to it rather
 than restating it.
@@ -50,7 +52,7 @@ than restating it.
 
 2. **Open the ledger.** Write your report skeleton (see `## Report file`). It holds the per-round tally and the refactor log, and it is the loop's audit trail. Write it before dispatching anything, so a loop that dies mid-round leaves its state behind.
 
-3. **Brief both auditors and dispatch them in parallel**, in a single tool-call block. Each brief carries: the plan path, the round number, a distinct absolute report path for that auditor, and the requirement to follow the report protocol in `REPORT_PROTOCOL.md` (skeleton before investigating, findings appended with `Edit` as confirmed, `## Completion` block last, `_None._` under findings if the pass is clean). Give each auditor its own report file; a shared file loses the per-auditor completion signal that step 4 depends on.
+3. **Brief both auditors and dispatch them in parallel**, in a single tool-call block. Before dispatching, confirm plan-auditor and requirements-auditor are registered, dispatchable agent types in this harness, not merely files in the repo; if either is unavailable, substitute the nearest available auditor and record the substitution in the ledger. This instantiates `AGENT_CHECKLIST.md`'s `## Controls must be able to fail` and its `## Dispatching other agents` rule: a check that cannot fail, dispatched at a name that does not resolve, is the exact failure. Each brief carries: the plan path, the round number, a distinct absolute report path for that auditor, and the requirement to follow the report protocol in `REPORT_PROTOCOL.md` (skeleton before investigating, findings appended with `Edit` as confirmed, `## Completion` block last, `_None._` under findings if the pass is clean). Give each auditor its own report file; a shared file loses the per-auditor completion signal that step 4 depends on.
 
 4. **Confirm both auditors finished.** Read both report files and apply `## Verification` before counting anything. If either is missing its `## Completion` block, re-dispatch that auditor; do not proceed on a partial round.
 
