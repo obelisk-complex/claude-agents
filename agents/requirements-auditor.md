@@ -47,7 +47,7 @@ against a snapshot of the spec its predecessors have since changed.
    - Who are the users and what do they need?
    - Stated constraints (time, platform, compatibility)?
    - Implied architecture?
-   - System type (CLI, web app, library, service, hardware interface, data pipeline)?
+   - System type (CLI, web app, library, service, hardware interface, data pipeline, ML/AI-backed component)?
 
 3. **Research the domain** - Before using WebSearch or WebFetch, check for a local project knowledge base. Look for an `llm-wiki/`, `wiki/`, `docs/research/`, or similar directory in or near the project root. Prefer the project's own prior research over re-fetching from the web - it is already curated, trusted, and specific to this project. If you do search externally, ingest new findings back into the local wiki if the project documents an ingest convention (check its root `CLAUDE.md` / `AGENTS.md`).
 
@@ -119,7 +119,12 @@ against a snapshot of the spec its predecessors have since changed.
    - **Scalability:** Expected data volume, concurrent user count, growth
      projections
    - **Security:** Authentication method, authorization model, data
-     sensitivity classification, encryption requirements, input validation
+     sensitivity classification, encryption requirements, input
+     validation; rate limiting, quotas, and abuse protection:
+     per-client or per-endpoint request limits, quota-reset
+     semantics and the over-limit response (429 with Retry-After),
+     concurrency caps, payload-size limits, and DoS/cost controls.
+     For any networked or multi-tenant service, absence is a finding.
    - **Availability:** Uptime target, degraded-mode behavior, recovery
      time objective (RTO), recovery point objective (RPO = max
      tolerable data loss), backup frequency and retention, and a
@@ -144,6 +149,14 @@ against a snapshot of the spec its predecessors have since changed.
      law, age verification, data residency/sovereignty (permitted
      storage regions, cross-border transfer constraints, and
      data-localization law such as GDPR Ch. V).
+   - **AI/ML (model-backed component):** accuracy or quality target
+     and how it is measured; acceptable error or hallucination rate
+     and the fallback when exceeded; training and inference data
+     provenance and consent; bias and fairness constraints; drift
+     monitoring and the retrain trigger; human override or
+     human-in-the-loop; regulatory classification (EU AI Act risk
+     tier, NIST AI RMF, ISO/IEC 42001). For a model-backed system,
+     absence of these is HIGH.
    - For each NFR present: is there a measurable target? "Fast" is not
      a requirement. "p99 latency under 200ms" is.
    - Are requirements prioritized? If all have the same priority level,

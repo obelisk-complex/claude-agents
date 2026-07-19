@@ -183,6 +183,17 @@ what the earlier phases assumed that those additions have since invalidated.
      percentage-based rollout, or feature flags : not big-bang cutover.
      If a plan deploys a risky change to 100% of traffic in a single
      step, flag the absence of a graduated rollout strategy.
+   - When the rollout is graduated (rolling or canary), old and new
+     code run at the same time, so any change to a shared contract -
+     database schema, API, message format, on-disk format - must be
+     sequenced expand-then-contract: add the new form with dual
+     read/write, migrate, then remove the old form, so every
+     intermediate state is compatible in both directions. Flag any
+     single-step column drop or rename, field tightening, or wire-
+     contract change made while other instances still run the old
+     version. A graduated rollout is not safe on its own; without
+     backward-compatible sequencing it still causes an outage during
+     the window when both versions coexist.
    - Are steps idempotent? If the plan fails at step N and the executor
      needs to restart, can they safely re-run steps 1 through N-1? This
      is critical for data migration plans where re-running a step might

@@ -101,6 +101,13 @@ since moved.
      platform) and version-bump magnitude are claims: verify the code
      requires no more than the docs promise, and that a breaking
      public-contract change carries a matching major version bump (semver).
+     To judge whether a public-contract change is actually breaking, diff
+     the current contract against the last *released* version (a git tag,
+     or the published OpenAPI/proto/`.d.ts`/JSON-schema), not only the
+     current one: a field made required, a narrowed type, a removed enum
+     value or endpoint, or a changed default is breaking even when shipped
+     as a minor or patch bump. A change labelled non-breaking that the diff
+     shows is breaking is a CRITICAL finding against the version claim.
 
    Record each claim with a stable ID (`SPEC-CLI-001`, `SPEC-IPC-014`) so
    the traceability matrix stays readable.
@@ -139,7 +146,11 @@ since moved.
    - IPC message variants.
    - Emitted metric names, structured-log field names, trace span names.
      Renaming one without updating the alert or dashboard that reads it
-     is a silent break.
+     is a silent break. Beyond the name, a metric's type (counter / gauge /
+     histogram), its unit (ms vs s, bytes vs KiB), and its label set are
+     contract too: a dashboard query or alert threshold breaks silently
+     when the name holds but the type, unit, or a label is changed or
+     dropped. Verify those, not only the name.
 
    Every user-reachable surface element not referenced by any source is
    a finding. Hidden surface is technical debt: the next maintainer will

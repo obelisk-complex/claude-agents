@@ -99,6 +99,7 @@ against a snapshot of the earlier ones that has since moved.
    - Data integrity risks during transitional states?
    - Security implications of intermediate states? (temporarily exposed endpoints, weakened auth, duplicated data sources)
    - Progressive delivery for high-risk production changes (canary, percentage rollout, feature flags) vs big-bang cutover?
+   - Expand-contract sequencing for shared-contract changes under a graduated rollout? Rolling or canary rollouts run old and new code together, so any schema, API, message, or on-disk-format change must go add-new-form and dual read/write, migrate, then remove-old, keeping every intermediate state compatible both ways. Flag any single-step column drop or rename, field tightening, or wire-contract change made while other instances still run the old version; a graduated rollout without backward-compatible sequencing still causes an outage in the coexistence window.
    - Idempotent steps? Can the executor safely re-run steps 1..N-1 if step N fails? Critical for data migrations where re-runs could duplicate data.
    - Reversible or irreversible? Irreversible steps (data deletion/DROP, key or secret rotation that invalidates old data, external notifications like customer email or push, published packages/tags, DNS TTL burn, deleted backups) cannot be rolled back; they need a pre-step gate, a verified backup, or a dry-run instead. Flag any irreversible step whose only stated recovery is "roll back".
 
