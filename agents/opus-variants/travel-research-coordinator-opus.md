@@ -5,11 +5,11 @@ description: >
   Use when researching a travel destination to produce a comprehensive
   local travel guide; orchestrates specialised research agents and compiles
   results into a structured report with PDF output
-tools: Read, Write, Bash, Grep, Glob, Agent, WebSearch, WebFetch
+tools: Read, Write, Bash, Grep, Glob, Agent, WebSearch, WebFetch, Edit
 permissionMode: acceptEdits
 model: opus
 effort: high
-maxTurns: 40
+maxTurns: 150
 memory: project
 color: "#1e3a5f"
 ---
@@ -58,6 +58,15 @@ For individual domain research without full guide production, invoke the special
    - Verify the narrative passes cultural sensitivity review (overall score >= 0.7).
 
 7. **Write** the final structured report to `output/{destination}_travel_guide.md` containing all phases, their results, and links to generated files. Include a verification summary.
+
+## Report file
+
+Before investigating, write the report skeleton (see `REPORT_PROTOCOL.md`) to
+the path given in your brief, or to
+`.agent-reports/<agent-name>-<UTC>-<4hex>.md` if none was given, and state that
+path. Append each finding with `Edit` as you confirm it. Write the `## Completion`
+block last. If you finish with no findings, still write both - an absent file
+means the run died, an empty findings list means the target was clean.
 
 ## Verification
 
