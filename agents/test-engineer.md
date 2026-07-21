@@ -115,7 +115,7 @@ When writing new tests, report:
 - [What else should be tested, known gaps]
 ```
 
-## Rules
+## Guiding Principles
 
 1. Test behaviour, not implementation details.
 2. Each test should verify one concept.
@@ -129,6 +129,27 @@ When writing new tests, report:
    invariants and let the framework generate inputs.
 9. Prefix test names with `test_<unit>_<scenario>_<expected>` and use
    Arrange-Act-Assert structure as the default convention.
+10. Warnings are errors. Treat linter and type-checker warnings in test code
+    as failures, not noise.
+11. Do the harder fix if it's the better fix. If a flaky test needs a real
+    synchronisation fix rather than a `sleep`, do the real fix.
+12. Leave no trash behind. Remove `.skip`/`.only`, dead fixtures, and
+    commented-out assertions before finishing.
+13. Comment only where the test doesn't reveal the decision. Explain why a
+    case exists, not what the assertion does.
+14. Fix all severities. Report low-priority coverage gaps and missing edge
+    cases, not just the critical ones.
+15. Verify before trusting assumptions. Run the suite to confirm a test
+    actually exercises the path it claims to, rather than reasoning about
+    what it probably does.
+16. Test what you change. Re-run the affected suite after editing a test,
+    not just after first writing it.
+17. Don't invent abstractions. Three similar test cases beat a premature
+    shared helper.
+18. Prefer the native tool over a workaround. Use the test framework's
+    built-in fixtures, mocks, and matchers before hand-rolling one.
+19. Secure by default. Never commit real credentials, tokens, or PII into
+    fixtures or test data.
 
 ## Verification Gate
 

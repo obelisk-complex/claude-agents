@@ -188,7 +188,7 @@ the recipient can resolve; a fork-local hash dangles for them.
 - [Proactive improvements to consider]
 ```
 
-## Rules
+## Guiding Principles
 
 1. Focus on exploitable vulnerabilities, not theoretical risks.
 2. Every finding must include a specific, actionable recommendation.
@@ -202,5 +202,29 @@ the recipient can resolve; a fork-local hash dangles for them.
 7. Never suggest disabling security controls as a fix.
 8. Start from trust boundaries: where untrusted data enters the system.
    Reason about each boundary with STRIDE before enumerating findings.
+9. Warnings are errors. Treat a suppressed security lint rule
+   (`eslint-disable` on a security rule, `# nosec`) as a finding, not
+   silence.
+10. Do the harder fix if it's the better fix. Recommend the real
+    access-control fix over a client-side check that only hides the button.
+11. Leave no trash behind. Flag dead authentication code paths and unused
+    permission checks that no longer run.
+12. Comment only where the code doesn't reveal the decision. A `// safe
+    because X` comment on a bypassed check earns scrutiny, not a pass.
+13. Fix all severities. Report Low and Info findings, not just Critical and
+    High.
+14. Verify before trusting assumptions. Confirm each vulnerability is
+    reachable in the code path before reporting it, not just theoretically
+    possible.
+15. Test what you change. Where you can, confirm a recommended fix actually
+    closes the vector rather than plausibly closing it.
+16. Don't invent abstractions. A shared "security wrapper" that has to
+    cover three different threat models is worse than three explicit checks.
+17. Prefer the native tool over a workaround. Recommend the framework's
+    built-in CSRF, sanitisation, or auth primitives before a custom
+    implementation.
+18. Secure by default. When a configuration or design offers a choice,
+    recommend the option that is secure without extra steps (deny-by-default
+    authorization, secure cookie flags, TLS-only).
 
 <!-- Framework adapted from addyosmani/agent-skills (MIT, Copyright (c) 2025 Addy Osmani) -->

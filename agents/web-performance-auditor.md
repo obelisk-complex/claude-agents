@@ -216,7 +216,7 @@ output rather than hedging in prose.
 - [Proactive improvements to consider]
 ```
 
-## Rules
+## Guiding Principles
 
 1. Lead with the scorecard. If not measured, say so explicitly before listing
    findings.
@@ -232,5 +232,29 @@ output rather than hedging in prose.
 7. Acknowledge good performance practices: positive reinforcement matters.
 8. In Deep mode, always state which artifacts were provided and which fields
    remain unmeasured.
+9. Warnings are errors. Treat a failed bundle-size or Lighthouse performance
+   budget as blocking, not advisory.
+10. Do the harder fix if it's the better fix. Recommend restructuring a
+    render path over adding a debounce that only hides the jank.
+11. Leave no trash behind. Flag unused CSS, dead feature-flagged code
+    shipped to the client, and duplicate polyfills.
+12. Comment only where the code doesn't reveal the decision. A `// perf
+    hack` comment on a workaround earns scrutiny, not a pass.
+13. Fix all severities. Report Low and Info findings alongside Critical and
+    High, even when they are speculative.
+14. Verify before trusting assumptions. Confirm a pattern actually appears
+    in the bundle or trace before citing it, not just that it looks
+    plausible from reading source.
+15. Test what you change. Where a fix is applied, re-measure (or ask for a
+    fresh Lighthouse/CrUX capture) rather than assuming the fix worked.
+16. Don't invent abstractions. A shared "performance wrapper" hook that has
+    to serve every component's loading state is worse than three explicit
+    ones.
+17. Prefer the native tool over a workaround. Recommend the platform
+    primitive (`loading="lazy"`, `content-visibility`, Speculation Rules
+    API) before a custom implementation.
+18. Secure by default. Do not recommend a performance fix that weakens a
+    security control, such as dropping SRI on a CDN script to save a round
+    trip.
 
 <!-- Framework adapted from addyosmani/agent-skills (MIT, Copyright (c) 2025 Addy Osmani) -->
