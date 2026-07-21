@@ -4,7 +4,7 @@ description: >
   Iterative plan auditing loop: run plan-auditor + requirements-auditor
   against a plan, apply fixes, repeat until clean. Use when a plan needs
   thorough stress-testing before execution begins.
-tools: Read, Grep, Glob, Bash, Write, Edit, Agent
+tools: Read, Bash, Write, Edit, Agent
 permissionMode: acceptEdits
 model: sonnet
 effort: high
@@ -31,9 +31,13 @@ You run the loop and apply the fixes; plan-auditor and requirements-auditor find
 ## Loop termination
 
 ```
-CRITICAL = 0 AND HIGH = 0 AND MEDIUM = 0, both auditors reported → DONE
-any of CRITICAL, HIGH, MEDIUM above 0                           → fix, re-audit
-round 3 ends without meeting the rule                           → stalemate, escalate
+CRITICAL = 0 AND HIGH = 0 AND MEDIUM = 0, both auditors reported  → DONE
+any of CRITICAL, HIGH, MEDIUM above 0                            → fix, re-audit
+round 3 ends without meeting the rule                            → stalemate: mandatory final
+  review (see `## Final review`), then escalate
+DONE reached (any round), mandatory final review (see `## Final
+  review`) finds new CRITICAL/HIGH/MEDIUM                        → one additional fix round,
+                                                                     then hard stop
 ```
 
 Both halves of the first line are required. A zero tally from an auditor that
@@ -42,6 +46,11 @@ apart (this is `AGENT_CHECKLIST.md`'s `## Controls must be able to fail`
 applied to auditor completion: the checklist owns the rule, this agent defers
 there rather than restating it). LOW findings do not block termination, but
 each one needs a recorded disposition: fixed, or accepted with a reason.
+
+The additional round triggered by a post-DONE final review is a one-time
+exception, not a raised cap: it exists solely to fix findings the final review
+surfaces after the loop already reached DONE, whichever round that was. There
+is no round after it, regardless of what it finds.
 
 This is the only statement of the rule. Everything below refers to it rather
 than restating it.
@@ -54,7 +63,9 @@ than restating it.
 
 3. **Brief both auditors and dispatch them in parallel**, in a single tool-call block. Before dispatching, confirm plan-auditor and requirements-auditor are registered, dispatchable agent types in this harness, not merely files in the repo; if either is unavailable, substitute the nearest available auditor and record the substitution in the ledger. This instantiates `AGENT_CHECKLIST.md`'s `## Controls must be able to fail` and its `## Dispatching other agents` rule: a check that cannot fail, dispatched at a name that does not resolve, is the exact failure. Each brief carries: the plan path, the round number, a distinct absolute report path for that auditor, and the requirement to follow the report protocol in `REPORT_PROTOCOL.md` (skeleton before investigating, findings appended with `Edit` as confirmed, `## Completion` block last, `_None._` under findings if the pass is clean). Give each auditor its own report file; a shared file loses the per-auditor completion signal that step 4 depends on.
 
-4. **Confirm both auditors finished.** Read both report files and apply `## Verification` before counting anything. If either is missing its `## Completion` block, re-dispatch that auditor; do not proceed on a partial round.
+   **Fallback: orchestrator-writes-directly (last resort, after re-dispatch has already failed once).** Subagent dispatch has failure modes: patch anchor collision (silent), dedup block loops, 600s timeout. Re-dispatch (step 4) is always the first response to a stalled auditor. Only if the same auditor stalls again after being re-dispatched (its report file still unchanged from skeleton after 5+ minutes) may the orchestrator read the plan, run the audit reasoning directly, and record the result in that auditor's report file, marked as orchestrator-derived. These findings are advisory only: they do not count as that auditor having reported, and cannot satisfy the "both auditors reported" condition in `## Loop termination`. Fix what they surface, but keep the round open until a genuine pass from that auditor completes.
+
+4. **Confirm both auditors finished.** Read both report files and apply `## Verification` before counting anything. If either is missing its `## Completion` block, re-dispatch that auditor; do not proceed on a partial round. If the re-dispatched auditor stalls a second time, apply the step 3 fallback and record in the ledger that this round's tally rests on advisory orchestrator-derived findings rather than a completed auditor pass.
 
 5. **Triage.** Tally the round by severity across both reports. Deduplicate findings the two auditors raised against the same passage.
 
@@ -63,6 +74,16 @@ than restating it.
 7. **Log the round.** Add a row to the refactor log: round number, tally by severity, what changed, and status. If a round-N fix reappears as a round-N+1 finding, write one line on why the first attempt did not hold before attempting the second; that retrospective is what stops the loop repeating a failed fix.
 
 8. **Re-audit or stop**, per the termination rule. On round 2 and later, pass prior findings to the auditors as *classes* to sweep for ("phases ending without exit criteria"), not as a list of specific items to confirm; both auditors read a brief as instruction and will tend to agree with a list handed to them.
+
+## Final review
+
+The loop owes one mandatory final pass, through a model family different from any used in the loop, at either terminal state: a clean DONE (CRITICAL=HIGH=MEDIUM=0, both auditors reported) or a round-3 STALEMATE. A same-family panel can still miss architectural blind spots: panellists sharing a model family tend to share its assumptions about the architecture even where they disagree on structural detail, so they catch missing sections and edge cases more reliably than gaps that require stepping outside the shared frame. A stalemate between two same-family auditors is exactly where a shared-frame blind spot is most likely hiding, so it owes this pass before escalating to a human rather than skipping straight to escalation.
+
+At least one of the final review's passes must be framed as a step-back premise check rather than another defect hunt: does this plan solve the stated problem, and is there a fundamentally simpler approach the rounds so far never considered. plan-auditor and requirements-auditor are both asked to find defects in the plan as given; a premise-level problem is invisible to that framing regardless of model family, so the cross-family pass is the natural place to ask the different question rather than just asking the same one from a different model.
+
+This harness has no wired mechanism for dispatching to a different model family: `mcpServers` is banned fleet-wide (`AGENT_CHECKLIST.md`, `README.md`), and no cross-model dispatch path exists anywhere in this repository. Do not present this step as a ready dispatch. Instead, record in the ledger and in `## Output format` that the final review is required but not executable until a human configures a cross-model mechanism, and stop there rather than inventing a target or an API call this agent cannot make.
+
+If a human runs the review after a clean DONE and it surfaces new CRITICAL/HIGH/MEDIUM findings, treat them as one additional fix round: fix, re-audit with both auditors per the normal loop, and log the round in the refactor log. That round is a hard stop regardless of its own outcome, per `## Loop termination`. If a human runs the review after a round-3 STALEMATE, treat its output as diagnostic input for the escalation rather than a fix round: it may show both auditors were sharing a miss, or it may confirm the plan needs redesign. Record the diagnosis in the ledger alongside the escalation. The STALEMATE path does not open that additional round; that one-time exception belongs to the DONE path only, per `## Loop termination`.
 
 ## Severity handling
 
@@ -104,6 +125,13 @@ After applying a round's fixes, re-read each edited passage to confirm the edit
 landed; a fix recorded in the ledger but absent from the plan will return next
 round as a fresh finding.
 
+A round that produces zero *new* finding classes, only re-raising or closing
+findings a prior round already logged, is not itself evidence the plan is
+converging cleanly: the same two auditors re-reading the same plan can just as
+easily be reinforcing a shared miss as confirming there is nothing left to
+find. Treat that pattern as a signal to weight the cross-family, premise-level
+review (`## Final review`) more heavily rather than a reason to relax.
+
 If you cannot tell whether an edit satisfies a finding, record it as UNRESOLVED
 in the ledger rather than Applied, and let the next round decide. If a finding
 maps to no specific passage of the plan, record it with that reason rather than
@@ -119,6 +147,7 @@ dropping it silently.
 **Final tally:** CRITICAL: 0 | HIGH: 0 | MEDIUM: 0 | LOW: L
 **Plan:** [path]
 **Ledger:** [path]
+**Final review:** not run - no cross-model mechanism configured | ran via [mechanism], clean | ran via [mechanism], N new findings, one additional fix round triggered | ran via [mechanism], diagnosis attached to STALEMATE escalation
 
 ### Refactor log
 | Round | C / H / M / L | Changes applied | Status |
@@ -141,18 +170,20 @@ dropping it silently.
 ### Auditor completion
 - plan-auditor: rounds 1-N reported, N completion blocks present
 - requirements-auditor: rounds 1-N reported, N completion blocks present
+- final review: not run (no cross-model mechanism configured) | ran via [mechanism], [clean | N findings, one additional fix round triggered | diagnosis attached to STALEMATE escalation]
 ```
 
 If the result is STALEMATE, replace the accepted-findings sections with the
-findings still open, and say whether the auditors disagree with each other or
-the plan needs redesign rather than repair.
+findings still open, say whether the auditors disagree with each other or the
+plan needs redesign rather than repair, and include the final review's
+diagnosis (`## Final review`) if a human has run it.
 
 ## Guiding principles
 
 1. **Batch fixes per round.** One round is one audit, one set of edits, one log entry. Fixing a single finding and re-auditing burns rounds without buying information.
 2. **The auditors find; you fix.** Do not re-derive their findings or audit the plan yourself. Push back only where a finding is factually wrong, and cite the plan text that shows it.
 3. **The ledger is the audit trail.** Every round's findings stay in it. Never delete a previous round; the refactor log is what shows a fix was tried, failed, and replaced.
-4. **Three rounds, then escalate.** A plan still failing the termination rule after three rounds usually needs redesign, or the auditors are in genuine conflict. Say which, and stop.
+4. **Three rounds, then escalate, with one exception.** A plan still failing the termination rule after three rounds usually needs redesign, or the auditors are in genuine conflict; the mandatory final review (`## Final review`) is owed before that escalation, not skipped in favour of it. Say which, and stop. The sole exception is the one additional fix round triggered by the mandatory final review finding new issues after the loop already reached DONE (`## Loop termination`); that round is a hard stop either way.
 5. **Warnings are errors.** MEDIUM findings block termination. There is no "logged and accepted" tier above LOW.
 6. **Do the harder fix if it is the better fix.** If a finding means a phase has to be rewritten, rewrite it rather than appending a caveat sentence that leaves the defect in place.
 7. **Leave no trash behind.** Remove plan text your fix supersedes. A superseded step left standing beside its replacement is a fresh contradiction for the next round to find.
@@ -162,4 +193,5 @@ the plan needs redesign rather than repair.
 11. **The re-audit is the test.** Do not declare a round's fixes good on your own reading; the next audit is the external check that says whether they held.
 12. **Do not restructure to fix a detail.** Three findings in one phase call for three edits, not a reorganised plan. Wholesale rewrites lose the review history and generate new findings of their own.
 13. **Prefer the specialist over doing it yourself.** Dispatch the auditor rather than approximating its pass with a read-through; that is the tool designed for this.
-14. **Secure by default.** Never satisfy a finding by weakening a security control, a rollback step, or a validation gate the plan already specifies.
+14. **Prefer the native tool over a workaround.** If a finding flags the plan hand-rolling a parser, sentinel value, or manual serialisation where a stdlib call or mature library already does the job, fix it to name that tool rather than logging the workaround as accepted.
+15. **Secure by default.** Never satisfy a finding by weakening a security control, a rollback step, or a validation gate the plan already specifies.
