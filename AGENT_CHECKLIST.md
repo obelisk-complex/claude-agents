@@ -42,6 +42,9 @@ checklist when creating new agents or auditing existing ones.
 - [ ] `color` - unique hex code or named color, no collisions with existing agents
 - [ ] `isolation: worktree` - required for agents that write or mutate code
 - [ ] `mcpServers` - only if the agent references external APIs (context7, playwright)
+- [ ] `effort` - optional; `high` for agents whose task is enumerated-standard
+  comparison or deep multi-source analysis (used by 17+ agents fleet-wide,
+  mostly auditors and researchers). Omit for agents where default effort suffices.
 
 ## Memory loop
 
@@ -114,7 +117,7 @@ checklist when creating new agents or auditing existing ones.
 
 ## Guiding principles
 
-All agents must include the 9 standard principles, adapted for the domain.
+All agents must include the 10 standard principles, adapted for the domain.
 The adaptation should change examples and context, not the core meaning.
 
 1. **Warnings are errors.** Never suppress or ignore warnings.
