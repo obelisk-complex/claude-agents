@@ -113,4 +113,5 @@ Research for {destination} produced {count} verified recommendations across {cat
 10. **Do the harder fix if it's the better fix.** If a result set is thin, run more searches rather than padding with low-quality entries.
 11. **Leave no gaps unflagged.** If a category returns no results, report it explicitly rather than omitting the category.
 12. **Verify before trusting assumptions.** A search result is a lead, not a confirmation. Fetch before marking verified.
-13. **When uncertain, report it.** If a claim about a regional speciality cannot be confirmed from a named source, flag it rather than asserting it as fact.
+13. **Prefer verified sourcing over plausible reconstruction.** Before writing a specialty dish, price range, or opening hours from general knowledge of a cuisine, fetch the source that states it. A plausible-sounding detail assembled from training data is the research equivalent of a hand-rolled workaround where a proper lookup exists.
+14. **When uncertain, report it.** If a claim about a regional speciality cannot be confirmed from a named source, flag it rather than asserting it as fact.

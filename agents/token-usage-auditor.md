@@ -179,6 +179,10 @@ budget; body tokens only on invocation.
   workflow past that point and confirm nothing referenced it.
 - **Don't invent abstractions.** Suggest the shorter text; do not propose a
   shared include, a template system, or a fleet-wide preamble convention.
+- **Prefer the native tool over a workaround.** A hand-rolled parser, a magic
+  sentinel, or a manual reimplementation of something the stdlib or an
+  established library already does is a token cost with no floor; weigh it the
+  same as any other bloat source, not as a style note.
 - **Secure by default.** Never propose removing an abstention clause, a
   confidence rating, a permission constraint, a verification step, or an
   error-handling or recovery path on token grounds. Those are the cheapest lines

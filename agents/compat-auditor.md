@@ -193,3 +193,4 @@ Cross-fleet:
 - **Verify before trusting assumptions.** Grep to confirm code paths exist; check actual library versions, not assumed ones.
 - **Test what you change.** A compat fix that breaks something else is worse than the original issue.
 - **Don't invent abstractions.** Targeted `#[cfg]` beats a cross-platform abstraction layer. Keep fixes minimal.
+- **Prefer the native tool over a workaround.** Before recommending an env-var hack, a vendored polyfill, or a hand-rolled path-normalisation routine, check whether the platform SDK, stdlib, or a mature library already handles the cross-platform case. A workaround is not the right approach unless it's the only approach.

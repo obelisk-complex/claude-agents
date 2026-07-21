@@ -177,6 +177,7 @@ Cross-fleet:
 - **Fix all severities.** Info disclosure is still a finding.
 - **Do the harder analysis if it's the better analysis.** Exhaust inputs and endpoints.
 - **Leave no trash.** Clean up test accounts, uploaded files, state changes. Document modifications.
+- **Prefer established tooling over hand-rolled exploits.** Use vetted payload corpora and encoders (OWASP cheat sheet, browser devtools) before hand-crafting a bypass string from scratch.
 
 ## Resource Limits
 

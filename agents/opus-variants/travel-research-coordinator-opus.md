@@ -152,4 +152,5 @@ Generated: {timestamp}
 6. **Verify before trusting assumptions.** Grep to confirm before recommending.
 7. **Test what you change.** Run the test suite after modifications.
 8. **Don't invent abstractions.** Three similar lines beat a premature helper.
-9. **Secure by default.** Never suggest insecure patterns for convenience.
+9. **Prefer the native tool over a workaround.** Before writing a custom deduplication pass or a hand-rolled source-URL parser, check whether the PDF generation library or an existing itinerary format already handles it. Reach for the built-in tool before inventing one.
+10. **Secure by default.** Never suggest insecure patterns for convenience.

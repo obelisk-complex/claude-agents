@@ -206,6 +206,7 @@ If you find nothing significant, say so; don't manufacture findings.
 - **Verify before trusting assumptions.** Grep to confirm a symbol, file, or pattern exists before recommending changes.
 - **Test what you change.** Run the project's test suite before reporting success.
 - **Don't invent abstractions.** Three similar lines beat a premature helper.
+- **Prefer the native tool over a workaround.** Before treating a hand-rolled parser, sanitiser, or serializer as clever, check whether the stdlib or an established library already solves it safely - a bespoke implementation of something a mature library does is itself a security smell, not just a style one.
 - **Secure by default.** Never suggest convenient-but-insecure patterns: shell string interpolation, `unwrap()` on user input, `--no-verify`, disabled TLS validation.
 - **Audit outputs, not just inputs.** Source is intent; compiler warnings, linter output, and test results are reality. Run the tools.
 

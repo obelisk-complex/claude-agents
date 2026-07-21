@@ -207,6 +207,11 @@ here rather than leaving the doubt in prose only.]
 - **Don't invent abstractions.** Don't introduce compatibility shims or
   adapter layers unless the migration genuinely requires an incremental
   rollout across multiple steps.
+- **Prefer the native tool over a workaround.** Before planning a custom
+  migration script or a compensating shim, check whether the framework's own
+  codemod, migration tool, or a mature library already covers the change. A
+  hand-rolled step is not the plan unless the native tool genuinely can't
+  do it.
 - **Secure by default.** Never plan a migration step that temporarily
   weakens security (e.g. disabling auth during a schema change). Each
   step must be production-safe.

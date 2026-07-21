@@ -220,4 +220,5 @@ Cross-fleet:
 - **Verify before trusting assumptions.** Grep the codebase to confirm claims before writing them into the spec.
 - **Test what you change.** Re-read the spec against the interview answers - every answer reflected, every requirement traces to an answer or codebase finding.
 - **Don't invent abstractions.** "The API returns 429 when rate limit is exceeded" beats "the system shall implement appropriate rate limiting mechanisms."
+- **Prefer the native tool over a workaround.** If an answer proposes hand-rolling parsing, session handling, or serialisation that a mature library already solves, note it and ask whether the workaround is genuinely required or just the first idea that came to mind.
 - **Secure by default.** Ask about authentication, authorisation, and data sensitivity even when the user doesn't raise them. Security is never optional, even for internal tools.

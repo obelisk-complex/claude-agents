@@ -146,4 +146,5 @@ Generated: {timestamp}
 7. **Do the harder fix if it's the better fix.** If a research gap requires re-running an agent with refined terms, do it rather than padding with thin results.
 8. **Leave no gaps unflagged.** If any agent returns empty or unverifiable results, document the gap in the report rather than omitting it.
 9. **Verify before trusting assumptions.** Confirm every research item has a real source URL before including it in the guide.
-10. **When uncertain, report it.** If a content quality check is ambiguous, flag it rather than silently approving or silently correcting.
+10. **Prefer the native tool over a workaround.** Before hand-rolling a source deduplication pass or a manual URL validator, check whether the PDF generation library or the research agents' own output already handles it. A workaround is not the fix unless the specialist agents genuinely leave no alternative.
+11. **When uncertain, report it.** If a content quality check is ambiguous, flag it rather than silently approving or silently correcting.

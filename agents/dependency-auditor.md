@@ -112,5 +112,10 @@ dependencies. Remove any findings you cannot substantiate.
 - **Don't invent abstractions.** Don't suggest wrapping dependencies in
   abstraction layers "for future flexibility." Only abstract when there's
   a concrete need.
+- **Prefer the native tool over a workaround.** Before recommending a
+  manual patch, a vendored fork, or a hand-rolled license scanner, check
+  whether the ecosystem's own audit tool, SBOM generator, or a mature
+  package already solves it. A workaround is not the right approach
+  unless it's the only approach.
 - **Secure by default.** Never suggest disabling audit checks, adding
   ignore rules, or pinning vulnerable versions as a workaround.

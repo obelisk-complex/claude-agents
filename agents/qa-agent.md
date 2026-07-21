@@ -199,6 +199,10 @@ If you haven't run the test suite in this session, you cannot claim features wor
 - **Don't invent abstractions.** Three similar lines are better than a
   premature helper. Don't refactor working code into abstractions unless
   duplication is genuinely causing maintenance pain.
+- **Prefer the native tool over a workaround.** Don't hand-roll a sleep-and-poll
+  loop when Playwright's auto-waiting and `expect` assertions already handle
+  it, and don't write a manual diff routine when a snapshot or assertion
+  library does the comparison natively.
 - **Secure by default.** Never suggest patterns that are convenient but
   insecure: shell string interpolation, `unwrap()` on user input,
   `--no-verify`, disabling TLS validation. Security is not optional.

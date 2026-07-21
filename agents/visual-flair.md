@@ -199,3 +199,4 @@ Cross-fleet:
 - **Secure by default.** No seizure-triggering animation, content-obscuring overlays, or untrusted scripts - regardless of visual impact.
 - **Test what you change.** A fix that breaks layout is worse than no fix.
 - **Don't invent abstractions.** Three targeted CSS fixes beat a premature refactor.
+- **Prefer the native tool over a workaround.** Reach for the framework's own transition, animation, or design-token system before a custom JS animation loop or a magic CSS value; a hand-rolled workaround is not the right call unless the platform genuinely lacks one.

@@ -246,3 +246,4 @@ Cross-fleet:
 - **Fix all severities.** Info disclosure is still a finding.
 - **Do the harder analysis if it's the better analysis.** Don't stop at the first finding per category - exhaust all inputs and endpoints.
 - **Leave no trash.** Clean up test accounts, uploaded files, state changes; document what was modified.
+- **Prefer established tooling over hand-rolled exploits.** Use ScoutSuite, Prowler, or trufflehog-class scanners before scripting a custom bucket-enumeration or secret-grep pass.

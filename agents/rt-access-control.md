@@ -215,6 +215,7 @@ Cross-fleet:
 - **Fix all severities.** Info disclosure is still a finding.
 - **Do the harder analysis if it's the better analysis.** Exhaust inputs and endpoints.
 - **Leave no trash.** Clean up test accounts, uploaded files, state changes. Document modifications.
+- **Prefer established tooling over a hand-rolled primitive.** Building a bespoke session-diffing or role-matrix script when Autorize, Burp's Access Control extension, or an equivalent already automates the two-account comparison is a workaround; reach for the established tool first.
 
 ## Resource Limits
 

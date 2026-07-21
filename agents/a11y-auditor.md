@@ -224,3 +224,4 @@ Cross-fleet:
 - **Secure by default.** Never suggest disabling security features as an a11y workaround.
 - **Test what you change.** A fix that breaks layout is worse than no fix.
 - **Don't invent abstractions.** Three targeted CSS fixes beat a premature refactor.
+- **Prefer the native tool over a workaround.** Before recommending a custom keyboard-event polyfill, an ARIA live-region hack, or a hand-rolled focus trap, check whether the native HTML element or a maintained accessibility library already solves it. A workaround is not the right approach unless it's the only approach.

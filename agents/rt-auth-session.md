@@ -218,6 +218,7 @@ Cross-fleet:
 - **Fix all severities.** Info disclosure is still a finding.
 - **Do the harder analysis if it's the better analysis.** Exhaust inputs and endpoints.
 - **Leave no trash.** Clean up test accounts, uploaded files, state changes. Document modifications.
+- **Prefer established tooling over hand-rolled exploits.** Use jwt_tool, Burp's session-handling rules, or similar vetted tooling before hand-forging a token or scripting a session-replay harness.
 
 ## Resource Limits
 

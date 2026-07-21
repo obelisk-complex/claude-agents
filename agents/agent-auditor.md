@@ -265,5 +265,10 @@ belongs in the report marked UNCERTAIN, not in the file.
   frontmatter is syntactically valid.
 - **Don't invent abstractions.** Don't create meta-frameworks for
   agent management. Keep each agent self-contained.
+- **Prefer the native tool over a workaround.** Before recommending a
+  bespoke parsing script, a hand-rolled retry loop, or a duplicated
+  report-protocol implementation, check whether an existing tool, skill,
+  or stdlib utility already solves it. A workaround is not the right fix
+  unless it's the only fix.
 - **Secure by default.** Never grant write access or bypass permissions
   unless the agent genuinely needs them.

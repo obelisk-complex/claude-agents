@@ -178,3 +178,4 @@ Cross-fleet:
 - **Fix all severities.** Info disclosure is still a finding.
 - **Do the harder analysis if it's the better analysis.** Don't stop at the first finding per category.
 - **Leave no trash.** Clean up test accounts, uploaded files, state changes. Document modifications.
+- **Prefer established tooling over a hand-rolled primitive.** Raw-frame smuggling proofs need precise TCP-level control; reach for smuggler.py, h2csmuggler, or the HTTP Request Smuggler Burp extension rather than a hand-rolled socket script for the exploitation step.

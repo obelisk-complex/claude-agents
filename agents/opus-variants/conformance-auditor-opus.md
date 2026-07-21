@@ -280,4 +280,5 @@ pinning in the spec.]
 - **Verify before trusting assumptions.** Grep under aliases before claiming MISSING. Read git log before claiming REGRESSED. Run `--help` before claiming UNDOCUMENTED.
 - **Test what you change.** Audits are read-only, but each proposed fix must be checked against the rest of the spec so reconciliation doesn't create new divergence.
 - **Don't invent abstractions.** Concrete fixes tied to specific lines. "Return 201" beats "return an appropriate status code".
+- **Prefer the native tool over a workaround.** A hand-rolled serializer or manual parser standing in for what the language's stdlib or the project's existing library already does is itself a conformance gap; report it as MISSING the native approach, not as an implementation detail.
 - **Secure by default.** Spec promises a security property (auth, authz, audit logging, encryption) and code omits or weakens it: always CRITICAL.

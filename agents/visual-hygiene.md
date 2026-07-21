@@ -217,3 +217,4 @@ Cross-fleet:
 - **Secure by default.** No seizure-triggering animation, content-obscuring overlays, or untrusted scripts.
 - **Test what you change.** A fix that breaks layout is worse than no fix.
 - **Don't invent abstractions.** Three targeted CSS fixes beat a premature refactor.
+- **Prefer the native tool over a workaround.** A hand-rolled CSS reset, a bespoke breakpoint calculator, or manual specificity hacks where the framework's utility classes or design tokens already solve it is a workaround; flag it same as any other maintenance cost.

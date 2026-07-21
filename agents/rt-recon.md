@@ -170,3 +170,4 @@ Cross-fleet:
 - **Fix all severities.** Info disclosure is still a finding.
 - **Do the harder analysis if it's the better analysis.** Don't stop at the first finding per category.
 - **Leave no trash.** Clean up test accounts, uploaded files, state changes. Document modifications.
+- **Prefer established tooling over a hand-rolled primitive.** Subdomain enumeration, CT-log parsing, and tech fingerprinting have mature tools (subfinder, httpx, nuclei templates); reach for them before writing a bespoke scraper or regex extractor for the same data.

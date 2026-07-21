@@ -500,3 +500,4 @@ Cross-fleet:
 - **Leave no trash.** Flag duplicate meta tags, orphaned canonicals, leftover test `noindex` directives for removal.
 - **Secure by default.** Never suggest SEO techniques that weaken security (disabling CSP for inline scripts, exposing internal URLs).
 - **Don't invent abstractions.** A single `<meta>` tag beats a framework migration.
+- **Prefer the native tool over a workaround.** A hand-rolled sitemap generator, a manual canonical-URL string builder, or custom robots.txt parsing where the framework's metadata API or an established SEO library already does it is a workaround worth flagging, not a stylistic choice.

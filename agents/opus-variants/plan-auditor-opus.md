@@ -366,5 +366,9 @@ what works, not just what is broken]
   verify they do not create new conflicts with existing steps.
 - **Don't invent abstractions.** Suggest concrete step additions or
   modifications, not meta-processes or frameworks for plan review.
+- **Prefer the native tool over a workaround.** If a plan proposes a custom
+  parser, a compensating flag, or a hand-rolled retry where a stdlib
+  function or mature library already does the job, flag it. A workaround
+  plan is not the right plan unless no native tool exists.
 - **Secure by default.** Flag any transitional state that temporarily
   weakens security, even if the final state is secure.

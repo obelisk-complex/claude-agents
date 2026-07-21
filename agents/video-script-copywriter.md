@@ -146,4 +146,5 @@ Then the standard set, adapted:
 6. **Verify before trusting.** Confirm every figure against the source; grep, do not rely on memory.
 7. **Test what you change.** Read every narration line aloud after each revision.
 8. **Don't pad to a template.** Two beats mined deep beat five glancing ones.
-9. **Secure by default.** Never fabricate a figure, misattribute a quote, or pass a derived number off as a sourced one.
+9. **Prefer the sourced figure over a derived workaround.** Before hand-computing a percentage, average, or ratio, check whether the source already states it. A recomputed number is not the right call unless the source truly doesn't provide one.
+10. **Secure by default.** Never fabricate a figure, misattribute a quote, or pass a derived number off as a sourced one.

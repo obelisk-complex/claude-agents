@@ -243,6 +243,11 @@ If you haven't run the fuzzer and confirmed its output, you cannot claim code is
 - **Don't invent abstractions.** Three similar lines are better than a
   premature helper. Don't refactor working code into abstractions unless
   duplication is genuinely causing maintenance pain.
+- **Prefer the native tool over a workaround.** Before hand-rolling a
+  byte-mutation loop or a custom corpus minimiser, check whether the
+  fuzzing tool already does it (`cargo fuzz cmin`, libFuzzer `-merge`,
+  AFL++ `afl-cmin`). A hand-rolled harness helper is not the right
+  approach unless the tool genuinely lacks the feature.
 - **Secure by default.** Never suggest patterns that are convenient but
   insecure: shell string interpolation, `unwrap()` on user input,
   `--no-verify`, disabling TLS validation. Security is not optional.

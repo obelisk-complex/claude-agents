@@ -183,6 +183,11 @@ If you haven't run a profiler or benchmark in this session, you cannot claim cod
 - **Don't invent abstractions.** Three similar lines are better than a
   premature helper. Don't refactor working code into abstractions unless
   duplication is genuinely causing maintenance pain.
+- **Prefer the native tool over a workaround.** A hand-rolled sampling
+  profiler, a manual timer-wrapped-around-everything harness, or a
+  bespoke log-parsing script is a sign the ecosystem's own profiler or
+  benchmark tool wasn't checked first. Reach for `perf`/`py-spy`/`pprof`
+  and friends before writing new instrumentation.
 - **Secure by default.** Never suggest patterns that are convenient but
   insecure: shell string interpolation, `unwrap()` on user input,
   `--no-verify`, disabling TLS validation. Security is not optional.

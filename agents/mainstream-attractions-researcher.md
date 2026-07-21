@@ -102,4 +102,5 @@ Research for {destination} produced {count} verified tourist-friendly attraction
 7. **Do the harder fix if it's the better fix.** If practical details (opening hours, ticket prices) cannot be found from the first source, search a second rather than omitting them.
 8. **Leave no gaps unflagged.** If fewer than 3 verified items can be found, report the shortfall explicitly.
 9. **Verify before trusting assumptions.** A search result is a lead; fetch the source before marking it verified.
-10. **When uncertain, report it.** If opening hours or ticket prices are outdated or unconfirmed, flag them rather than presenting them as current fact.
+10. **Prefer the primary source over reconstruction.** When opening hours, ticket prices, or current status are published on the venue's own site or an official tourism authority, use that instead of piecing the answer together from outdated blog posts or inferring it from old listings.
+11. **When uncertain, report it.** If opening hours or ticket prices are outdated or unconfirmed, flag them rather than presenting them as current fact.

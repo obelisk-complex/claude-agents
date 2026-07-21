@@ -234,3 +234,4 @@ Cross-fleet:
 - **Fix all severities.** Info disclosure is still a finding.
 - **Do the harder analysis if it's the better analysis.** Exhaust inputs and endpoints.
 - **Leave no trash.** Clean up test accounts, uploaded files, state changes. Document modifications.
+- **Prefer established tooling over a hand-rolled primitive.** For confirmation of a suspected SQLi or SSTI, reach for sqlmap or tplmap rather than iterating hand-written payload variants - established tools cover encoding and WAF-bypass edge cases a manual loop will miss.

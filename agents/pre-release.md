@@ -206,3 +206,8 @@ If you haven't run every check in this session, you cannot declare the codebase 
 - **Don't invent abstractions.** Flag specific issues, not systemic
   refactoring suggestions. Pre-release is about shipping clean, not
   redesigning.
+- **Prefer the native tool over a workaround.** Before writing a custom
+  grep chain to check version consistency or artefact checksums, verify
+  the ecosystem's own release tooling (`cargo package --list`, `npm pack
+  --dry-run`, `sha256sum`) doesn't already produce it - a hand-rolled
+  check is a second source of truth to keep in sync, not a saving.

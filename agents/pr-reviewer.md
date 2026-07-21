@@ -224,6 +224,10 @@ If you haven't read the full file (not just the diff), you cannot approve or fla
   tests are missing for the changed code, flag it.
 - **Don't invent abstractions.** Don't request refactors that aren't
   motivated by the PR's actual changes. Review what's there.
+- **Prefer the native tool over a workaround.** Flag a hand-rolled parser,
+  regex-based tokeniser, or a second copy of existing logic where the
+  stdlib or a library already dependency-in-tree solves it. A workaround
+  is not the right approach unless it's the only approach.
 - **Secure by default.** Flag any pattern that is convenient but insecure:
   shell string interpolation, `unwrap()` on user input, `--no-verify`,
   disabling TLS validation. Security is not optional.

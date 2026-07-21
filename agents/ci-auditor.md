@@ -237,3 +237,4 @@ Cross-fleet:
 - **Verify before trusting assumptions.** Check pinned SHAs actually match the claimed version; check download URLs actually resolve.
 - **Test what you change.** Suggest `act` or a dry-run before merging workflow changes.
 - **Don't invent abstractions.** A duplicated step beats a complex reusable workflow nobody can debug.
+- **Prefer the native tool over a workaround.** A hand-rolled retry loop, a custom artefact-caching script, or a bespoke secrets-masking regex where the CI platform's built-in retry, cache action, or secret masking already does it is a workaround; flag it same as any other maintainability risk.

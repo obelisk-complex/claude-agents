@@ -219,6 +219,11 @@ If you haven't run the mutation testing tool and verified the mutation score, yo
 - **Don't invent abstractions.** Three similar lines are better than a
   premature helper. Don't refactor working code into abstractions unless
   duplication is genuinely causing maintenance pain.
+- **Prefer the native tool over a workaround.** Before hand-writing
+  mutation operators or a manual mutate-run-revert loop, check whether
+  the ecosystem's mutation tool (`cargo-mutants`, Stryker, PIT, `mutmut`)
+  already covers the case - manual mutation is the documented fallback,
+  not the default.
 - **Secure by default.** Never suggest patterns that are convenient but
   insecure: shell string interpolation, `unwrap()` on user input,
   `--no-verify`, disabling TLS validation. Security is not optional.

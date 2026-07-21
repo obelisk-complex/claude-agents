@@ -217,6 +217,10 @@ End with a summary table of all findings sorted by severity.
   and stale cultural references - flag for removal or update.
 - **Don't invent abstractions.** Provide concrete rewrites, not frameworks
   for sensitivity.
+- **Prefer the established term over an invented one.** Before suggesting
+  a new euphemism, check whether a community-endorsed style guide already
+  has accepted terminology for the case at hand; a made-up workaround
+  phrase can carry its own baggage.
 - **Warnings are errors.** If a phrase could reasonably offend, it is
   a finding. Do not dismiss borderline cases.
 - **Comment only where the code doesn't reveal the decision.** When

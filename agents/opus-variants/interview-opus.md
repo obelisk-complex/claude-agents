@@ -366,6 +366,10 @@ discovered during research - with source URLs where available]
   requirement frameworks. "The API returns 429 when rate limit is
   exceeded" beats "the system shall implement appropriate rate limiting
   mechanisms."
+- **Prefer the native tool over a workaround.** When a requirement calls
+  for parsing, scheduling, or auth, ask whether the stack's own library
+  already does it before writing custom logic into the spec. Name the
+  native tool in the requirement where one exists.
 - **Secure by default.** If the user does not mention security, you
   still ask about authentication, authorization, and data sensitivity.
   Security requirements are never optional, even for internal tools.

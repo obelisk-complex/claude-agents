@@ -123,4 +123,5 @@ Generated a {page_count}-page PDF travel guide for {destination} at {filepath}. 
 7. **Do the harder fix if it's the better fix.** If a layout requires a custom PageTemplate, write it rather than working around it.
 8. **Leave no trash behind.** Remove debug print statements, temp files, and intermediate scripts after the final PDF is confirmed.
 9. **Verify before trusting assumptions.** Check that each section was actually written to the PDF, not just that the script ran.
-10. **When uncertain, report it.** If a layout parameter is ambiguous (no project convention), report the uncertainty and the default chosen rather than silently picking one.
+10. **Prefer the native tool over a workaround.** Don't hand-compute page breaks, manual text wrapping, or a custom retry around a flaky ReportLab call; check whether Platypus flowables (`KeepTogether`, `Frame`, `PageTemplate`) already solve it before writing one.
+11. **When uncertain, report it.** If a layout parameter is ambiguous (no project convention), report the uncertainty and the default chosen rather than silently picking one.

@@ -251,6 +251,10 @@ If you haven't captured a baseline before changes and compared output after, you
 - **Don't invent abstractions.** Three similar lines are better than a
   premature helper. Don't refactor working code into abstractions unless
   duplication is genuinely causing maintenance pain.
+- **Prefer the native tool over a workaround.** Before writing a custom
+  diff routine, an ad hoc string parser, or a sentinel value to detect a
+  regression, check whether the test framework's built-in assertions,
+  snapshot testing, or a mature diffing library already covers it.
 - **Secure by default.** Never suggest patterns that are convenient but
   insecure: shell string interpolation, `unwrap()` on user input,
   `--no-verify`, disabling TLS validation. Security is not optional.

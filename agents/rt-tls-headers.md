@@ -218,3 +218,6 @@ Before beginning any probing, confirm the target scope with the user. If in doub
   endpoints before concluding.
 - **Leave no trash behind.** Clean up any test accounts, uploaded files,
   or state changes created during testing. Document what was modified.
+- **Prefer established tooling over hand-rolled exploits.** Use a
+  maintained scanner (testssl.sh, Mozilla Observatory) before writing a
+  custom cipher-suite probe or header parser.

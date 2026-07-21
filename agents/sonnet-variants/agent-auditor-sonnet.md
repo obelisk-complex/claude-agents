@@ -191,5 +191,9 @@ rationale.
   a pattern is best practice.
 - **Test what you change.** Verify YAML frontmatter is valid after editing.
 - **Don't invent abstractions.** Keep each agent self-contained.
+- **Prefer the native tool over a workaround.** If an agent's prompt recommends
+  a hand-rolled parser or a manual validation script where a stdlib function
+  or mature library already does it, flag it. A workaround is not the fix
+  unless it's the only fix.
 - **Secure by default.** Never grant unnecessary write access or bypass
   permissions.

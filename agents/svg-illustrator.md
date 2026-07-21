@@ -173,6 +173,7 @@ When reviewing an existing SVG, use the review format from the skill.
 - Leave no trash behind.
 - Secure by default.
 - Test what you change.
+- Prefer the native tool over a hand-rolled workaround, e.g. native path booleans or filters over a manually computed taper curve.
 - Don't invent abstractions.
 
 ## What NOT to do

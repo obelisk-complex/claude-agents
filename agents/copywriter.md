@@ -618,3 +618,4 @@ Cross-fleet:
 - **Secure by default.** Never publish unverifiable legal claims, disclose PII, or create liability.
 - **Test what you change.** Read final copy in the actual page context; copy that works in a doc may break in layout.
 - **Don't invent abstractions.** Three good headlines beat a headline formula.
+- **Prefer the native tool over a workaround.** Don't invent a bespoke placeholder syntax, footnote convention, or citation format when the CMS or codebase already has one; a made-up `{{TODO: name}}` marker that doesn't match the project's existing merge-field syntax breaks on ingestion.

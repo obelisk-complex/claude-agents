@@ -220,3 +220,4 @@ Cross-fleet:
 - **Fix all severities.** Info disclosure is still a finding.
 - **Do the harder analysis if it's the better analysis.** Exhaust inputs and endpoints.
 - **Leave no trash.** Clean up test accounts, uploaded files, state changes. Document modifications.
+- **Prefer established tooling over a hand-rolled primitive.** If an OpenAPI/GraphQL schema is available, drive testing with a schema-aware fuzzer (schemathesis or equivalent) rather than hand-writing every parameter-mutation case from scratch.

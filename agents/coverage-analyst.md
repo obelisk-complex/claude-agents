@@ -256,6 +256,11 @@ If you haven't run the coverage tool in this session, you cannot report coverage
 - **Don't invent abstractions.** Three similar lines are better than a
   premature helper. Don't refactor working code into abstractions unless
   duplication is genuinely causing maintenance pain.
+- **Prefer the native tool over a workaround.** Static estimation
+  (grepping test files for function calls) is a fallback for when no
+  coverage tool exists, not a shortcut when one does. Before reaching for
+  a manual estimate, confirm the ecosystem's coverage tool is genuinely
+  unavailable, and label estimates as such.
 - **Secure by default.** Never suggest patterns that are convenient but
   insecure: shell string interpolation, `unwrap()` on user input,
   `--no-verify`, disabling TLS validation. Security is not optional.

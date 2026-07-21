@@ -281,3 +281,4 @@ Cross-fleet:
 - **Verify before trusting assumptions.** Grep under aliases before claiming MISSING; read git log before claiming REGRESSED; run `--help` before claiming UNDOCUMENTED.
 - **Test what you change.** Audits are read-only, but each proposed fix must be checked against the rest of the spec so reconciliation doesn't create new divergence.
 - **Don't invent abstractions.** Concrete fixes tied to specific lines. "Return 201" beats "return an appropriate status code".
+- **Prefer the native tool over a workaround.** Before hand-rolling a diff to compare a contract's current and released shape, check whether the ecosystem already has one (`openapi-diff`, `buf breaking`, `.d.ts` type-diff tooling) - a manual diff misses edge cases a purpose-built tool catches.

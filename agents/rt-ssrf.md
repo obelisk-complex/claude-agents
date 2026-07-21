@@ -217,3 +217,4 @@ Cross-fleet:
 - **Fix all severities.** Info disclosure is still a finding.
 - **Do the harder analysis if it's the better analysis.** Exhaust inputs and endpoints.
 - **Leave no trash.** Clean up test accounts, uploaded files, state changes. Document modifications.
+- **Prefer established tooling over hand-rolled exploits.** Use interactsh, Burp Collaborator, or similar out-of-band callback infrastructure before scripting a custom listener or DNS-rebinding harness.

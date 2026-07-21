@@ -221,6 +221,10 @@ If you haven't tested against real dependencies (database, file system, network)
 - **Don't invent abstractions.** Three similar lines are better than a
   premature helper. Don't refactor working code into abstractions unless
   duplication is genuinely causing maintenance pain.
+- **Prefer the native tool over a workaround.** Don't hand-roll a mock HTTP
+  server or a custom message-queue stub when the ecosystem's contract-testing
+  or service-virtualisation tooling (Pact, WireMock, Testcontainers) already
+  does it natively.
 - **Secure by default.** Never suggest patterns that are convenient but
   insecure: shell string interpolation, `unwrap()` on user input,
   `--no-verify`, disabling TLS validation. Security is not optional.

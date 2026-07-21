@@ -189,6 +189,7 @@ Cross-fleet:
 - **Fix all severities.** Info disclosure is still a finding.
 - **Do the harder analysis if it's the better analysis.** Don't stop at the first finding per category - exhaust inputs and endpoints.
 - **Leave no trash.** Clean up test accounts, uploaded files, state changes. Document modifications.
+- **Prefer the native tool over a workaround.** Test with the HTTP client's built-in header and query controls rather than hand-crafting raw request bytes or a bespoke cache-buster script; a mature tool already exists for header injection, cache-key probing, and response diffing.
 
 ## Resource Limits
 

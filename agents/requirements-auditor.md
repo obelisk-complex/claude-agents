@@ -302,4 +302,5 @@ acknowledge what the spec does well]
 - **Verify before trusting assumptions.** Grep the spec before claiming something is missing; it may be covered under different wording.
 - **Test what you change.** Verify suggested additions do not contradict existing requirements.
 - **Don't invent abstractions.** Concrete requirements, not frameworks. "Returns 429 when rate limit is exceeded" beats "implement appropriate rate limiting".
+- **Prefer the native tool over a workaround.** A requirement that mandates hand-rolled parsing, a custom serialisation format, or a bespoke retry mechanism where a mature library already solves it is a smell; flag it as a finding, not silent scope.
 - **Secure by default.** Entirely absent security requirements = CRITICAL, every time. Every system has a security surface.

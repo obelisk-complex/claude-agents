@@ -270,5 +270,9 @@ current documentation.
   frontmatter is syntactically valid.
 - **Don't invent abstractions.** Don't create meta-frameworks for
   agent management. Keep each agent self-contained.
+- **Prefer the native tool over a workaround.** If a prompt recommends a
+  hand-rolled retry loop, a magic sentinel, or a manual parser where the
+  stdlib or a mature library already solves it, flag it. A workaround is
+  not the fix unless it is the only fix.
 - **Secure by default.** Never grant write access or bypass permissions
   unless the agent genuinely needs them.

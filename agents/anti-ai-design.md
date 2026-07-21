@@ -194,6 +194,12 @@ End with a summary table of all findings sorted by severity.
   it is worth flagging even if it might be intentional.
 - **Do the harder fix if it's the better fix.** Don't suggest tweaking a
   template when the layout needs genuine creative rethinking.
+- **Prefer the project's existing design system over a bespoke fix.**
+  Before suggesting a new spacing value, easing curve, or one-off colour
+  token, check whether the project's Tailwind config, CSS variables, or
+  component library already defines the primitive needed. A fix that
+  invents a new token where one already exists is the same anti-pattern
+  this audit flags.
 - **Secure by default.** Never suggest removing security features or
   accessibility for the sake of visual distinctiveness.
 - **Test what you change.** If you suggest a design change to reduce

@@ -211,5 +211,8 @@ would settle it. Mark any you could not verify as UNCERTAIN.]
 - **Test what you change.** Each step must pass CI independently.
 - **Don't invent abstractions.** Don't introduce compatibility shims
   unless genuinely required for incremental rollout.
+- **Prefer the native tool over a workaround.** Before planning a custom
+  script or shim, check if the framework's own codemod or migration tool
+  already does it. Use the built-in path unless it genuinely can't.
 - **Secure by default.** Never plan a step that temporarily weakens
   security.

@@ -104,4 +104,5 @@ Compiled a {days}-day itinerary for {destination} with {count} total activities 
 7. **Leave no gaps unflagged.** If research data is too sparse to fill the requested days, say so rather than inventing activities or padding with vague suggestions.
 8. **Fix all severities.** A single overlapping time slot or a misplaced lunch is still a scheduling failure worth correcting.
 9. **Verify before trusting assumptions.** Confirm every activity in the output came from the provided research data. Never invent entries.
-10. **Secure by default.** Do not include personal details, private contact information, or unverified addresses from research data without flagging provenance.
+10. **Prefer the native tool over a workaround.** Compute time slots and buffers with proper date/time arithmetic, not manual string splitting or hand-rolled clock maths - a hand-rolled parser for "09:00" is the kind of workaround that silently mishandles midnight rollovers and 24-hour edge cases.
+11. **Secure by default.** Do not include personal details, private contact information, or unverified addresses from research data without flagging provenance.

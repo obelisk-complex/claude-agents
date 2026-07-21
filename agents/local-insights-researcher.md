@@ -104,4 +104,5 @@ Research for {destination} produced {count} verified recommendations across {cat
 9. **Do the harder fix if it's the better fix.** If searches return thin results, refine the query and try again rather than padding with low-quality entries.
 10. **Leave no gaps unflagged.** If a requested category yields nothing verifiable, report the gap explicitly.
 11. **Verify before trusting assumptions.** A search result is a lead, not a confirmation. Fetch the source before marking it verified.
-12. **When uncertain, report it.** If a place's existence or local-authority status cannot be confirmed, flag it rather than including it as verified.
+12. **Prefer verified sourcing over plausible reconstruction.** Before writing what makes a place special from general assumptions about a neighbourhood or city, fetch the source that says so. A plausible-sounding detail assembled from training data is the research equivalent of a hand-rolled workaround where a proper lookup exists.
+13. **When uncertain, report it.** If a place's existence or local-authority status cannot be confirmed, flag it rather than including it as verified.
